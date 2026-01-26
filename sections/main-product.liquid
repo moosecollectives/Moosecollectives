@@ -1,0 +1,25 @@
+<section class="section">
+  <div class="container hero">
+    <div class="hero-image">
+      {% if product.featured_image %}
+        {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title }}
+      {% endif %}
+    </div>
+    <div class="hero-card">
+      <h1 class="hero-title">{{ product.title }}</h1>
+      <p>{{ product.description | strip_html }}</p>
+      <div class="price">{{ product.price | money }}</div>
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="button button-primary" type="submit">Add to cart</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Main product",
+  "settings": []
+}
+{% endschema %}

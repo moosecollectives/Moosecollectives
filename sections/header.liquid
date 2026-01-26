@@ -1,0 +1,29 @@
+<header class="header">
+  <div class="container header-inner">
+    <a class="brand" href="{{ routes.root_url }}">
+      {% if settings.logo != blank %}
+        {{ settings.logo | image_url: width: 160 | image_tag: alt: shop.name }}
+      {% else %}
+        {{ shop.name }}
+      {% endif %}
+    </a>
+
+    <nav class="nav" aria-label="Main navigation">
+      {% for link in linklists[settings.main_menu].links %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {% endfor %}
+    </nav>
+
+    <div class="nav">
+      <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+      <a class="button button-secondary" href="{{ routes.account_login_url }}">Account</a>
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": []
+}
+{% endschema %}
