@@ -1,0 +1,26 @@
+<footer class="footer">
+  <div class="container footer-grid">
+    <div>
+      <h4>{{ shop.name }}</h4>
+      <p>{{ settings.footer_text }}</p>
+    </div>
+    <div>
+      <h4>Explore</h4>
+      <p><a href="{{ routes.collections_url }}">Shop all</a></p>
+      <p><a href="{{ routes.search_url }}">Search</a></p>
+      <p><a href="{{ routes.cart_url }}">Cart</a></p>
+    </div>
+    <div>
+      <h4>Support</h4>
+      <p>{{ settings.contact_email }}</p>
+      <p>{{ settings.contact_phone }}</p>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": []
+}
+{% endschema %}
