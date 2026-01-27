@@ -1,11 +1,5 @@
 <header class="header">
   <div class="container header-inner">
-    <nav class="nav nav-left" aria-label="Main navigation">
-      {% for link in linklists[settings.main_menu].links %}
-        <a href="{{ link.url }}">{{ link.title }}</a>
-      {% endfor %}
-    </nav>
-
     <a class="brand" href="{{ routes.root_url }}">
       {% if settings.logo != blank %}
         {{ settings.logo | image_url: width: 220 | image_tag: alt: shop.name }}
@@ -14,11 +8,14 @@
       {% endif %}
     </a>
 
-    <div class="nav nav-right">
+    <nav class="nav nav-main" aria-label="Main navigation">
+      {% for link in linklists[settings.main_menu].links %}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {% endfor %}
       <a href="/pages/faq">FAQ</a>
       <a href="/pages/commissions">Commissions</a>
       <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
-    </div>
+    </nav>
   </div>
 </header>
 
