@@ -448,6 +448,26 @@ a {
     grid-template-columns: 1fr;
   }
 
+  .hero {
+    padding-top: 24px;
+  }
+
+  .hero-media {
+    position: relative;
+    height: clamp(220px, 60vw, 360px);
+  }
+
+  .hero-media::after {
+    background:
+      radial-gradient(120% 80% at 12% 0%, rgba(255, 90, 0, 0.6), transparent 60%),
+      radial-gradient(120% 80% at 88% 0%, rgba(255, 179, 0, 0.55), transparent 60%),
+      linear-gradient(180deg, rgba(10, 15, 34, 0.6), rgba(10, 15, 34, 0.1) 50%, rgba(10, 15, 34, 0.55) 100%);
+  }
+
+  .hero-grid {
+    margin-top: 16px;
+  }
+
 }
 
 @media (prefers-reduced-motion: reduce) {
