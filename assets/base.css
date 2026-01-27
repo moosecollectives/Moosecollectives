@@ -109,10 +109,14 @@ a {
 .header {
   position: sticky;
   top: 0;
-  background: rgba(231, 247, 255, 0.85);
+  background:
+    radial-gradient(120% 120% at 10% 0%, rgba(255, 90, 0, 0.35) 0%, transparent 55%),
+    radial-gradient(120% 120% at 90% 0%, rgba(255, 179, 0, 0.4) 0%, transparent 55%),
+    linear-gradient(135deg, rgba(10, 15, 34, 0.95), rgba(12, 26, 58, 0.88));
   backdrop-filter: blur(14px);
-  border-bottom: 3px solid rgba(12, 18, 32, 0.08);
+  border-bottom: 3px solid rgba(255, 255, 255, 0.12);
   z-index: 20;
+  color: #f6faff;
 }
 
 .header-inner {
@@ -128,7 +132,7 @@ a {
   font-size: clamp(22px, 3vw, 36px);
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: var(--ink);
+  color: #f6faff;
 }
 
 .nav {
@@ -187,8 +191,8 @@ a {
 }
 
 .button-secondary {
-  background: rgba(255, 255, 255, 0.85);
-  border-color: rgba(12, 18, 32, 0.12);
+  background: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.25);
 }
 
 .button:hover {
@@ -407,10 +411,14 @@ a {
 
 .footer {
   padding: 56px 0;
-  border-top: 3px solid rgba(12, 18, 32, 0.08);
-  background: rgba(231, 247, 255, 0.8);
+  border-top: 3px solid rgba(255, 255, 255, 0.12);
+  background:
+    radial-gradient(120% 120% at 10% 0%, rgba(255, 90, 0, 0.35) 0%, transparent 55%),
+    radial-gradient(120% 120% at 90% 0%, rgba(255, 179, 0, 0.4) 0%, transparent 55%),
+    linear-gradient(135deg, rgba(10, 15, 34, 0.95), rgba(12, 26, 58, 0.88));
   position: relative;
   overflow: hidden;
+  color: #f6faff;
 }
 
 .footer-grid {
