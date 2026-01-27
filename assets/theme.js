@@ -25,6 +25,36 @@ const initCarousel = (carousel) => {
     position = -halfWidth;
   }
 
+  const shuffle = (array) => {
+    for (let i = array.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  };
+
+  const randomizeTrack = () => {
+    const cards = Array.from(track.querySelectorAll('[data-carousel-card]'));
+    if (cards.length < 2) return;
+    const half = Math.floor(cards.length / 2);
+    if (half < 2) return;
+    const firstHalf = cards.slice(0, half);
+    const secondHalf = cards.slice(half, half * 2);
+    if (secondHalf.length !== firstHalf.length) return;
+
+    const order = shuffle(firstHalf.map((_, index) => index));
+    const fragment = document.createDocumentFragment();
+    order.forEach((index) => {
+      fragment.appendChild(firstHalf[index]);
+    });
+    order.forEach((index) => {
+      fragment.appendChild(secondHalf[index]);
+    });
+    track.appendChild(fragment);
+  };
+
+  randomizeTrack();
+
   const step = () => {
     speed += (targetSpeed - speed) * 0.06;
     position += direction * speed;
