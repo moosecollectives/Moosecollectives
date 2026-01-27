@@ -1,10 +1,30 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "logo": null,
+    "logo": "shopify://shop_images/content_7b428045-28e0-43a7-8537-0aaf18fb9b44.png",
     "main_menu": "main-menu",
     "footer_text": "A modern essentials brand with a playful edge.",
     "contact_email": "hello@example.com",
-    "contact_phone": "+1 (555) 555-5555"
+    "contact_phone": "+1 (555) 555-5555",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    },
+    "content_for_index": []
   },
   "presets": {}
 }
