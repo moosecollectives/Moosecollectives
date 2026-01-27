@@ -325,7 +325,12 @@ a {
 }
 
 .carousel-section {
-  padding-top: 24px;
+  padding-top: 16px;
+  padding-bottom: 12px;
+}
+
+.carousel-section + .carousel-section {
+  padding-top: 6px;
 }
 
 .product-carousel {

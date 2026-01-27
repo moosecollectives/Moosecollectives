@@ -12,8 +12,11 @@ const initCarousel = (carousel) => {
   let targetSpeed = speed;
   const direction = carousel.dataset.direction === 'right' ? 1 : -1;
   const baseSpeed = parseFloat(carousel.dataset.speed) || 0.6;
-  speed = baseSpeed;
-  targetSpeed = baseSpeed;
+  const isMobile = window.matchMedia('(max-width: 980px)').matches;
+  const mobileBoost = isMobile ? 0.7 : 0;
+  const tunedSpeed = Math.min(baseSpeed + mobileBoost, 2);
+  speed = tunedSpeed;
+  targetSpeed = tunedSpeed;
 
   const getHalfWidth = () => track.scrollWidth / 2;
   let halfWidth = getHalfWidth();
@@ -46,7 +49,7 @@ const initCarousel = (carousel) => {
   });
 
   carousel.addEventListener('mouseleave', () => {
-    targetSpeed = baseSpeed;
+    targetSpeed = tunedSpeed;
   });
 
   window.addEventListener('resize', refresh);
