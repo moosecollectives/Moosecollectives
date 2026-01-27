@@ -7,10 +7,6 @@
     "product-carousel": {
       "type": "product-carousel",
       "settings": {}
-    },
-    "featured-collection": {
-      "type": "featured-collection",
-      "settings": {}
     }
   },
   "order": ["main-hero", "product-carousel"]

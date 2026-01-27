@@ -1,23 +1,27 @@
-<section class="section">
-  <div class="container hero hero-single">
-    <div class="hero-card">
-      <span class="hero-eyebrow">{{ section.settings.eyebrow }}</span>
-      <h1 class="hero-title">{{ section.settings.heading }}</h1>
-      <p>{{ section.settings.subheading }}</p>
-      <div class="hero-actions">
-        {% if section.settings.primary_label != blank %}
-          <a class="button button-primary" href="{{ section.settings.primary_link }}">
-            {{ section.settings.primary_label }}
-          </a>
-        {% endif %}
-        {% if section.settings.secondary_label != blank %}
-          <a class="button button-secondary" href="{{ section.settings.secondary_link }}">
-            {{ section.settings.secondary_label }}
-          </a>
-        {% endif %}
+<section class="section hero">
+  <div class="container">
+    <div class="hero-media">
+      {% if section.settings.image != blank %}
+        {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: section.settings.heading }}
+      {% endif %}
+      <div class="hero-copy">
+        <span class="hero-eyebrow">{{ section.settings.eyebrow }}</span>
+        <h1 class="hero-title">{{ section.settings.heading }}</h1>
+        <p class="hero-subtitle">{{ section.settings.subheading }}</p>
+        <div class="hero-actions">
+          {% if section.settings.primary_label != blank %}
+            <a class="button button-primary" href="{{ section.settings.primary_link }}">
+              {{ section.settings.primary_label }}
+            </a>
+          {% endif %}
+          {% if section.settings.secondary_label != blank %}
+            <a class="button button-secondary" href="{{ section.settings.secondary_link }}">
+              {{ section.settings.secondary_label }}
+            </a>
+          {% endif %}
+        </div>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -25,14 +29,14 @@
 {
   "name": "Main hero",
   "settings": [
-    {"type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "New season"},
-    {"type": "text", "id": "heading", "label": "Heading", "default": "Textured essentials that feel effortless"},
-    {"type": "textarea", "id": "subheading", "label": "Subheading", "default": "Curated capsules, made in small runs, with a focus on craft and color."},
-    {"type": "text", "id": "primary_label", "label": "Primary button label", "default": "Shop best sellers"},
+    {"type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Fresh drop"},
+    {"type": "text", "id": "heading", "label": "Heading", "default": "Pop culture artifacts, curated loud"},
+    {"type": "textarea", "id": "subheading", "label": "Subheading", "default": "Collector-ready pieces, limited runs, and a rotating vault of culture-forward finds."},
+    {"type": "text", "id": "primary_label", "label": "Primary button label", "default": "Shop all"},
     {"type": "url", "id": "primary_link", "label": "Primary button link"},
-    {"type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Learn our story"},
+    {"type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Learn more"},
     {"type": "url", "id": "secondary_link", "label": "Secondary button link"},
-    {"type": "image_picker", "id": "image", "label": "Hero image"}
+    {"type": "image_picker", "id": "image", "label": "Hero media"}
   ]
 }
 {% endschema %}
