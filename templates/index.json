@@ -28,12 +28,26 @@
         "heading": "All products",
         "collection": "",
         "cta_label": "Browse collection",
+        "direction": "left",
+        "start_from_end": false,
+        "max_products": 50
+      }
+    },
+    "product-carousel-secondary": {
+      "type": "product-carousel",
+      "settings": {
+        "heading": "More to explore",
+        "collection": "",
+        "cta_label": "View all",
+        "direction": "right",
+        "start_from_end": true,
         "max_products": 50
       }
     }
   },
   "order": [
     "main-hero",
-    "product-carousel"
+    "product-carousel",
+    "product-carousel-secondary"
   ]
 }

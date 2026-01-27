@@ -10,17 +10,24 @@ const initCarousel = (carousel) => {
   let position = 0;
   let speed = 0.6;
   let targetSpeed = speed;
-  let isHovering = false;
+  const direction = carousel.dataset.direction === 'right' ? 1 : -1;
 
   const getHalfWidth = () => track.scrollWidth / 2;
   let halfWidth = getHalfWidth();
+  const startFromEnd = carousel.dataset.start === 'end';
+  if (startFromEnd) {
+    position = -halfWidth;
+  }
 
   const step = () => {
     speed += (targetSpeed - speed) * 0.06;
-    position -= speed;
+    position += direction * speed;
 
-    if (Math.abs(position) >= halfWidth) {
+    if (direction === -1 && Math.abs(position) >= halfWidth) {
       position = 0;
+    }
+    if (direction === 1 && position >= 0) {
+      position = -halfWidth;
     }
 
     track.style.transform = `translate3d(${position}px, 0, 0)`;
@@ -32,12 +39,10 @@ const initCarousel = (carousel) => {
   };
 
   carousel.addEventListener('mouseenter', () => {
-    isHovering = true;
     targetSpeed = 0;
   });
 
   carousel.addEventListener('mouseleave', () => {
-    isHovering = false;
     targetSpeed = 0.6;
   });
 
