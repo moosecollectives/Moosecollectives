@@ -1,13 +1,38 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main-hero": {
       "type": "main-hero",
-      "settings": {}
+      "settings": {
+        "eyebrow": "redefined rugs",
+        "heading": "your room elevated with us!",
+        "subheading": "a vault of your favorite anime's reconstructed into our handmade rugs made by us for you.",
+        "primary_label": "full collective",
+        "primary_link": "",
+        "secondary_label": "custom commissions",
+        "secondary_link": ""
+      }
     },
     "product-carousel": {
       "type": "product-carousel",
-      "settings": {}
+      "settings": {
+        "heading": "All products",
+        "collection": "",
+        "cta_label": "Browse collection",
+        "max_products": 50
+      }
     }
   },
-  "order": ["main-hero", "product-carousel"]
+  "order": [
+    "main-hero",
+    "product-carousel"
+  ]
 }
