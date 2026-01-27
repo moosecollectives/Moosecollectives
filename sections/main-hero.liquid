@@ -33,7 +33,9 @@
     </div>
 
     <div class="hero-media-frame">
-      {% if section.settings.image != blank %}
+      {% if section.settings.video != blank %}
+        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+      {% elsif section.settings.image != blank %}
         {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: section.settings.heading }}
       {% else %}
         <div class="hero-placeholder"></div>
@@ -54,7 +56,8 @@
     {"type": "url", "id": "primary_link", "label": "Primary button link"},
     {"type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "See commissions"},
     {"type": "url", "id": "secondary_link", "label": "Secondary button link"},
-    {"type": "image_picker", "id": "image", "label": "Hero media"}
+    {"type": "image_picker", "id": "image", "label": "Hero image"},
+    {"type": "video", "id": "video", "label": "Hero video"}
   ]
 }
 {% endschema %}
