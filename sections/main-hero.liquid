@@ -11,7 +11,7 @@
           </a>
         {% endif %}
         {% if section.settings.secondary_label != blank %}
-          <a class="button button-secondary" href="{{ section.settings.secondary_link }}">
+          <a class="button button-secondary" href="{% if section.settings.secondary_link != blank %}{{ section.settings.secondary_link }}{% else %}/pages/commissions{% endif %}">
             {{ section.settings.secondary_label }}
           </a>
         {% endif %}
