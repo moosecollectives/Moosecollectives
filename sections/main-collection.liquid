@@ -4,15 +4,17 @@
       <h1 class="section-title">Full collection</h1>
       <span>{{ collection.products_count }} items</span>
     </div>
-    <div class="product-grid">
+    <div class="collection-grid">
       {% for product in collection.products %}
-        <article class="product-card">
+        <article class="collection-card">
           <a href="{{ product.url }}">
             {% if product.featured_image %}
               {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
             {% endif %}
-            <h3>{{ product.title }}</h3>
-            <span class="price">{{ product.price | money }}</span>
+            <div class="collection-card-body">
+              <h3>{{ product.title }}</h3>
+              <span class="price">{{ product.price | money }}</span>
+            </div>
           </a>
         </article>
       {% endfor %}
