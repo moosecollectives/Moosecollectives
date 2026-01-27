@@ -19,10 +19,64 @@
     </div>
 
     <div class="hero-image">
-      {% if section.settings.image != blank %}
+      {% if section.settings.collection != blank %}
+        <div class="hero-collage" aria-hidden="true">
+          <div class="hero-collage-track">
+            {% for product in section.settings.collection.products limit: 8 %}
+              {% if product.featured_image %}
+                <div class="hero-collage-item">
+                  {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
+                </div>
+              {% endif %}
+            {% endfor %}
+            {% for product in section.settings.collection.products limit: 8 %}
+              {% if product.featured_image %}
+                <div class="hero-collage-item">
+                  {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          </div>
+        </div>
+      {% elsif section.settings.image != blank %}
         {{ section.settings.image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: section.settings.heading }}
       {% endif %}
     </div>
+  </div>
+</section>
+
+<section class="section hero-featured">
+  <div class="container">
+    <div class="section-heading">
+      <h2 class="section-title">{{ section.settings.featured_heading }}</h2>
+      {% if section.settings.collection != blank %}
+        <a class="button button-secondary" href="{{ section.settings.collection.url }}">
+          {{ section.settings.collection_cta_label }}
+        </a>
+      {% elsif section.settings.collection_cta_label != blank %}
+        <a class="button button-secondary" href="{{ section.settings.collection_cta_link }}">
+          {{ section.settings.collection_cta_label }}
+        </a>
+      {% endif %}
+    </div>
+
+    {% if section.settings.collection != blank %}
+      <div class="product-grid">
+        {% for product in section.settings.collection.products limit: 4 %}
+          <article class="product-card">
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <h3>{{ product.title }}</h3>
+              <span class="price">{{ product.price | money }}</span>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p>Select a collection to showcase products here.</p>
+    {% endif %}
   </div>
 </section>
 
@@ -37,7 +91,11 @@
     {"type": "url", "id": "primary_link", "label": "Primary button link"},
     {"type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Learn our story"},
     {"type": "url", "id": "secondary_link", "label": "Secondary button link"},
-    {"type": "image_picker", "id": "image", "label": "Hero image"}
+    {"type": "image_picker", "id": "image", "label": "Hero image"},
+    {"type": "collection", "id": "collection", "label": "Hero + featured collection"},
+    {"type": "text", "id": "featured_heading", "label": "Featured heading", "default": "Top picks"},
+    {"type": "text", "id": "collection_cta_label", "label": "Collection CTA label", "default": "Show entire collection"},
+    {"type": "url", "id": "collection_cta_link", "label": "Collection CTA link (optional)"}
   ]
 }
 {% endschema %}

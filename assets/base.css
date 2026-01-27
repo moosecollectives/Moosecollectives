@@ -1,17 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Space+Grotesk:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Newsreader:wght@400;500;600&display=swap');
 
 :root {
-  --color-ink: #1b1b1b;
-  --color-paper: #f7f2ea;
-  --color-accent: #ff6a3d;
-  --color-accent-2: #0aa1a7;
-  --color-shadow: rgba(9, 9, 9, 0.12);
+  --color-ink: #0b1224;
+  --color-paper: #0a0f1f;
+  --color-accent: #ff7a1a;
+  --color-accent-2: #f5a15f;
+  --color-shadow: rgba(5, 10, 20, 0.45);
   --radius-lg: 28px;
   --radius-md: 16px;
   --radius-sm: 10px;
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'Space Grotesk', sans-serif;
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'Newsreader', serif;
   --page-gutter: clamp(20px, 4vw, 56px);
+  --bg-glow: rgba(255, 122, 26, 0.32);
+  --bg-ink: #0a1024;
+  --bg-mid: #101c3a;
+  --jiggle-x: 0px;
+  --jiggle-y: 0px;
+  --jiggle-rot: 0deg;
 }
 
 * {
@@ -25,11 +31,49 @@ html {
 body {
   margin: 0;
   font-family: var(--font-body);
-  color: var(--color-ink);
-  background: radial-gradient(circle at 20% 20%, #fff5ec, transparent 55%),
-    radial-gradient(circle at 80% 10%, #e7f6f7, transparent 45%),
-    var(--color-paper);
+  color: #f5efe9;
+  background:
+    radial-gradient(circle at 20% 20%, var(--bg-glow), transparent 50%),
+    radial-gradient(circle at 80% 10%, rgba(21, 52, 98, 0.8), transparent 45%),
+    linear-gradient(135deg, var(--bg-ink), var(--bg-mid) 55%, #0c1124 100%),
+    repeating-linear-gradient(120deg, rgba(255, 255, 255, 0.03) 0 2px, transparent 2px 6px);
   min-height: 100vh;
+}
+
+.template-index {
+  --bg-glow: rgba(255, 122, 26, 0.35);
+  --bg-ink: #0b1430;
+  --bg-mid: #142451;
+}
+
+.template-collection {
+  --bg-glow: rgba(255, 153, 51, 0.28);
+  --bg-ink: #0a1128;
+  --bg-mid: #182750;
+}
+
+.template-product {
+  --bg-glow: rgba(255, 120, 20, 0.3);
+  --bg-ink: #0a0f24;
+  --bg-mid: #132243;
+}
+
+.template-page {
+  --bg-glow: rgba(255, 170, 70, 0.25);
+  --bg-ink: #0a1226;
+  --bg-mid: #1a2a4e;
+}
+
+.template-cart {
+  --bg-glow: rgba(255, 140, 50, 0.3);
+  --bg-ink: #0b1328;
+  --bg-mid: #18284d;
+}
+
+.template-404 {
+  --bg-glow: rgba(255, 100, 30, 0.28);
+  --bg-ink: #0a0f22;
+  --bg-mid: #152446;
 }
 
 img {
@@ -47,6 +91,7 @@ a {
   left: -999px;
   top: 10px;
   background: #fff;
+  color: #111;
   padding: 8px 12px;
   border-radius: 6px;
 }
@@ -54,6 +99,13 @@ a {
 .skip-link:focus {
   left: 10px;
   z-index: 999;
+}
+
+.page-shell {
+  transform: translate3d(var(--jiggle-x), var(--jiggle-y), 0) rotate(var(--jiggle-rot));
+  transform-origin: center top;
+  transition: transform 0.08s ease-out;
+  will-change: transform;
 }
 
 .container {
@@ -92,14 +144,14 @@ a {
 }
 
 .button-primary {
-  background: var(--color-ink);
-  color: #fff;
-  box-shadow: 0 12px 30px -18px var(--color-ink);
+  background: var(--color-accent);
+  color: #1b0f0a;
+  box-shadow: 0 12px 30px -18px rgba(255, 122, 26, 0.7);
 }
 
 .button-secondary {
-  background: #fff;
-  border-color: var(--color-ink);
+  background: rgba(12, 20, 40, 0.7);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .button:hover {
@@ -114,11 +166,13 @@ a {
 }
 
 .hero-card {
-  background: #fff;
+  background: rgba(9, 14, 29, 0.86);
   border-radius: var(--radius-lg);
   padding: clamp(26px, 5vw, 42px);
   box-shadow: 0 20px 60px -40px var(--color-shadow);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   animation: floatIn 0.8s ease both;
+  backdrop-filter: blur(12px);
 }
 
 .hero-eyebrow {
@@ -146,14 +200,43 @@ a {
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  min-height: 320px;
-  background: linear-gradient(135deg, #ffefde, #d6f0f1);
+  min-height: 360px;
+  background: linear-gradient(135deg, rgba(8, 15, 32, 0.9), rgba(19, 36, 66, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.hero-image img {
+.hero-collage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hero-collage-track {
+  display: flex;
+  gap: 18px;
+  padding: 18px;
+  width: max-content;
+  animation: pan 28s linear infinite;
+}
+
+.hero-collage-item {
+  width: clamp(160px, 20vw, 240px);
+  height: clamp(220px, 28vw, 320px);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 12px 30px -24px rgba(0, 0, 0, 0.8);
+  background: rgba(9, 13, 24, 0.8);
+}
+
+.hero-collage-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  filter: saturate(1.05) contrast(1.05);
+}
+
+.hero-featured {
+  padding-top: 0;
 }
 
 .product-grid {
@@ -163,18 +246,25 @@ a {
 }
 
 .product-card {
-  background: #fff;
+  background: rgba(10, 16, 32, 0.86);
   border-radius: var(--radius-md);
   padding: 18px;
   box-shadow: 0 18px 50px -40px var(--color-shadow);
   display: grid;
   gap: 12px;
   animation: fadeUp 0.6s ease both;
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .product-card h3 {
   margin: 0;
   font-size: 18px;
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
 }
 
 .price {
@@ -184,9 +274,9 @@ a {
 .header {
   position: sticky;
   top: 0;
-  background: rgba(247, 242, 234, 0.92);
+  background: rgba(9, 14, 29, 0.92);
   backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(27, 27, 27, 0.08);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   z-index: 20;
 }
 
@@ -235,7 +325,7 @@ a {
 
 .footer {
   padding: 48px 0;
-  border-top: 1px solid rgba(27, 27, 27, 0.08);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .footer-grid {
@@ -271,6 +361,15 @@ a {
   }
 }
 
+@keyframes pan {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 @media (max-width: 860px) {
   .nav {
     flex-wrap: wrap;
@@ -279,5 +378,9 @@ a {
 
   .header-inner {
     flex-direction: column;
+  }
+
+  .hero-collage-track {
+    animation-duration: 36s;
   }
 }
