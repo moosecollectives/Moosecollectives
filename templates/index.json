@@ -13,5 +13,5 @@
       "settings": {}
     }
   },
-  "order": ["main-hero", "product-carousel", "featured-collection"]
+  "order": ["main-hero", "product-carousel"]
 }
