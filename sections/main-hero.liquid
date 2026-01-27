@@ -1,4 +1,13 @@
 <section class="section hero">
+  <div class="hero-media">
+    {% if section.settings.video != blank %}
+      {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+    {% elsif section.settings.image != blank %}
+      {{ section.settings.image | image_url: width: 2000 | image_tag: loading: 'lazy', alt: section.settings.heading }}
+    {% else %}
+      <div class="hero-placeholder"></div>
+    {% endif %}
+  </div>
   <div class="container hero-grid">
     <div class="hero-panel">
       <span class="hero-eyebrow">{{ section.settings.eyebrow }}</span>
@@ -31,17 +40,7 @@
         </div>
       </div>
     </div>
-
-    <div class="hero-media-frame">
-      {% if section.settings.video != blank %}
-        {{ section.settings.video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
-      {% elsif section.settings.image != blank %}
-        {{ section.settings.image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: section.settings.heading }}
-      {% else %}
-        <div class="hero-placeholder"></div>
-      {% endif %}
-      <div class="hero-ticker">Pop icons. Vintage drops. Limited glow.</div>
-    </div>
+    <div class="hero-ticker">Pop icons. Vintage drops. Limited glow.</div>
   </div>
 </section>
 
