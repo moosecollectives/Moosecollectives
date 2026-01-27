@@ -225,7 +225,6 @@ a {
 }
 
 .hero-panel::after,
-.hero-media-frame::after,
 .product-carousel-card::after,
 .product-card::after,
 .footer::after {
@@ -322,15 +321,7 @@ a {
 }
 
 .hero-ticker {
-  align-self: end;
-  justify-self: end;
-  padding: 10px 16px;
-  border-radius: 999px;
-  background: rgba(12, 18, 32, 0.85);
-  color: #f4f8ff;
-  font-size: 12px;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  display: none;
 }
 
 .carousel-section {
@@ -457,14 +448,6 @@ a {
     grid-template-columns: 1fr;
   }
 
-  .hero-ticker {
-    justify-self: start;
-    margin-top: 16px;
-  }
-
-  .hero-media-frame {
-    order: -1;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
