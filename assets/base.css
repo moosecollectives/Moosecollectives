@@ -449,12 +449,13 @@ a {
   }
 
   .hero {
-    padding-top: 24px;
+    padding-top: 16px;
+    padding-bottom: 24px;
   }
 
   .hero-media {
     position: relative;
-    height: clamp(220px, 60vw, 360px);
+    height: clamp(200px, 52vw, 300px);
   }
 
   .hero-media::after {
@@ -466,7 +467,32 @@ a {
 
   .hero-grid {
     margin-top: 16px;
+    gap: 16px;
   }
+
+  .hero-panel {
+    padding: 18px;
+  }
+
+  .hero-title {
+    font-size: clamp(24px, 7vw, 36px);
+    margin: 10px 0 8px;
+  }
+
+  .hero-actions {
+    margin-top: 12px;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 8px;
+    margin-top: 16px;
+  }
+
+  .hero-stat-number {
+    font-size: 18px;
+  }
+}
 
 }
 
