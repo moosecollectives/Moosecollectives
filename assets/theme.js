@@ -11,6 +11,9 @@ const initCarousel = (carousel) => {
   let speed = 0.6;
   let targetSpeed = speed;
   const direction = carousel.dataset.direction === 'right' ? 1 : -1;
+  const baseSpeed = parseFloat(carousel.dataset.speed) || 0.6;
+  speed = baseSpeed;
+  targetSpeed = baseSpeed;
 
   const getHalfWidth = () => track.scrollWidth / 2;
   let halfWidth = getHalfWidth();
@@ -43,7 +46,7 @@ const initCarousel = (carousel) => {
   });
 
   carousel.addEventListener('mouseleave', () => {
-    targetSpeed = 0.6;
+    targetSpeed = baseSpeed;
   });
 
   window.addEventListener('resize', refresh);

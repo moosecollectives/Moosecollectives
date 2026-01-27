@@ -30,18 +30,20 @@
         "cta_label": "Browse collection",
         "direction": "left",
         "start_from_end": false,
-        "max_products": 50
+        "max_products": 50,
+        "speed": 0.6
       }
     },
     "product-carousel-secondary": {
       "type": "product-carousel",
       "settings": {
-        "heading": "More to explore",
+        "heading": "",
         "collection": "",
-        "cta_label": "View all",
+        "cta_label": "",
         "direction": "right",
         "start_from_end": true,
-        "max_products": 50
+        "max_products": 50,
+        "speed": 0.4
       }
     }
   },

@@ -4,19 +4,23 @@
 {% endif %}
 
 <section class="section carousel-section">
-  <div class="container">
-    <div class="section-heading">
-      <h2 class="section-title">{{ section.settings.heading }}</h2>
-      {% if carousel_collection != blank %}
-        <a class="button button-secondary" href="{{ carousel_collection.url }}">
-          {{ section.settings.cta_label }}
-        </a>
-      {% endif %}
+  {% if section.settings.heading != blank or section.settings.cta_label != blank %}
+    <div class="container">
+      <div class="section-heading">
+        {% if section.settings.heading != blank %}
+          <h2 class="section-title">{{ section.settings.heading }}</h2>
+        {% endif %}
+        {% if carousel_collection != blank and section.settings.cta_label != blank %}
+          <a class="button button-secondary" href="{{ carousel_collection.url }}">
+            {{ section.settings.cta_label }}
+          </a>
+        {% endif %}
+      </div>
     </div>
-  </div>
+  {% endif %}
 
   {% if carousel_collection != blank and carousel_collection.products_count > 0 %}
-    <div class="product-carousel" data-carousel data-direction="{{ section.settings.direction }}" data-start="{% if section.settings.start_from_end %}end{% else %}start{% endif %}">
+    <div class="product-carousel" data-carousel data-direction="{{ section.settings.direction }}" data-start="{% if section.settings.start_from_end %}end{% else %}start{% endif %}" data-speed="{{ section.settings.speed }}">
       <div class="product-carousel-track" data-carousel-track>
         {% for product in carousel_collection.products limit: section.settings.max_products %}
           <article class="product-carousel-card" data-carousel-card>
@@ -80,6 +84,15 @@
       "max": 50,
       "step": 2,
       "default": 50
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed",
+      "min": 0.2,
+      "max": 1.2,
+      "step": 0.1,
+      "default": 0.6
     }
   ],
   "presets": [{"name": "Product carousel"}]
