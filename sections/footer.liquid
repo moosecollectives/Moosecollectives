@@ -6,14 +6,16 @@
     </div>
     <div>
       <h4>Explore</h4>
-      <p><a href="{{ routes.collections_url }}">Shop all</a></p>
-      <p><a href="{{ routes.search_url }}">Search</a></p>
+      {% for link in linklists[settings.main_menu].links %}
+        <p><a href="{{ link.url }}">{{ link.title }}</a></p>
+      {% endfor %}
+      <p><a href="/pages/faq">FAQ</a></p>
+      <p><a href="/pages/commissions">Commissions</a></p>
       <p><a href="{{ routes.cart_url }}">Cart</a></p>
     </div>
     <div>
       <h4>Support</h4>
       <p>{{ settings.contact_email }}</p>
-      <p>{{ settings.contact_phone }}</p>
     </div>
   </div>
 </footer>
