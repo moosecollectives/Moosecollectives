@@ -1,0 +1,71 @@
+{% assign carousel_collection = section.settings.collection %}
+{% if carousel_collection == blank %}
+  {% assign carousel_collection = collections['all'] %}
+{% endif %}
+
+<section class="section">
+  <div class="container">
+    <div class="section-heading">
+      <h2 class="section-title">{{ section.settings.heading }}</h2>
+      {% if carousel_collection != blank %}
+        <a class="button button-secondary" href="{{ carousel_collection.url }}">
+          {{ section.settings.cta_label }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if carousel_collection != blank and carousel_collection.products_count > 0 %}
+    <div class="product-carousel" aria-label="Product carousel">
+      <div class="product-carousel-track">
+        {% for product in carousel_collection.products limit: section.settings.max_products %}
+          <article class="product-carousel-card">
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <h3>{{ product.title }}</h3>
+              <span class="price">{{ product.price | money }}</span>
+            </a>
+          </article>
+        {% endfor %}
+        {% for product in carousel_collection.products limit: section.settings.max_products %}
+          <article class="product-carousel-card">
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <h3>{{ product.title }}</h3>
+              <span class="price">{{ product.price | money }}</span>
+            </a>
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="container">
+      <p>No products available to display.</p>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Product carousel",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Heading", "default": "All products"},
+    {"type": "collection", "id": "collection", "label": "Collection (defaults to All products)"},
+    {"type": "text", "id": "cta_label", "label": "CTA label", "default": "Show entire collection"},
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products",
+      "min": 4,
+      "max": 50,
+      "step": 2,
+      "default": 50
+    }
+  ],
+  "presets": [{"name": "Product carousel"}]
+}
+{% endschema %}

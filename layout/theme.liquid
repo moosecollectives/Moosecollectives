@@ -25,14 +25,12 @@
   <body class="template-{{ template.name | handle }}">
     <a class="skip-link" href="#MainContent">Skip to content</a>
 
-    <div class="page-shell">
-      {% section 'header' %}
+    {% section 'header' %}
 
-      <main id="MainContent" role="main">
-        {{ content_for_layout }}
-      </main>
+    <main id="MainContent" role="main">
+      {{ content_for_layout }}
+    </main>
 
-      {% section 'footer' %}
-    </div>
+    {% section 'footer' %}
   </body>
 </html>

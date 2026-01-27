@@ -4,10 +4,14 @@
       "type": "main-hero",
       "settings": {}
     },
+    "product-carousel": {
+      "type": "product-carousel",
+      "settings": {}
+    },
     "featured-collection": {
       "type": "featured-collection",
       "settings": {}
     }
   },
-  "order": ["main-hero", "featured-collection"]
+  "order": ["main-hero", "product-carousel", "featured-collection"]
 }
