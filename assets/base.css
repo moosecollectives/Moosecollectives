@@ -445,7 +445,7 @@ a {
 .collection-card img {
   width: 100%;
   height: clamp(220px, 28vw, 320px);
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   filter: saturate(1.1) contrast(1.05);
 }
