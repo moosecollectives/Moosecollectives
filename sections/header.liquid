@@ -10,9 +10,10 @@
 
     <nav class="nav nav-main" aria-label="Main navigation">
       {% for link in linklists[settings.main_menu].links %}
-        <a href="{{ link.url }}">{{ link.title }}</a>
+        {% unless link.handle == 'contact' %}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endunless %}
       {% endfor %}
-      <a href="/pages/faq">FAQ</a>
       <a href="/pages/commissions">Commissions</a>
       <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
     </nav>
