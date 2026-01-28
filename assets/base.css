@@ -116,13 +116,13 @@ a {
   position: sticky;
   top: 0;
   background:
-    radial-gradient(120% 120% at 10% 0%, rgba(255, 90, 0, 0.35) 0%, transparent 55%),
-    radial-gradient(120% 120% at 90% 0%, rgba(255, 179, 0, 0.4) 0%, transparent 55%),
-    linear-gradient(135deg, rgba(10, 15, 34, 0.95), rgba(12, 26, 58, 0.88));
+    radial-gradient(120% 120% at 12% 0%, rgba(255, 122, 0, 0.25) 0%, transparent 58%),
+    radial-gradient(120% 120% at 88% 0%, rgba(255, 190, 0, 0.28) 0%, transparent 58%),
+    linear-gradient(180deg, #b6e7ff, #d8f2ff);
   backdrop-filter: blur(14px);
-  border-bottom: 3px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 2px solid rgba(12, 18, 32, 0.12);
   z-index: 20;
-  color: #f6faff;
+  color: var(--ink);
 }
 
 .header-inner {
@@ -138,7 +138,7 @@ a {
   font-size: clamp(22px, 3vw, 36px);
   text-transform: uppercase;
   letter-spacing: 0.18em;
-  color: #f6faff;
+  color: var(--ink);
 }
 
 .nav {
@@ -522,14 +522,14 @@ a {
 
 .footer {
   padding: 56px 0;
-  border-top: 3px solid rgba(255, 255, 255, 0.12);
+  border-top: 2px solid rgba(12, 18, 32, 0.12);
   background:
-    radial-gradient(120% 120% at 10% 0%, rgba(255, 90, 0, 0.35) 0%, transparent 55%),
-    radial-gradient(120% 120% at 90% 0%, rgba(255, 179, 0, 0.4) 0%, transparent 55%),
-    linear-gradient(135deg, rgba(10, 15, 34, 0.95), rgba(12, 26, 58, 0.88));
+    radial-gradient(120% 120% at 12% 0%, rgba(255, 122, 0, 0.25) 0%, transparent 58%),
+    radial-gradient(120% 120% at 88% 0%, rgba(255, 190, 0, 0.28) 0%, transparent 58%),
+    linear-gradient(180deg, #b6e7ff, #d8f2ff);
   position: relative;
   overflow: hidden;
-  color: #f6faff;
+  color: var(--ink);
 }
 
 .footer-grid {
