@@ -432,7 +432,7 @@ a {
 
 .collection-link {
   display: grid;
-  gap: 12px;
+  gap: 6px;
 }
 
 .collection-media {
@@ -452,8 +452,8 @@ a {
 
 .collection-card-body {
   display: grid;
-  gap: 6px;
-  padding: 4px 8px 18px;
+  gap: 4px;
+  padding: 2px 8px 14px;
   color: #f6faff;
 }
 
