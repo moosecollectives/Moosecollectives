@@ -56,9 +56,9 @@ body {
 
 .template-collection {
   background:
-    radial-gradient(140% 90% at 12% 6%, rgba(255, 90, 0, 0.65) 0%, transparent 62%),
-    radial-gradient(95% 90% at 92% 0%, rgba(255, 179, 0, 0.7) 0%, transparent 62%),
-    linear-gradient(180deg, #0c1a3a 0%, #1b4ba3 32%, #6fbfff 68%, #9fe5ff 100%);
+    radial-gradient(120% 80% at 12% 6%, rgba(255, 122, 0, 0.55) 0%, transparent 58%),
+    radial-gradient(90% 80% at 92% 0%, rgba(255, 190, 0, 0.6) 0%, transparent 58%),
+    linear-gradient(180deg, #7fc9ff 0%, #a8e2ff 45%, #bdeeff 100%);
 }
 
 img {
