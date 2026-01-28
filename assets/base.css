@@ -224,7 +224,6 @@ a {
   overflow: hidden;
 }
 
-.hero-panel::after,
 .product-carousel-card::after,
 .product-card::after,
 .footer::after {
@@ -348,17 +347,18 @@ a {
 
 .product-carousel-card {
   width: clamp(210px, 20vw, 280px);
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 24px 8px 24px 8px;
+  background: rgba(10, 18, 32, 0.35);
+  border-radius: 28px;
   padding: 14px;
-  border: 3px solid rgba(12, 18, 32, 0.08);
-  box-shadow: 0 20px 45px -35px var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 24px 60px -44px rgba(7, 18, 30, 0.6);
   display: grid;
   gap: 12px;
   transform: translateY(0) rotate(-0.5deg);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
   position: relative;
   overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 .product-carousel-card:nth-child(2n) {
@@ -369,12 +369,12 @@ a {
   width: 100%;
   height: clamp(210px, 26vw, 300px);
   object-fit: cover;
-  border-radius: 18px 6px 18px 6px;
+  border-radius: 22px;
 }
 
 .product-carousel-card:hover {
   transform: translateY(-6px) rotate(0deg) scale(1.05);
-  box-shadow: 0 26px 60px -40px rgba(12, 18, 32, 0.45);
+  box-shadow: 0 30px 70px -44px rgba(7, 18, 30, 0.65);
   z-index: 2;
 }
 
@@ -486,6 +486,19 @@ a {
   background: rgba(8, 14, 28, 0.55);
   padding: 6px 10px;
   border-radius: 999px;
+}
+
+.product-carousel-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background:
+    linear-gradient(140deg, rgba(255, 255, 255, 0.45), transparent 45%),
+    linear-gradient(320deg, rgba(255, 255, 255, 0.2), transparent 60%);
+  mix-blend-mode: screen;
+  opacity: 0.55;
 }
 
 .price {
