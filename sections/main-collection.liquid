@@ -1,16 +1,19 @@
 <section class="section">
   <div class="container">
-    <div class="section-heading">
+    <div class="section-heading collection-heading">
       <h1 class="section-title">Full collection</h1>
       <span>{{ collection.products_count }} items</span>
     </div>
     <div class="collection-grid">
       {% for product in collection.products %}
         <article class="collection-card">
-          <a href="{{ product.url }}">
-            {% if product.featured_image %}
-              {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
-            {% endif %}
+          <a class="collection-link" href="{{ product.url }}">
+            <div class="collection-media">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <span class="collection-number">{{ forloop.index | prepend: '0' }}</span>
+            </div>
             <div class="collection-card-body">
               <h3>{{ product.title }}</h3>
               <span class="price">{{ product.price | money }}</span>
