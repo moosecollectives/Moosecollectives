@@ -12,7 +12,6 @@
               {% if product.featured_image %}
                 {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
               {% endif %}
-              <span class="collection-number">{{ forloop.index | prepend: '0' }}</span>
             </div>
             <div class="collection-card-body">
               <h3>{{ product.title }}</h3>
