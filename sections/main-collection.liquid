@@ -6,17 +6,13 @@
     </div>
     <div class="collection-grid">
       {% for product in collection.products %}
-        <article class="collection-card">
-          <a class="collection-link" href="{{ product.url }}">
-            <div class="collection-media">
-              {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
-              {% endif %}
-            </div>
-            <div class="collection-card-body">
-              <h3>{{ product.title }}</h3>
-              <span class="price">{{ product.price | money }}</span>
-            </div>
+        <article class="product-carousel-card collection-carousel-card">
+          <a href="{{ product.url }}">
+            {% if product.featured_image %}
+              {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
+            {% endif %}
+            <h3>{{ product.title }}</h3>
+            <span class="price">{{ product.price | money }}</span>
           </a>
         </article>
       {% endfor %}

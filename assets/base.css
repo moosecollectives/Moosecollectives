@@ -415,6 +415,15 @@ a {
   gap: 22px;
 }
 
+.collection-carousel-card {
+  width: 100%;
+  transform: none;
+}
+
+.collection-carousel-card:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
 .collection-card {
   position: relative;
   border-radius: 28px;
