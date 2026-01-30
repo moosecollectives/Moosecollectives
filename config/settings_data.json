@@ -30,6 +30,11 @@
         "type": "shopify://apps/essential-upsell/blocks/app-embed/50627fd9-24fd-4250-8614-accc12826d80",
         "disabled": false,
         "settings": {}
+      },
+      "6279071938380501511": {
+        "type": "shopify://apps/powerful-form-builder/blocks/app-embed/e4bcb1eb-35b2-42e6-bc37-bfe0e1542c9d",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
