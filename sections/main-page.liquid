@@ -1,9 +1,9 @@
-<section class="section{% if template.suffix == 'faq' %} page-section-faq{% endif %}{% if template.suffix == 'commissions' %} page-section-commissions{% endif %}">
+<section class="section{% if template.suffix == 'faq' %} page-section-faq{% endif %}{% if template.suffix == 'commissions' or page.handle == 'commissions' %} page-section-commissions{% endif %}">
   <div class="container">
     <h1 class="section-title">{{ page.title }}</h1>
-    <div class="page-content{% if template.suffix == 'faq' %} page-content-faq{% endif %}{% if template.suffix == 'commissions' %} page-content-commissions{% endif %}">{{ page.content }}</div>
+    <div class="page-content{% if template.suffix == 'faq' %} page-content-faq{% endif %}{% if template.suffix == 'commissions' or page.handle == 'commissions' %} page-content-commissions{% endif %}">{{ page.content }}</div>
 
-    {% if template.suffix == 'commissions' %}
+    {% if template.suffix == 'commissions' or page.handle == 'commissions' %}
       <div class="commissions-form-wrap">
         {% form 'contact' %}
           {% if form.posted_successfully? %}
