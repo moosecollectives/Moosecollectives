@@ -120,7 +120,7 @@ a {
 }
 
 .page-content-faq {
-  font-size: clamp(16px, 1.2vw, 19px);
+  font-size: clamp(17px, 1.3vw, 20px);
   line-height: 1.75;
   max-width: 820px;
   background: rgba(255, 255, 255, 0.75);
@@ -129,6 +129,8 @@ a {
   padding: clamp(18px, 3vw, 28px);
   box-shadow: 0 24px 60px -48px rgba(7, 18, 30, 0.4);
   color: var(--ink);
+  margin: 18px auto 0;
+  text-align: center;
 }
 
 .page-content-faq h2,
@@ -145,8 +147,9 @@ a {
 
 .page-content-faq ul,
 .page-content-faq ol {
-  padding-left: 20px;
+  padding-left: 0;
   margin: 12px 0;
+  list-style-position: inside;
 }
 
 .page-content-faq li + li {
