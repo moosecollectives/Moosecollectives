@@ -115,6 +115,44 @@ a {
   text-transform: uppercase;
 }
 
+.page-content {
+  margin-top: 18px;
+}
+
+.page-content-faq {
+  font-size: clamp(16px, 1.2vw, 19px);
+  line-height: 1.75;
+  max-width: 820px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 22px;
+  padding: clamp(18px, 3vw, 28px);
+  box-shadow: 0 24px 60px -48px rgba(7, 18, 30, 0.4);
+  color: var(--ink);
+}
+
+.page-content-faq h2,
+.page-content-faq h3 {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 24px 0 10px;
+}
+
+.page-content-faq p + p {
+  margin-top: 12px;
+}
+
+.page-content-faq ul,
+.page-content-faq ol {
+  padding-left: 20px;
+  margin: 12px 0;
+}
+
+.page-content-faq li + li {
+  margin-top: 6px;
+}
+
 .header {
   position: sticky;
   top: 0;
