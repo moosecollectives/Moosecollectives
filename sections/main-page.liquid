@@ -1,4 +1,4 @@
-<section class="section">
+<section class="section{% if template.suffix == 'faq' %} page-section-faq{% endif %}">
   <div class="container">
     <h1 class="section-title">{{ page.title }}</h1>
     <div class="page-content{% if template.suffix == 'faq' %} page-content-faq{% endif %}">{{ page.content }}</div>
