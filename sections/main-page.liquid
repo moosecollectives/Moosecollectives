@@ -1,7 +1,50 @@
-<section class="section{% if template.suffix == 'faq' %} page-section-faq{% endif %}">
+<section class="section{% if template.suffix == 'faq' %} page-section-faq{% endif %}{% if template.suffix == 'commissions' %} page-section-commissions{% endif %}">
   <div class="container">
     <h1 class="section-title">{{ page.title }}</h1>
-    <div class="page-content{% if template.suffix == 'faq' %} page-content-faq{% endif %}">{{ page.content }}</div>
+    <div class="page-content{% if template.suffix == 'faq' %} page-content-faq{% endif %}{% if template.suffix == 'commissions' %} page-content-commissions{% endif %}">{{ page.content }}</div>
+
+    {% if template.suffix == 'commissions' %}
+      <div class="commissions-form-wrap">
+        {% form 'contact' %}
+          {% if form.posted_successfully? %}
+            <p class="form-success">Thanks! Your commission request has been sent.</p>
+          {% endif %}
+
+          {{ form.errors | default_errors }}
+
+          <div class="form-grid">
+            <label>
+              Full name
+              <input type="text" name="contact[name]" required>
+            </label>
+            <label>
+              Phone number
+              <input type="tel" name="contact[phone]" required>
+            </label>
+            <label>
+              Email
+              <input type="email" name="contact[email]" required>
+            </label>
+            <label>
+              Size option
+              <select name="contact[Size option]" required>
+                <option value="">Select a size</option>
+                <option value="2x2 - $400">2x2 - $400</option>
+                <option value="3.5x3.5 - $600">3.5x3.5 - $600</option>
+                <option value="6x6 - $800">6x6 - $800</option>
+              </select>
+            </label>
+          </div>
+
+          <label>
+            Description
+            <textarea name="contact[Description]" rows="6" required></textarea>
+          </label>
+
+          <button class="button button-primary" type="submit">Submit request</button>
+        {% endform %}
+      </div>
+    {% endif %}
   </div>
 </section>
 
