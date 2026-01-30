@@ -55,11 +55,7 @@ body {
 }
 
 .template-collection {
-  background:
-    radial-gradient(circle at 18% 12%, rgba(255, 122, 0, 0.45) 0%, transparent 18%),
-    radial-gradient(circle at 82% 8%, rgba(255, 184, 0, 0.42) 0%, transparent 20%),
-    repeating-radial-gradient(circle at 20% 20%, rgba(255, 170, 0, 0.28) 0 2px, transparent 2px 10px),
-    linear-gradient(180deg, #a9e0ff 0%, #cfeeff 100%);
+  background: #bfe7ff;
 }
 
 img {
