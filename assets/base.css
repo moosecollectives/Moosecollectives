@@ -56,9 +56,12 @@ body {
 
 .template-collection {
   background:
-    radial-gradient(120% 80% at 12% 6%, rgba(255, 122, 0, 0.55) 0%, transparent 58%),
-    radial-gradient(90% 80% at 92% 0%, rgba(255, 190, 0, 0.6) 0%, transparent 58%),
-    linear-gradient(180deg, #7fc9ff 0%, #a8e2ff 45%, #bdeeff 100%);
+    radial-gradient(circle at 18% 12%, rgba(255, 122, 0, 0.35) 0%, transparent 16%),
+    radial-gradient(circle at 82% 8%, rgba(255, 184, 0, 0.32) 0%, transparent 18%),
+    radial-gradient(circle at 30% 60%, rgba(255, 140, 0, 0.28) 0%, transparent 20%),
+    radial-gradient(circle at 70% 70%, rgba(255, 200, 0, 0.26) 0%, transparent 22%),
+    linear-gradient(180deg, #9bd8ff 0%, #c8edff 45%, #def6ff 100%),
+    repeating-radial-gradient(circle at 20% 20%, rgba(255, 170, 0, 0.18) 0 2px, transparent 2px 10px);
 }
 
 img {
