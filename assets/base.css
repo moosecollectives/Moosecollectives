@@ -658,12 +658,24 @@ a {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  background: transparent;
+  position: absolute;
   border: 2px solid transparent;
-  background:
-    linear-gradient(transparent, transparent) padding-box,
-    linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) border-box;
+  background: transparent;
   color: var(--tangerine-1);
+  box-shadow: 0 12px 22px -18px rgba(255, 122, 0, 0.55);
+}
+
+.cart-badge::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .cart-remove {
@@ -703,20 +715,36 @@ a {
   font-weight: 600;
 }
 
+.cart-price-total,
+.cart-price-breakdown {
+  display: inline-block;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.cart-price-breakdown {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
 .cart-price:hover .cart-price-total {
-  display: none;
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 .cart-price:hover .cart-price-breakdown {
-  display: inline;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .cart-price.is-breakdown .cart-price-total {
-  display: none;
+  opacity: 0;
+  transform: translateY(-6px);
 }
 
 .cart-price.is-breakdown .cart-price-breakdown {
-  display: inline;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 
