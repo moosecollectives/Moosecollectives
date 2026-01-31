@@ -255,15 +255,23 @@ window.addEventListener('load', () => {
 
           if (nextQty === currentQty) return;
 
-          const response = await fetch('/cart/change.js', {
-            method: 'POST',
-            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-            body: JSON.stringify({ id: variantId, quantity: nextQty })
-          });
+          if (!item && nextQty > 0) {
+            const addResponse = await fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: variantId, quantity: nextQty })
+            });
+            if (!addResponse.ok) return;
+          } else {
+            const response = await fetch('/cart/change.js', {
+              method: 'POST',
+              headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id: item.key, quantity: nextQty })
+            });
+            if (!response.ok) return;
+          }
 
-          if (!response.ok) return;
-          const updatedCart = await response.json();
-          await refreshCartCount(updatedCart);
+          const updatedCart = await refreshCartCount();
           updateProductControls(updatedCart);
         });
       });
