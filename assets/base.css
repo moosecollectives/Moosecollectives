@@ -928,22 +928,18 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
-.product-upsell {
-  padding-top: 24px;
-}
-
 .product-upsell-inline {
-  width: max-content;
+  width: 100%;
   max-width: 100%;
-  margin-left: auto;
+  margin-left: 0;
+  margin-top: 16px;
   opacity: 0;
   transform: translateY(12px);
   animation: upsellReveal 0.5s ease-in forwards;
 }
 
-.product-upsell .upsell-card {
-  width: max-content;
-  max-width: 100%;
+.product-upsell-inline .upsell-card {
+  width: 100%;
 }
 
 @keyframes upsellReveal {

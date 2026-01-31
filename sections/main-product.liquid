@@ -24,13 +24,8 @@
         </div>
       </form>
     </div>
-  </div>
-</section>
-
-{% assign upsell_product = all_products['adhesive-wall-strip'] %}
-{% if upsell_product != blank and product.handle != upsell_product.handle %}
-  <section class="section product-upsell">
-    <div class="container">
+    {% assign upsell_product = all_products['adhesive-wall-strip'] %}
+    {% if upsell_product != blank and product.handle != upsell_product.handle %}
       <div class="product-upsell-inline">
         <div class="upsell-card">
           <div>
@@ -41,9 +36,9 @@
           <a class="button button-secondary" href="{{ upsell_product.url }}">View adhesive strips</a>
         </div>
       </div>
-    </div>
-  </section>
-{% endif %}
+    {% endif %}
+  </div>
+</section>
 
 <section class="section product-related">
   <div class="container">
