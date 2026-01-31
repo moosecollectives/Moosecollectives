@@ -212,6 +212,20 @@ window.addEventListener('load', () => {
     });
   }
 
+  document.querySelectorAll('.cart-price').forEach((price) => {
+    price.addEventListener('click', () => {
+      price.classList.toggle('is-breakdown');
+      if (price.classList.contains('is-breakdown')) {
+        clearTimeout(price._breakdownTimer);
+        price._breakdownTimer = setTimeout(() => {
+          price.classList.remove('is-breakdown');
+        }, 10000);
+      } else {
+        clearTimeout(price._breakdownTimer);
+      }
+    });
+  });
+
   const cartCount = document.querySelector('[data-cart-count]');
 
   let cartCache = null;

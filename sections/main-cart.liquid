@@ -37,9 +37,11 @@
                 </div>
                 <div class="cart-meta">
                   <h3>{{ item.product.title }}</h3>
-                  <p class="price">{{ item.final_price | money }}</p>
+                  <p class="price cart-price" aria-label="Line item price">
+                    <span class="cart-price-total">{{ item.final_line_price | money }}</span>
+                    <span class="cart-price-breakdown">{{ item.final_price | money }} x {{ item.quantity }}</span>
+                  </p>
                   <div class="cart-quantity" data-cart-qty-wrap>
-                    <span class="cart-quantity-label">Qty</span>
                     <div class="cart-quantity-pill" role="group" aria-label="Quantity controls for {{ item.product.title }}">
                       <button class="cart-quantity-btn" type="button" data-cart-qty-btn="minus" aria-label="Decrease quantity">-</button>
                       <input
@@ -55,15 +57,15 @@
                         data-cart-title="{{ item.product.title | escape }}"
                       >
                       <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" aria-label="Increase quantity">+</button>
+                      <button class="cart-remove" type="button" data-cart-remove-key="{{ item.key }}" aria-label="Remove {{ item.product.title }} from cart">
+                        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                          <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm1 6h2v9h-2V9zm4 0h2v9h-2V9zM7 9h2v9H7V9z"/>
+                        </svg>
+                      </button>
                     </div>
                   </div>
                   <div class="cart-actions">
                     <a class="button button-secondary" href="{{ item.url }}">View item</a>
-                    <button class="cart-remove" type="button" data-cart-remove-key="{{ item.key }}" aria-label="Remove {{ item.product.title }} from cart">
-                      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                        <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm1 6h2v9h-2V9zm4 0h2v9h-2V9zM7 9h2v9H7V9z"/>
-                      </svg>
-                    </button>
                   </div>
                 </div>
               </article>
