@@ -189,6 +189,8 @@ window.addEventListener('load', () => {
 
   const cartCount = document.querySelector('[data-cart-count]');
 
+  let cartCache = null;
+
   const fetchCart = async () => {
     const response = await fetch('/cart.js', {
       headers: { Accept: 'application/json' },
@@ -201,6 +203,7 @@ window.addEventListener('load', () => {
   const refreshCartCount = async (cart) => {
     const resolvedCart = cart || (await fetchCart());
     if (!resolvedCart) return null;
+    cartCache = resolvedCart;
     if (cartCount) {
       cartCount.textContent = resolvedCart.item_count;
     }
@@ -243,6 +246,70 @@ window.addEventListener('load', () => {
 
   initProductControls();
 
+  const qtyState = new Map();
+
+  const getVariantState = (variantId) => {
+    if (!qtyState.has(variantId)) {
+      qtyState.set(variantId, { pendingDelta: 0, timer: null, inFlight: false });
+    }
+    return qtyState.get(variantId);
+  };
+
+  const scheduleVariantUpdate = (variantId, form) => {
+    const state = getVariantState(variantId);
+    if (state.timer) {
+      clearTimeout(state.timer);
+    }
+    state.timer = setTimeout(async () => {
+      if (state.inFlight) return;
+      state.inFlight = true;
+
+      const cart = cartCache || (await refreshCartCount());
+      if (!cart) {
+        state.inFlight = false;
+        return;
+      }
+
+      const item = cart.items.find((entry) => entry.id === variantId);
+      const currentQty = item ? item.quantity : 0;
+      const desiredQty = Math.max(0, currentQty + state.pendingDelta);
+      state.pendingDelta = 0;
+
+      if (desiredQty === currentQty) {
+        state.inFlight = false;
+        return;
+      }
+
+      if (!item && desiredQty > 0) {
+        const addResponse = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ id: variantId, quantity: desiredQty })
+        });
+        if (!addResponse.ok) {
+          state.inFlight = false;
+          return;
+        }
+      } else if (item) {
+        const response = await fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ id: item.key, quantity: desiredQty })
+        });
+        if (!response.ok) {
+          state.inFlight = false;
+          return;
+        }
+      }
+
+      const updatedCart = await refreshCartCount();
+      updateProductControls(updatedCart);
+      state.inFlight = false;
+    }, 350);
+  };
+
   document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
     const variantId = parseInt(form.dataset.variantId, 10);
     const controls = form.querySelector('[data-product-qty-controls]');
@@ -251,33 +318,22 @@ window.addEventListener('load', () => {
       controls.querySelectorAll('[data-product-qty-btn]').forEach((button) => {
         button.addEventListener('click', async () => {
           const direction = button.dataset.productQtyBtn;
-          const cart = await fetchCart();
+          const cart = cartCache || (await refreshCartCount());
           if (!cart) return;
-
           const item = cart.items.find((entry) => entry.id === variantId);
           const currentQty = item ? item.quantity : 0;
+
+          const state = getVariantState(variantId);
           if (direction === 'plus') {
-            const addResponse = await fetch('/cart/add.js', {
-              method: 'POST',
-              headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-              credentials: 'same-origin',
-              body: JSON.stringify({ id: variantId, quantity: 1 })
-            });
-            if (!addResponse.ok) return;
+            state.pendingDelta += 1;
           } else {
-            const nextQty = Math.max(0, currentQty - 1);
-            if (!item || nextQty === currentQty) return;
-            const response = await fetch('/cart/change.js', {
-              method: 'POST',
-              headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-              credentials: 'same-origin',
-              body: JSON.stringify({ id: item.key, quantity: nextQty })
-            });
-            if (!response.ok) return;
+            if (currentQty + state.pendingDelta <= 0) return;
+            state.pendingDelta -= 1;
           }
 
-          const updatedCart = await refreshCartCount();
-          updateProductControls(updatedCart);
+          const previewQty = Math.max(0, currentQty + state.pendingDelta);
+          setProductQtyState(form, previewQty);
+          scheduleVariantUpdate(variantId, form);
         });
       });
     }
