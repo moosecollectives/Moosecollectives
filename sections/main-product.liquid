@@ -1,11 +1,11 @@
-<section class="section">
-  <div class="container hero">
-    <div class="hero-image">
+<section class="section product-detail">
+  <div class="container product-detail-grid">
+    <div class="product-media">
       {% if product.featured_image %}
-        {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title }}
+        {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
       {% endif %}
     </div>
-    <div class="hero-card">
+    <div class="product-info">
       <h1 class="hero-title">{{ product.title }}</h1>
       <p>{{ product.description | strip_html }}</p>
       <div class="price">{{ product.price | money }}</div>
@@ -14,6 +14,19 @@
         <button class="button button-primary" type="submit">Add to cart</button>
       </form>
     </div>
+  </div>
+</section>
+
+<section class="section product-feature-block">
+  <div class="container feature-placeholder">
+    <h2 class="section-title">Featured drop</h2>
+    <p>Add your featured content here soon.</p>
+  </div>
+</section>
+
+<section class="section product-media-block">
+  <div class="container media-placeholder">
+    <p>Add an image or video here later.</p>
   </div>
 </section>
 
