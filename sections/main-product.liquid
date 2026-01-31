@@ -4,23 +4,6 @@
       {% if product.featured_image %}
         {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
       {% endif %}
-      {% assign adhesive_product = section.settings.adhesive_product %}
-      {% if adhesive_product == blank %}
-        {% assign adhesive_product = all_products['adhesive-wall-strip'] %}
-      {% endif %}
-      <div class="product-strip">
-        <span>No room on your floor? Take your rug to the walls.</span>
-        {% if adhesive_product != blank %}
-          <span class="product-strip-title">{{ adhesive_product.title }}</span>
-        {% endif %}
-      </div>
-      {% if adhesive_product != blank and adhesive_product.available %}
-        <div class="product-strip-offer">
-          <strong>{{ adhesive_product.title }}</strong>
-          <span class="price">{{ adhesive_product.price | money }}</span>
-          <a class="button button-secondary" href="{{ routes.cart_add_url }}?id={{ adhesive_product.selected_or_first_available_variant.id }}&quantity=1">Add to cart</a>
-        </div>
-      {% endif %}
     </div>
     <div class="product-info">
       <h1 class="hero-title">{{ product.title }}</h1>
@@ -50,8 +33,6 @@
 {% schema %}
 {
   "name": "Main product",
-  "settings": [
-    {"type": "product", "id": "adhesive_product", "label": "Adhesive wall strip product"}
-  ]
+  "settings": []
 }
 {% endschema %}
