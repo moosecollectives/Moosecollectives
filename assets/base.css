@@ -717,7 +717,7 @@ a {
 
 .cart-price-total,
 .cart-price-breakdown {
-  display: inline-block;
+  display: block;
   white-space: nowrap;
   transition: opacity 0.2s ease;
 }
