@@ -718,34 +718,31 @@ a {
 .cart-price-total,
 .cart-price-breakdown {
   display: inline-block;
-  overflow: hidden;
   white-space: nowrap;
-  transition: opacity 0.25s ease, max-width 0.25s ease, transform 0.25s ease;
-}
-
-.cart-price-total {
-  max-width: 120px;
+  transition: opacity 0.2s ease;
 }
 
 .cart-price-breakdown {
-  max-width: 0;
   opacity: 0;
-  transform: translateX(-6px);
   pointer-events: none;
 }
 
 .cart-price:hover .cart-price-total,
 .cart-price.is-breakdown .cart-price-total {
-  max-width: 0;
   opacity: 0;
-  transform: translateX(-6px);
 }
 
 .cart-price:hover .cart-price-breakdown,
 .cart-price.is-breakdown .cart-price-breakdown {
-  max-width: 200px;
   opacity: 1;
-  transform: translateX(0);
+}
+
+.cart-meta-row .cart-quantity {
+  transition: transform 0.25s ease;
+}
+
+.cart-meta-row.is-breakdown .cart-quantity {
+  transform: translateX(12px);
 }
 
 

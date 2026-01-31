@@ -213,12 +213,28 @@ window.addEventListener('load', () => {
   }
 
   document.querySelectorAll('.cart-price').forEach((price) => {
+    const row = price.closest('.cart-meta-row');
+    if (row) {
+      price.addEventListener('mouseenter', () => {
+        row.classList.add('is-breakdown');
+      });
+      price.addEventListener('mouseleave', () => {
+        row.classList.remove('is-breakdown');
+      });
+    }
+
     price.addEventListener('click', () => {
       price.classList.toggle('is-breakdown');
+      if (row) {
+        row.classList.toggle('is-breakdown', price.classList.contains('is-breakdown'));
+      }
       if (price.classList.contains('is-breakdown')) {
         clearTimeout(price._breakdownTimer);
         price._breakdownTimer = setTimeout(() => {
           price.classList.remove('is-breakdown');
+          if (row) {
+            row.classList.remove('is-breakdown');
+          }
         }, 10000);
       } else {
         clearTimeout(price._breakdownTimer);
