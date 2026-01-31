@@ -804,8 +804,10 @@ a {
   padding: 6px 12px;
   border-radius: 999px;
   border: 2px solid transparent;
-  border-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) 1;
-  background: transparent;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) border-box;
+  background-clip: padding-box, border-box;
   box-shadow: 0 16px 32px -18px rgba(255, 122, 0, 0.55);
 }
 
@@ -813,25 +815,21 @@ a {
   display: none !important;
 }
 
-.product-qty-btn,
-.product-qty-count {
-  color: transparent;
-  background-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
 .product-qty-btn {
   width: 28px;
   height: 28px;
   border-radius: 50%;
   border: none;
-  background: transparent;
+  background: none;
   font-size: 16px;
   line-height: 1;
   font-weight: 700;
   cursor: pointer;
+  color: var(--tangerine-1);
+  background-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .product-qty-btn:hover {
@@ -842,6 +840,11 @@ a {
   font-size: 13px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+  color: var(--tangerine-1);
+  background-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .product-info .hero-title {
