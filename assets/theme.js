@@ -192,11 +192,18 @@ window.addEventListener('load', () => {
         if (!key) return;
         console.log('[cart-remove] key', key);
 
+        const beforeCart = await fetchCart();
+        console.log('[cart-remove] before cart', beforeCart);
+        if (!beforeCart) return;
+        const line = beforeCart.items.findIndex((item) => item.key === key) + 1;
+        console.log('[cart-remove] line', line);
+        if (line <= 0) return;
+
         const response = await fetch('/cart/change.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
           credentials: 'same-origin',
-          body: JSON.stringify({ id: key, quantity: 0 })
+          body: JSON.stringify({ line, quantity: 0 })
         });
 
         if (!response.ok) {
