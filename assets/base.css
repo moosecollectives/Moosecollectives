@@ -708,15 +708,15 @@ a {
 .cart-price {
   position: relative;
   margin: 0;
-}
-
-.cart-price-breakdown {
-  display: none;
-  font-weight: 600;
+  min-height: 1.2em;
+  display: inline-block;
 }
 
 .cart-price-total,
 .cart-price-breakdown {
+  position: absolute;
+  left: 0;
+  top: 0;
   display: block;
   white-space: nowrap;
   transition: opacity 0.2s ease;
@@ -725,6 +725,7 @@ a {
 .cart-price-breakdown {
   opacity: 0;
   pointer-events: none;
+  font-weight: 600;
 }
 
 .cart-price:hover .cart-price-total,
