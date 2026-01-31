@@ -31,13 +31,15 @@
 {% if upsell_product != blank and product.handle != upsell_product.handle %}
   <section class="section product-upsell">
     <div class="container">
-      <div class="upsell-card">
-        <div>
-          <span class="upsell-eyebrow">Recommended add-on</span>
-          <h3 class="upsell-title">Add adhesive strips to your order</h3>
-          <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
+      <div class="product-upsell-inline">
+        <div class="upsell-card">
+          <div>
+            <span class="upsell-eyebrow">Recommended add-on</span>
+            <h3 class="upsell-title">Add adhesive strips to your order</h3>
+            <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
+          </div>
+          <a class="button button-secondary" href="{{ upsell_product.url }}">View adhesive strips</a>
         </div>
-        <a class="button button-secondary" href="{{ upsell_product.url }}">View adhesive strips</a>
       </div>
     </div>
   </section>
