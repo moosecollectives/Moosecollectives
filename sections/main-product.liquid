@@ -29,10 +29,15 @@
           <div class="upsell-card">
             <div>
               <span class="upsell-eyebrow">Recommended add-on</span>
-              <h3 class="upsell-title">Add adhesive strips to your order</h3>
+              <h3 class="upsell-title">
+                <a class="upsell-link" href="{{ upsell_product.url }}">Add adhesive strips to your order</a>
+              </h3>
               <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
             </div>
-            <a class="button button-secondary" href="{{ upsell_product.url }}">View adhesive strips</a>
+            <form class="upsell-quick-add" method="post" action="/cart/add" data-upsell-quick-add>
+              <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
+              <button class="button button-secondary" type="submit">Add to cart</button>
+            </form>
           </div>
         </div>
       {% endif %}

@@ -984,6 +984,10 @@ a {
   text-transform: uppercase;
 }
 
+.upsell-link {
+  color: inherit;
+}
+
 .upsell-subtitle {
   margin: 0;
   color: var(--ink-soft);
