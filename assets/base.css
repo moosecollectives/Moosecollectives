@@ -804,10 +804,8 @@ a {
   padding: 6px 12px;
   border-radius: 12px;
   border: 2px solid transparent;
-  background:
-    linear-gradient(transparent, transparent) padding-box,
-    linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) border-box;
-  background-color: transparent;
+  border-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) 1;
+  background: transparent;
   box-shadow: 0 16px 32px -18px rgba(255, 122, 0, 0.55);
 }
 
