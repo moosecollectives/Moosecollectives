@@ -11,7 +11,10 @@
           <div class="product-media-placeholder">Add product video</div>
         {% endif %}
       </div>
-      {% assign adhesive_product = all_products['adhesive-wall-strip'] %}
+      {% assign adhesive_product = section.settings.adhesive_product %}
+      {% if adhesive_product == blank %}
+        {% assign adhesive_product = all_products['adhesive-wall-strip'] %}
+      {% endif %}
       <div class="product-strip">
         <span>No room on your floor? Take your rug to the walls.</span>
         {% if adhesive_product != blank %}
@@ -58,7 +61,8 @@
 {
   "name": "Main product",
   "settings": [
-    {"type": "video", "id": "media_video", "label": "Product media video"}
+    {"type": "video", "id": "media_video", "label": "Product media video"},
+    {"type": "product", "id": "adhesive_product", "label": "Adhesive wall strip product"}
   ]
 }
 {% endschema %}
