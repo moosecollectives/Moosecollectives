@@ -214,13 +214,15 @@ window.addEventListener('load', () => {
     if (!controls || !count || !button) return;
 
     if (quantity > 0) {
+      form.classList.add('has-in-cart');
       controls.hidden = false;
       button.hidden = true;
       count.textContent = `${quantity} in cart`;
     } else {
+      form.classList.remove('has-in-cart');
       controls.hidden = true;
       button.hidden = false;
-      count.textContent = '0 in cart';
+      count.textContent = '';
     }
   };
 
