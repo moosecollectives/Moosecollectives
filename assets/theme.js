@@ -190,6 +190,7 @@ window.addEventListener('load', () => {
       button.addEventListener('click', async () => {
         const key = button.dataset.cartRemoveKey;
         if (!key) return;
+        console.log('[cart-remove] key', key);
 
         const response = await fetch('/cart/change.js', {
           method: 'POST',
@@ -198,8 +199,14 @@ window.addEventListener('load', () => {
           body: JSON.stringify({ id: key, quantity: 0 })
         });
 
-        if (!response.ok) return;
-        await refreshCartCount();
+        if (!response.ok) {
+          console.log('[cart-remove] failed', response.status);
+          return;
+        }
+
+        const updatedCart = await response.json();
+        console.log('[cart-remove] updated cart', updatedCart);
+        await refreshCartCount(updatedCart);
         window.location.reload();
       });
     });
