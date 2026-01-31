@@ -20,7 +20,11 @@
                   <p class="price">{{ item.final_price | money }}</p>
                   <div class="cart-actions">
                     <a class="button button-secondary" href="{{ item.url }}">View item</a>
-                    <a class="cart-remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0">Remove</a>
+                    <form method="post" action="{{ routes.cart_change_url }}" class="cart-remove-form">
+                      <input type="hidden" name="id" value="{{ item.key }}">
+                      <input type="hidden" name="quantity" value="0">
+                      <button class="cart-remove" type="submit">Remove</button>
+                    </form>
                   </div>
                 </div>
               </article>

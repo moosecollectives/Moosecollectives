@@ -543,6 +543,12 @@ a {
   background: rgba(255, 184, 0, 0.3);
   padding: 8px 12px;
   border-radius: 999px;
+  border: none;
+  cursor: pointer;
+}
+
+.cart-remove-form {
+  margin: 0;
 }
 
 .cart-footer {
