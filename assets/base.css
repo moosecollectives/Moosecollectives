@@ -718,6 +718,18 @@ a {
   padding: 8px 14px;
   border-radius: 12px;
   min-height: 16px;
+  color: #2d1600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 11px;
+  display: grid;
+  gap: 4px;
+}
+
+.product-strip-title {
+  font-size: 10px;
+  letter-spacing: 0.14em;
 }
 
 .product-strip-offer {

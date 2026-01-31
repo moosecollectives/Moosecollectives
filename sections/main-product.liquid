@@ -15,7 +15,12 @@
       {% if adhesive_product == blank %}
         {% assign adhesive_product = all_products['adhesive-wall-strip'] %}
       {% endif %}
-      <div class="product-strip"></div>
+      <div class="product-strip">
+        <span>No room on your floor? Take your rug to the walls.</span>
+        {% if adhesive_product != blank %}
+          <span class="product-strip-title">{{ adhesive_product.title }}</span>
+        {% endif %}
+      </div>
       {% if adhesive_product != blank and adhesive_product.available %}
         <div class="product-strip-offer">
           <strong>{{ adhesive_product.title }}</strong>
