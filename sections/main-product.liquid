@@ -9,9 +9,16 @@
       <h1 class="hero-title">{{ product.title }}</h1>
       <p>{{ product.description | strip_html }}</p>
       <div class="price">{{ product.price | money }}</div>
-      <form method="post" action="/cart/add" data-add-to-cart>
+      <form method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button class="button button-primary" type="submit">Add to cart</button>
+        <div class="product-cart-actions" data-product-cart-actions>
+          <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+          <div class="product-qty-controls" data-product-qty-controls hidden>
+            <button class="product-qty-btn" type="button" data-product-qty-btn="minus" aria-label="Decrease quantity">-</button>
+            <span class="product-qty-count" data-product-qty-count>0 in cart</span>
+            <button class="product-qty-btn" type="button" data-product-qty-btn="plus" aria-label="Increase quantity">+</button>
+          </div>
+        </div>
       </form>
     </div>
   </div>

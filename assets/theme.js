@@ -90,6 +90,16 @@ const initCarousel = (carousel) => {
 window.addEventListener('load', () => {
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
 
+  const adjustProductTitles = () => {
+    document.querySelectorAll('.product-info .hero-title').forEach((title) => {
+      const shouldWrap = title.scrollWidth > title.clientWidth;
+      title.classList.toggle('is-wrapping', shouldWrap);
+    });
+  };
+
+  adjustProductTitles();
+  window.addEventListener('resize', adjustProductTitles);
+
   const cartForm = document.querySelector('[data-cart-form]');
   if (cartForm) {
     const updateDelay = 500;
@@ -178,27 +188,87 @@ window.addEventListener('load', () => {
   }
 
   const cartCount = document.querySelector('[data-cart-count]');
-  const cartAdded = document.querySelector('[data-cart-added]');
-  let addedTimer;
 
-  const showAddedMessage = () => {
-    if (!cartAdded) return;
-    cartAdded.classList.add('is-visible');
-    clearTimeout(addedTimer);
-    addedTimer = setTimeout(() => {
-      cartAdded.classList.remove('is-visible');
-    }, 1600);
-  };
-
-  const refreshCartCount = async () => {
-    if (!cartCount) return;
+  const fetchCart = async () => {
     const response = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
-    if (!response.ok) return;
-    const cart = await response.json();
-    cartCount.textContent = cart.item_count;
+    if (!response.ok) return null;
+    return response.json();
   };
+
+  const refreshCartCount = async (cart) => {
+    const resolvedCart = cart || (await fetchCart());
+    if (!resolvedCart) return null;
+    if (cartCount) {
+      cartCount.textContent = resolvedCart.item_count;
+    }
+    return resolvedCart;
+  };
+
+  const setProductQtyState = (form, quantity) => {
+    const controls = form.querySelector('[data-product-qty-controls]');
+    const count = form.querySelector('[data-product-qty-count]');
+    const button = form.querySelector('[data-add-to-cart-button]');
+    if (!controls || !count || !button) return;
+
+    if (quantity > 0) {
+      controls.hidden = false;
+      button.style.display = 'none';
+      count.textContent = `${quantity} in cart`;
+    } else {
+      controls.hidden = true;
+      button.style.display = '';
+      count.textContent = '0 in cart';
+    }
+  };
+
+  const updateProductControls = (cart) => {
+    if (!cart) return;
+    document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
+      const variantId = parseInt(form.dataset.variantId, 10);
+      if (!variantId) return;
+      const item = cart.items.find((entry) => entry.id === variantId);
+      setProductQtyState(form, item ? item.quantity : 0);
+    });
+  };
+
+  const initProductControls = async () => {
+    const cart = await refreshCartCount();
+    updateProductControls(cart);
+  };
+
+  initProductControls();
 
   document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
+    const variantId = parseInt(form.dataset.variantId, 10);
+    const controls = form.querySelector('[data-product-qty-controls]');
+
+    if (controls && variantId) {
+      controls.querySelectorAll('[data-product-qty-btn]').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const direction = button.dataset.productQtyBtn;
+          const cart = await fetchCart();
+          if (!cart) return;
+
+          const item = cart.items.find((entry) => entry.id === variantId);
+          const currentQty = item ? item.quantity : 0;
+          const nextQty = direction === 'plus' ? currentQty + 1 : Math.max(0, currentQty - 1);
+
+          if (nextQty === currentQty) return;
+
+          const response = await fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            body: JSON.stringify({ id: variantId, quantity: nextQty })
+          });
+
+          if (!response.ok) return;
+          const updatedCart = await response.json();
+          await refreshCartCount(updatedCart);
+          updateProductControls(updatedCart);
+        });
+      });
+    }
+
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
 
@@ -218,8 +288,8 @@ window.addEventListener('load', () => {
           throw new Error('Add to cart failed');
         }
 
-        await refreshCartCount();
-        showAddedMessage();
+        const updatedCart = await refreshCartCount();
+        updateProductControls(updatedCart);
       } catch (error) {
         form.submit();
       } finally {

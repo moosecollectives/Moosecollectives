@@ -572,6 +572,21 @@ a {
   border: none;
   background: transparent;
   color: inherit;
+  caret-color: transparent;
+}
+
+.cart-quantity-input:focus {
+  caret-color: currentColor;
+}
+
+.cart-quantity-input::-webkit-outer-spin-button,
+.cart-quantity-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.cart-quantity-input[type='number'] {
+  -moz-appearance: textfield;
 }
 
 .cart-actions {
@@ -588,26 +603,6 @@ a {
   gap: 6px;
 }
 
-.cart-added {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  transform: translateY(-4px);
-  padding: 4px 8px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.14);
-  font-size: 12px;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.cart-added.is-visible {
-  opacity: 1;
-  transform: translateY(6px);
-}
 
 .cart-remove {
   font-size: 12px;
@@ -750,6 +745,7 @@ a {
   grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
   gap: clamp(20px, 4vw, 48px);
   align-items: start;
+  justify-items: start;
 }
 
 .product-media {
@@ -777,6 +773,86 @@ a {
   padding: clamp(18px, 3vw, 28px);
   border: 1px solid rgba(255, 255, 255, 0.55);
   box-shadow: 0 24px 60px -48px rgba(7, 18, 30, 0.35);
+  width: max-content;
+  max-width: 100%;
+}
+
+.product-cart-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+.product-qty-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) border-box;
+}
+
+.product-qty-controls,
+.product-qty-btn,
+.product-qty-count {
+  color: transparent;
+  background-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.product-qty-btn {
+  border: 1px solid transparent;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) border-box;
+}
+
+.product-qty-btn:hover {
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)) padding-box,
+    linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) border-box;
+}
+
+.product-qty-btn {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(12, 18, 32, 0.1);
+  color: inherit;
+  font-size: 16px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.product-qty-btn:hover {
+  background: rgba(12, 18, 32, 0.2);
+}
+
+.product-qty-count {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.product-info .hero-title {
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.product-info .hero-title.is-wrapping {
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.product-info p {
+  max-width: 46ch;
 }
 
 .product-feature-block .feature-placeholder,
@@ -795,6 +871,14 @@ a {
 
   .product-media {
     max-width: 100%;
+  }
+
+  .product-info {
+    width: 100%;
+  }
+
+  .product-info .hero-title {
+    white-space: normal;
   }
 }
 
