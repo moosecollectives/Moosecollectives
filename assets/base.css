@@ -690,29 +690,6 @@ a {
   display: block;
 }
 
-.product-media-video {
-  border-radius: 18px;
-  overflow: hidden;
-  background: rgba(255, 255, 255, 0.7);
-  border: 1px dashed rgba(12, 18, 32, 0.2);
-}
-
-.product-media-video video {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
-}
-
-.product-media-placeholder {
-  padding: 18px;
-  text-align: center;
-  font-size: 13px;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--ink-soft);
-}
-
 .product-strip {
   background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
   padding: 8px 14px;

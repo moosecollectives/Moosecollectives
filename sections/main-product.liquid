@@ -4,13 +4,6 @@
       {% if product.featured_image %}
         {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
       {% endif %}
-      <div class="product-media-video">
-        {% if section.settings.media_video != blank %}
-          {{ section.settings.media_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
-        {% else %}
-          <div class="product-media-placeholder">Add product video</div>
-        {% endif %}
-      </div>
       {% assign adhesive_product = section.settings.adhesive_product %}
       {% if adhesive_product == blank %}
         {% assign adhesive_product = all_products['adhesive-wall-strip'] %}
@@ -58,7 +51,6 @@
 {
   "name": "Main product",
   "settings": [
-    {"type": "video", "id": "media_video", "label": "Product media video"},
     {"type": "product", "id": "adhesive_product", "label": "Adhesive wall strip product"}
   ]
 }
