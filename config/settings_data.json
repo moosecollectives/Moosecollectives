@@ -35,6 +35,11 @@
         "type": "shopify://apps/powerful-form-builder/blocks/app-embed/e4bcb1eb-35b2-42e6-bc37-bfe0e1542c9d",
         "disabled": false,
         "settings": {}
+      },
+      "9144908965052497053": {
+        "type": "shopify://apps/tipo-related-products/blocks/app-embed/75cf2d86-3988-45e7-8f28-ada23c99704f",
+        "disabled": false,
+        "settings": {}
       }
     }
   },
