@@ -148,6 +148,17 @@ a {
   transform: translateY(-1px);
 }
 
+.page-content-commissions .errors,
+.page-content-commissions .form-errors,
+.page-content-commissions .field__message,
+.page-content-commissions .form__message {
+  color: #ff6a00;
+  background: rgba(255, 106, 0, 0.12);
+  border: 1px solid rgba(255, 106, 0, 0.35);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
 .page-section-faq .section-title {
   text-align: center;
   margin-left: auto;
