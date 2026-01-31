@@ -256,19 +256,17 @@ window.addEventListener('load', () => {
 
           const item = cart.items.find((entry) => entry.id === variantId);
           const currentQty = item ? item.quantity : 0;
-          const nextQty = direction === 'plus' ? currentQty + 1 : Math.max(0, currentQty - 1);
-
-          if (nextQty === currentQty) return;
-
-          if (!item && nextQty > 0) {
+          if (direction === 'plus') {
             const addResponse = await fetch('/cart/add.js', {
               method: 'POST',
               headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
               credentials: 'same-origin',
-              body: JSON.stringify({ id: variantId, quantity: nextQty })
+              body: JSON.stringify({ id: variantId, quantity: 1 })
             });
             if (!addResponse.ok) return;
           } else {
+            const nextQty = Math.max(0, currentQty - 1);
+            if (!item || nextQty === currentQty) return;
             const response = await fetch('/cart/change.js', {
               method: 'POST',
               headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
