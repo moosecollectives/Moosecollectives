@@ -544,10 +544,25 @@ a {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 4px 6px;
+  padding: 6px 12px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(10, 18, 32, 0.5);
+  border: 2px solid transparent;
+  background: transparent;
+  position: relative;
+  box-shadow: 0 16px 32px -18px rgba(255, 122, 0, 0.55);
+}
+
+.cart-quantity-pill::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  padding: 2px;
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .cart-quantity-btn {
@@ -555,15 +570,20 @@ a {
   height: 28px;
   border-radius: 50%;
   border: none;
-  background: rgba(255, 255, 255, 0.12);
-  color: inherit;
+  background: none;
   font-size: 16px;
   line-height: 1;
+  font-weight: 700;
   cursor: pointer;
+  color: var(--tangerine-1);
+  background-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .cart-quantity-btn:hover {
-  background: rgba(255, 255, 255, 0.2);
+  opacity: 0.8;
 }
 
 .cart-quantity-input {
@@ -573,6 +593,11 @@ a {
   background: transparent;
   color: inherit;
   caret-color: transparent;
+  font-weight: 700;
+  background-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .cart-quantity-input:focus {

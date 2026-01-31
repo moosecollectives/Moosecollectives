@@ -239,8 +239,22 @@ window.addEventListener('load', () => {
     });
   };
 
+  const syncVariantState = (cart) => {
+    if (!cart) return;
+    document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
+      const variantId = parseInt(form.dataset.variantId, 10);
+      if (!variantId) return;
+      const item = cart.items.find((entry) => entry.id === variantId);
+      const state = getVariantState(variantId);
+      state.qty = item ? item.quantity : 0;
+      state.key = item ? item.key : null;
+      state.pendingDelta = 0;
+    });
+  };
+
   const initProductControls = async () => {
     const cart = await refreshCartCount();
+    syncVariantState(cart);
     updateProductControls(cart);
   };
 
@@ -250,7 +264,13 @@ window.addEventListener('load', () => {
 
   const getVariantState = (variantId) => {
     if (!qtyState.has(variantId)) {
-      qtyState.set(variantId, { pendingDelta: 0, timer: null, inFlight: false });
+      qtyState.set(variantId, {
+        pendingDelta: 0,
+        timer: null,
+        inFlight: false,
+        qty: 0,
+        key: null
+      });
     }
     return qtyState.get(variantId);
   };
@@ -261,26 +281,21 @@ window.addEventListener('load', () => {
       clearTimeout(state.timer);
     }
     state.timer = setTimeout(async () => {
-      if (state.inFlight) return;
+      if (state.inFlight) {
+        scheduleVariantUpdate(variantId, form);
+        return;
+      }
       state.inFlight = true;
 
-      const cart = cartCache || (await refreshCartCount());
-      if (!cart) {
-        state.inFlight = false;
-        return;
-      }
-
-      const item = cart.items.find((entry) => entry.id === variantId);
-      const currentQty = item ? item.quantity : 0;
-      const desiredQty = Math.max(0, currentQty + state.pendingDelta);
+      const desiredQty = Math.max(0, state.qty + state.pendingDelta);
       state.pendingDelta = 0;
 
-      if (desiredQty === currentQty) {
+      if (desiredQty === state.qty) {
         state.inFlight = false;
         return;
       }
 
-      if (!item && desiredQty > 0) {
+      if (!state.key && desiredQty > 0) {
         const addResponse = await fetch('/cart/add.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -291,12 +306,12 @@ window.addEventListener('load', () => {
           state.inFlight = false;
           return;
         }
-      } else if (item) {
+      } else if (state.key) {
         const response = await fetch('/cart/change.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
           credentials: 'same-origin',
-          body: JSON.stringify({ id: item.key, quantity: desiredQty })
+          body: JSON.stringify({ id: state.key, quantity: desiredQty })
         });
         if (!response.ok) {
           state.inFlight = false;
@@ -305,6 +320,7 @@ window.addEventListener('load', () => {
       }
 
       const updatedCart = await refreshCartCount();
+      syncVariantState(updatedCart);
       updateProductControls(updatedCart);
       state.inFlight = false;
     }, 350);
@@ -318,20 +334,15 @@ window.addEventListener('load', () => {
       controls.querySelectorAll('[data-product-qty-btn]').forEach((button) => {
         button.addEventListener('click', async () => {
           const direction = button.dataset.productQtyBtn;
-          const cart = cartCache || (await refreshCartCount());
-          if (!cart) return;
-          const item = cart.items.find((entry) => entry.id === variantId);
-          const currentQty = item ? item.quantity : 0;
-
           const state = getVariantState(variantId);
           if (direction === 'plus') {
             state.pendingDelta += 1;
           } else {
-            if (currentQty + state.pendingDelta <= 0) return;
+            if (state.qty + state.pendingDelta <= 0) return;
             state.pendingDelta -= 1;
           }
 
-          const previewQty = Math.max(0, currentQty + state.pendingDelta);
+          const previewQty = Math.max(0, state.qty + state.pendingDelta);
           setProductQtyState(form, previewQty);
           scheduleVariantUpdate(variantId, form);
         });
@@ -359,6 +370,7 @@ window.addEventListener('load', () => {
         }
 
         const updatedCart = await refreshCartCount();
+        syncVariantState(updatedCart);
         updateProductControls(updatedCart);
       } catch (error) {
         form.submit();
