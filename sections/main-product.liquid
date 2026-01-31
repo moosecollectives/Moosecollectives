@@ -1,5 +1,8 @@
 <section class="section product-detail">
   <div class="container product-detail-grid">
+    <a class="product-back" href="{{ routes.all_products_collection_url }}" aria-label="Back to products">
+      <span aria-hidden="true">‹</span>
+    </a>
     <div class="product-media">
       {% if product.featured_image %}
         {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
@@ -23,6 +26,22 @@
     </div>
   </div>
 </section>
+
+{% assign upsell_product = all_products['adhesive-wall-strip'] %}
+{% if upsell_product != blank and upsell_product.available and product.handle != upsell_product.handle %}
+  <section class="section product-upsell">
+    <div class="container">
+      <div class="upsell-card">
+        <div>
+          <span class="upsell-eyebrow">Recommended add-on</span>
+          <h3 class="upsell-title">Add adhesive strips to your order</h3>
+          <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
+        </div>
+        <a class="button button-secondary" href="{{ upsell_product.url }}">View adhesive strips</a>
+      </div>
+    </div>
+  </section>
+{% endif %}
 
 <section class="section product-related">
   <div class="container">

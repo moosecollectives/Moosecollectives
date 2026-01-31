@@ -420,4 +420,36 @@ window.addEventListener('load', () => {
       }
     });
   });
+
+  document.querySelectorAll('[data-cart-upsell]').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      const submitButton = form.querySelector('[type="submit"]');
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          credentials: 'same-origin',
+          body: new FormData(form)
+        });
+
+        if (!response.ok) {
+          throw new Error('Add upsell failed');
+        }
+
+        await refreshCartCount();
+        window.location.reload();
+      } catch (error) {
+        form.submit();
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+        }
+      }
+    });
+  });
 });

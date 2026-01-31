@@ -660,6 +660,19 @@ a {
   text-transform: uppercase;
 }
 
+.cart-upsell {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 18px 36px -30px rgba(7, 18, 30, 0.25);
+  margin-bottom: 20px;
+}
+
 .collection-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -771,6 +784,7 @@ a {
   gap: clamp(20px, 4vw, 48px);
   align-items: start;
   justify-items: start;
+  position: relative;
 }
 
 .product-media {
@@ -893,6 +907,55 @@ a {
   overflow-wrap: anywhere;
 }
 
+.product-back {
+  position: absolute;
+  left: 0;
+  top: -8px;
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  background-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.product-upsell {
+  padding-top: 24px;
+}
+
+.upsell-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 18px 22px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  box-shadow: 0 18px 36px -30px rgba(7, 18, 30, 0.25);
+}
+
+.upsell-eyebrow {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--tangerine-1);
+}
+
+.upsell-title {
+  margin: 8px 0 4px;
+  font-family: var(--font-display);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.upsell-subtitle {
+  margin: 0;
+  color: var(--ink-soft);
+}
+
 .product-info p {
   max-width: 46ch;
 }
@@ -921,6 +984,11 @@ a {
 
   .product-info .hero-title {
     white-space: normal;
+  }
+
+  .product-back {
+    position: static;
+    margin-bottom: 8px;
   }
 }
 
@@ -958,6 +1026,11 @@ a {
   .nav {
     justify-content: center;
     flex-wrap: wrap;
+  }
+
+  .cart-upsell {
+    flex-direction: column;
+    align-items: flex-start;
   }
 
   .hero-grid {
