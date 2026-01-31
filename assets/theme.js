@@ -190,7 +190,10 @@ window.addEventListener('load', () => {
   const cartCount = document.querySelector('[data-cart-count]');
 
   const fetchCart = async () => {
-    const response = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
+    const response = await fetch('/cart.js', {
+      headers: { Accept: 'application/json' },
+      credentials: 'same-origin'
+    });
     if (!response.ok) return null;
     return response.json();
   };
@@ -212,11 +215,11 @@ window.addEventListener('load', () => {
 
     if (quantity > 0) {
       controls.hidden = false;
-      button.style.display = 'none';
+      button.hidden = true;
       count.textContent = `${quantity} in cart`;
     } else {
       controls.hidden = true;
-      button.style.display = '';
+      button.hidden = false;
       count.textContent = '0 in cart';
     }
   };
@@ -259,6 +262,7 @@ window.addEventListener('load', () => {
             const addResponse = await fetch('/cart/add.js', {
               method: 'POST',
               headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+              credentials: 'same-origin',
               body: JSON.stringify({ id: variantId, quantity: nextQty })
             });
             if (!addResponse.ok) return;
@@ -266,6 +270,7 @@ window.addEventListener('load', () => {
             const response = await fetch('/cart/change.js', {
               method: 'POST',
               headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+              credentials: 'same-origin',
               body: JSON.stringify({ id: item.key, quantity: nextQty })
             });
             if (!response.ok) return;
@@ -289,6 +294,7 @@ window.addEventListener('load', () => {
         const response = await fetch('/cart/add.js', {
           method: 'POST',
           headers: { Accept: 'application/json' },
+          credentials: 'same-origin',
           body: new FormData(form)
         });
 
