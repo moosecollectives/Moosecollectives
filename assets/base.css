@@ -718,33 +718,34 @@ a {
 .cart-price-total,
 .cart-price-breakdown {
   display: inline-block;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  overflow: hidden;
+  white-space: nowrap;
+  transition: opacity 0.25s ease, max-width 0.25s ease, transform 0.25s ease;
+}
+
+.cart-price-total {
+  max-width: 120px;
 }
 
 .cart-price-breakdown {
+  max-width: 0;
   opacity: 0;
-  transform: translateY(6px);
+  transform: translateX(-6px);
   pointer-events: none;
 }
 
-.cart-price:hover .cart-price-total {
-  opacity: 0;
-  transform: translateY(-6px);
-}
-
-.cart-price:hover .cart-price-breakdown {
-  opacity: 1;
-  transform: translateY(0);
-}
-
+.cart-price:hover .cart-price-total,
 .cart-price.is-breakdown .cart-price-total {
+  max-width: 0;
   opacity: 0;
-  transform: translateY(-6px);
+  transform: translateX(-6px);
 }
 
+.cart-price:hover .cart-price-breakdown,
 .cart-price.is-breakdown .cart-price-breakdown {
+  max-width: 200px;
   opacity: 1;
-  transform: translateY(0);
+  transform: translateX(0);
 }
 
 
