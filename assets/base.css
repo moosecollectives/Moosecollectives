@@ -506,7 +506,7 @@ a {
 
 .cart-card {
   scroll-snap-align: start;
-  background: rgba(10, 18, 32, 0.2);
+  background: #ffffff;
   border: 1px solid rgba(255, 255, 255, 0.35);
   border-radius: 22px;
   overflow: hidden;
@@ -628,22 +628,55 @@ a {
   gap: 6px;
 }
 
+.cart-label {
+  position: relative;
+  display: inline-block;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -6px;
+  right: -12px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  color: var(--sky-1);
+}
 
 .cart-remove {
-  font-size: 12px;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: #2d1600;
-  background: rgba(255, 184, 0, 0.3);
-  padding: 8px 12px;
-  border-radius: 999px;
-  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  background: transparent;
   cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) border-box;
 }
 
 .cart-remove-form {
   margin: 0;
 }
+
+.cart-remove svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+  color: var(--tangerine-1);
+}
+
 
 .cart-footer {
   display: flex;
