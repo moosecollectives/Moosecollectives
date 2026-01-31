@@ -32,15 +32,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--ink);
-  background:
-    radial-gradient(40% 40% at 0% 0%, rgba(255, 90, 0, 0.35) 0%, transparent 70%),
-    radial-gradient(40% 40% at 100% 0%, rgba(255, 184, 0, 0.32) 0%, transparent 70%),
-    radial-gradient(40% 40% at 100% 100%, rgba(255, 90, 0, 0.28) 0%, transparent 70%),
-    radial-gradient(140% 90% at 12% 0%, rgba(255, 90, 0, 0.6) 0%, transparent 60%),
-    radial-gradient(90% 100% at 88% 12%, rgba(255, 184, 0, 0.68) 0%, transparent 62%),
-    radial-gradient(140% 100% at 40% 30%, rgba(111, 194, 255, 0.85) 0%, transparent 62%),
-    linear-gradient(180deg, #5ab5ff 0%, #8fd9ff 45%, #c8f0ff 100%),
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 2px, transparent 2px 12px);
+  background: #bfe7ff;
   min-height: 100vh;
 }
 
@@ -49,15 +41,7 @@ body {
 .template-page,
 .template-cart,
 .template-404 {
-  background:
-    radial-gradient(40% 40% at 0% 0%, rgba(255, 90, 0, 0.35) 0%, transparent 70%),
-    radial-gradient(40% 40% at 100% 0%, rgba(255, 184, 0, 0.32) 0%, transparent 70%),
-    radial-gradient(40% 40% at 100% 100%, rgba(255, 90, 0, 0.28) 0%, transparent 70%),
-    radial-gradient(140% 90% at 12% 6%, rgba(255, 90, 0, 0.6) 0%, transparent 60%),
-    radial-gradient(95% 90% at 92% 0%, rgba(255, 184, 0, 0.7) 0%, transparent 62%),
-    radial-gradient(140% 100% at 40% 30%, rgba(111, 194, 255, 0.82) 0%, transparent 62%),
-    linear-gradient(180deg, #5ab5ff 0%, #8fd9ff 45%, #c8f0ff 100%),
-    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 2px, transparent 2px 12px);
+  background: #bfe7ff;
 }
 
 .template-collection {
@@ -136,13 +120,18 @@ a {
 .page-content-commissions {
   max-width: 900px;
   margin: 18px auto 0;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 22px;
+  padding: clamp(18px, 3vw, 28px);
+  box-shadow: 0 24px 60px -48px rgba(7, 18, 30, 0.35);
 }
 
 .page-content-commissions button,
 .page-content-commissions input[type="submit"] {
   background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
   color: #2d1600;
-  border: none;
+  border: 0;
   border-radius: 999px;
   padding: 12px 24px;
   font-family: var(--font-body);
