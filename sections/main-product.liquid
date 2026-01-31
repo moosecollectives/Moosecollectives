@@ -19,8 +19,9 @@
             <strong>{{ adhesive_product.title }}</strong>
             <span class="price">{{ adhesive_product.price | money }}</span>
             {% if adhesive_product.available %}
-              <form method="post" action="/cart/add">
+              <form method="post" action="{{ routes.cart_add_url }}">
                 <input type="hidden" name="id" value="{{ adhesive_product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="quantity" value="1">
                 <button class="button button-secondary" type="submit">Add to cart</button>
               </form>
             {% endif %}
