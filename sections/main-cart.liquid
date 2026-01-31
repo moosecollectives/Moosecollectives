@@ -30,13 +30,12 @@
                       inputmode="numeric"
                       aria-label="Quantity for {{ item.product.title }}"
                       data-cart-qty
-                      data-cart-key="{{ item.key }}"
                       data-cart-title="{{ item.product.title | escape }}"
                     >
                   </div>
                   <div class="cart-actions">
                     <a class="button button-secondary" href="{{ item.url }}">View item</a>
-                    <a class="button button-secondary cart-remove" href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0" data-cart-remove data-cart-title="{{ item.product.title | escape }}">Remove</a>
+                    <a class="button button-secondary cart-remove" href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0">Remove</a>
                   </div>
                 </div>
               </article>

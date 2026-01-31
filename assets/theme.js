@@ -155,13 +155,5 @@ window.addEventListener('load', () => {
     });
   });
 
-  cartForm.querySelectorAll('[data-cart-remove]').forEach((link) => {
-    link.addEventListener('click', (event) => {
-      const title = link.dataset.cartTitle || 'this item';
-      const confirmed = window.confirm(`Remove ${title} from your cart?`);
-      if (!confirmed) {
-        event.preventDefault();
-      }
-    });
-  });
+  // Remove links should act immediately; confirmation only happens on qty -> 0.
 });
