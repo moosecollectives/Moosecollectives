@@ -89,4 +89,79 @@ const initCarousel = (carousel) => {
 
 window.addEventListener('load', () => {
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
+
+  const cartForm = document.querySelector('[data-cart-form]');
+  if (!cartForm) return;
+
+  const updateDelay = 500;
+  const timers = new Map();
+  const previousValues = new Map();
+  const updateButton = cartForm.querySelector('button[name="update"]');
+
+  const submitCart = () => {
+    if (typeof cartForm.requestSubmit === 'function') {
+      cartForm.requestSubmit(updateButton || undefined);
+      return;
+    }
+    cartForm.submit();
+  };
+
+  const scheduleSubmit = (input) => {
+    const existing = timers.get(input);
+    if (existing) {
+      clearTimeout(existing);
+    }
+    const timer = setTimeout(() => {
+      submitCart();
+    }, updateDelay);
+    timers.set(input, timer);
+  };
+
+  const resetInput = (input) => {
+    const previous = previousValues.get(input);
+    if (previous !== undefined) {
+      input.value = previous;
+    }
+  };
+
+  cartForm.querySelectorAll('[data-cart-qty]').forEach((input) => {
+    input.addEventListener('focus', () => {
+      previousValues.set(input, input.value);
+    });
+
+    input.addEventListener('input', () => {
+      if (input.value === '') return;
+
+      const value = Math.max(0, parseInt(input.value, 10));
+      if (Number.isNaN(value)) return;
+      input.value = value;
+
+      if (value === 0) {
+        const title = input.dataset.cartTitle || 'this item';
+        const confirmed = window.confirm(`Remove ${title} from your cart?`);
+        if (!confirmed) {
+          resetInput(input);
+          return;
+        }
+      }
+
+      scheduleSubmit(input);
+    });
+
+    input.addEventListener('blur', () => {
+      if (input.value === '') {
+        resetInput(input);
+      }
+    });
+  });
+
+  cartForm.querySelectorAll('[data-cart-remove]').forEach((link) => {
+    link.addEventListener('click', (event) => {
+      const title = link.dataset.cartTitle || 'this item';
+      const confirmed = window.confirm(`Remove ${title} from your cart?`);
+      if (!confirmed) {
+        event.preventDefault();
+      }
+    });
+  });
 });
