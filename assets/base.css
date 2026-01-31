@@ -905,15 +905,6 @@ a {
   -webkit-text-fill-color: transparent;
 }
 
-.product-info .hero-title {
-  white-space: nowrap;
-  max-width: 100%;
-}
-
-.product-info .hero-title.is-wrapping {
-  white-space: normal;
-  overflow-wrap: anywhere;
-}
 
 .product-back {
   position: absolute;

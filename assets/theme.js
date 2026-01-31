@@ -90,16 +90,6 @@ const initCarousel = (carousel) => {
 window.addEventListener('load', () => {
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
 
-  const adjustProductTitles = () => {
-    document.querySelectorAll('.product-info .hero-title').forEach((title) => {
-      const shouldWrap = title.scrollWidth > title.clientWidth;
-      title.classList.toggle('is-wrapping', shouldWrap);
-    });
-  };
-
-  adjustProductTitles();
-  window.addEventListener('resize', adjustProductTitles);
-
   const cartForm = document.querySelector('[data-cart-form]');
   if (cartForm) {
     const updateDelay = 500;
@@ -473,8 +463,12 @@ window.addEventListener('load', () => {
           throw new Error('Add upsell failed');
         }
 
-        await refreshCartCount();
-        window.location.reload();
+        const updatedCart = await refreshCartCount();
+        updateProductControls(updatedCart);
+        const card = form.closest('.product-upsell-inline');
+        if (card) {
+          card.style.display = 'none';
+        }
       } catch (error) {
         form.submit();
       } finally {
