@@ -185,6 +185,25 @@ window.addEventListener('load', () => {
         }
       });
     });
+
+    cartForm.querySelectorAll('[data-cart-remove-line]').forEach((link) => {
+      link.addEventListener('click', async (event) => {
+        event.preventDefault();
+        const line = parseInt(link.dataset.cartRemoveLine, 10);
+        if (!line) return;
+
+        const response = await fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ line, quantity: 0 })
+        });
+
+        if (!response.ok) return;
+        await refreshCartCount();
+        window.location.reload();
+      });
+    });
   }
 
   const cartCount = document.querySelector('[data-cart-count]');
@@ -304,6 +323,9 @@ window.addEventListener('load', () => {
         });
         if (!addResponse.ok) {
           state.inFlight = false;
+          const refreshed = await refreshCartCount();
+          syncVariantState(refreshed);
+          updateProductControls(refreshed);
           return;
         }
       } else if (state.key) {
@@ -315,6 +337,9 @@ window.addEventListener('load', () => {
         });
         if (!response.ok) {
           state.inFlight = false;
+          const refreshed = await refreshCartCount();
+          syncVariantState(refreshed);
+          updateProductControls(refreshed);
           return;
         }
       }
@@ -342,8 +367,6 @@ window.addEventListener('load', () => {
             state.pendingDelta -= 1;
           }
 
-          const previewQty = Math.max(0, state.qty + state.pendingDelta);
-          setProductQtyState(form, previewQty);
           scheduleVariantUpdate(variantId, form);
         });
       });
