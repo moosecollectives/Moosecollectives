@@ -11,24 +11,10 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {
-        "adhesive_product": "adhesive-wall-strip"
-      }
+      "settings": {}
     },
     "1769832804c5606922": {
       "type": "apps",
-      "blocks": {
-        "tipo_related_products_app_block_product_yM6bDM": {
-          "type": "shopify://apps/tipo-related-products/blocks/app-block-product/75cf2d86-3988-45e7-8f28-ada23c99704f",
-          "settings": {
-            "widget": "3",
-            "gashortcode": ""
-          }
-        }
-      },
-      "block_order": [
-        "tipo_related_products_app_block_product_yM6bDM"
-      ],
       "settings": {}
     }
   },
