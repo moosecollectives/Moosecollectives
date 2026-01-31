@@ -7,7 +7,9 @@
     <div>
       <h4>Explore</h4>
       {% for link in linklists[settings.main_menu].links %}
-        <p><a href="{{ link.url }}">{{ link.title }}</a></p>
+        {% unless link.handle == 'contact' %}
+          <p><a href="{{ link.url }}">{{ link.title }}</a></p>
+        {% endunless %}
       {% endfor %}
       <p><a href="/pages/faq">FAQ</a></p>
       <p><a href="/pages/commissions">Commissions</a></p>
