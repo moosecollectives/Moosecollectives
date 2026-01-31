@@ -15,22 +15,14 @@
       {% if adhesive_product == blank %}
         {% assign adhesive_product = all_products['adhesive-wall-strip'] %}
       {% endif %}
-      <div class="product-strip">
-        <span>No room on your floor? Take your rug to the walls.</span>
-        {% if adhesive_product != blank %}
-          <div class="product-strip-offer">
-            <strong>{{ adhesive_product.title }}</strong>
-            <span class="price">{{ adhesive_product.price | money }}</span>
-            {% if adhesive_product.available %}
-              <form method="post" action="{{ routes.cart_add_url }}">
-                <input type="hidden" name="id" value="{{ adhesive_product.selected_or_first_available_variant.id }}">
-                <input type="hidden" name="quantity" value="1">
-                <button class="button button-secondary" type="submit">Add to cart</button>
-              </form>
-            {% endif %}
-          </div>
-        {% endif %}
-      </div>
+      <div class="product-strip"></div>
+      {% if adhesive_product != blank and adhesive_product.available %}
+        <div class="product-strip-offer">
+          <strong>{{ adhesive_product.title }}</strong>
+          <span class="price">{{ adhesive_product.price | money }}</span>
+          <a class="button button-secondary" href="{{ routes.cart_add_url }}?id={{ adhesive_product.selected_or_first_available_variant.id }}&quantity=1">Add to cart</a>
+        </div>
+      {% endif %}
     </div>
     <div class="product-info">
       <h1 class="hero-title">{{ product.title }}</h1>

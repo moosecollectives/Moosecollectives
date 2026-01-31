@@ -715,15 +715,9 @@ a {
 
 .product-strip {
   background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
-  color: #2d1600;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  font-size: 12px;
-  padding: 12px 14px;
+  padding: 8px 14px;
   border-radius: 12px;
-  display: grid;
-  gap: 8px;
+  min-height: 16px;
 }
 
 .product-strip-offer {
@@ -732,8 +726,9 @@ a {
   gap: 10px;
   align-items: center;
   justify-content: space-between;
-  font-size: 11px;
-  letter-spacing: 0.08em;
+  font-size: 12px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .product-strip-offer .price {
