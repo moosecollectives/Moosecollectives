@@ -1,4 +1,4 @@
-<section class="section">
+<section class="section cart-section">
   <div class="container">
     <h1 class="section-title">Your cart</h1>
     {% if cart.item_count == 0 %}
@@ -6,23 +6,31 @@
       <a class="button button-primary" href="{{ routes.collections_url }}">Continue shopping</a>
     {% else %}
       <form action="{{ routes.cart_url }}" method="post">
-        <div class="product-grid">
-          {% for item in cart.items %}
-            <article class="product-card">
-              <div>
-                {% if item.image %}
-                  {{ item.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: item.product.title }}
-                {% endif %}
-              </div>
-              <div>
-                <h3>{{ item.product.title }}</h3>
-                <p>{{ item.final_price | money }}</p>
-                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0">
-              </div>
-            </article>
-          {% endfor %}
+        <div class="cart-carousel" data-cart-carousel>
+          <div class="cart-track">
+            {% for item in cart.items %}
+              <article class="cart-card">
+                <div class="cart-media">
+                  {% if item.image %}
+                    {{ item.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: item.product.title }}
+                  {% endif %}
+                </div>
+                <div class="cart-meta">
+                  <h3>{{ item.product.title }}</h3>
+                  <p class="price">{{ item.final_price | money }}</p>
+                  <div class="cart-actions">
+                    <a class="button button-secondary" href="{{ item.url }}">View item</a>
+                    <a class="cart-remove" href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0">Remove</a>
+                  </div>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
         </div>
-        <button class="button button-primary" type="submit" name="checkout">Checkout</button>
+        <div class="cart-footer">
+          <p class="cart-total">Total: {{ cart.total_price | money }}</p>
+          <button class="button button-primary" type="submit" name="checkout">Checkout</button>
+        </div>
       </form>
     {% endif %}
   </div>
