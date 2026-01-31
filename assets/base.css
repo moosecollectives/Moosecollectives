@@ -698,7 +698,6 @@ a {
   justify-content: center;
   box-shadow: 0 12px 22px -16px rgba(229, 57, 53, 0.6);
   align-self: flex-end;
-  margin-left: 8px;
 }
 
 .cart-remove-tab svg {
