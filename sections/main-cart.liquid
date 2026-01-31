@@ -12,7 +12,7 @@
           {% assign has_adhesive = true %}
         {% endif %}
       {% endfor %}
-      {% if upsell_product != blank and upsell_product.available and has_adhesive == false %}
+      {% if upsell_product != blank and has_adhesive == false %}
         <div class="cart-upsell">
           <div>
             <span class="upsell-eyebrow">Recommended add-on</span>

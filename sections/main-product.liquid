@@ -28,7 +28,7 @@
 </section>
 
 {% assign upsell_product = all_products['adhesive-wall-strip'] %}
-{% if upsell_product != blank and upsell_product.available and product.handle != upsell_product.handle %}
+{% if upsell_product != blank and product.handle != upsell_product.handle %}
   <section class="section product-upsell">
     <div class="container">
       <div class="upsell-card">
