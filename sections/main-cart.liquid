@@ -18,13 +18,22 @@
                 <div class="cart-meta">
                   <h3>{{ item.product.title }}</h3>
                   <p class="price">{{ item.final_price | money }}</p>
+                  <div class="cart-quantity">
+                    <label for="Quantity-{{ item.key }}">Qty</label>
+                    <input
+                      id="Quantity-{{ item.key }}"
+                      class="cart-quantity-input"
+                      type="number"
+                      name="updates[{{ item.key }}]"
+                      value="{{ item.quantity }}"
+                      min="0"
+                      inputmode="numeric"
+                      aria-label="Quantity for {{ item.product.title }}"
+                    >
+                  </div>
                   <div class="cart-actions">
                     <a class="button button-secondary" href="{{ item.url }}">View item</a>
-                    <form method="post" action="{{ routes.cart_change_url }}" class="cart-remove-form">
-                      <input type="hidden" name="id" value="{{ item.key }}">
-                      <input type="hidden" name="quantity" value="0">
-                      <button class="cart-remove" type="submit">Remove</button>
-                    </form>
+                    <a class="button button-secondary cart-remove" href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0">Remove</a>
                   </div>
                 </div>
               </article>
@@ -33,6 +42,7 @@
         </div>
         <div class="cart-footer">
           <p class="cart-total">Total: {{ cart.total_price | money }}</p>
+          <button class="button button-secondary" type="submit" name="update">Update cart</button>
           <button class="button button-primary" type="submit" name="checkout">Checkout</button>
         </div>
       </form>
