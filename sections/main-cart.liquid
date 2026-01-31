@@ -20,7 +20,7 @@
                   <p class="price">{{ item.final_price | money }}</p>
                   <div class="cart-actions">
                     <a class="button button-secondary" href="{{ item.url }}">View item</a>
-                    <a class="cart-remove" href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0">Remove</a>
+                    <a class="cart-remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0">Remove</a>
                   </div>
                 </div>
               </article>
