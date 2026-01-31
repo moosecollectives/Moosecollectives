@@ -9,7 +9,7 @@
       <h1 class="hero-title">{{ product.title }}</h1>
       <p>{{ product.description | strip_html }}</p>
       <div class="price">{{ product.price | money }}</div>
-      <form method="post" action="/cart/add">
+      <form method="post" action="/cart/add" data-add-to-cart>
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         <button class="button button-primary" type="submit">Add to cart</button>
       </form>

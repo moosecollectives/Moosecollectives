@@ -3,7 +3,7 @@
     <h1 class="section-title">Your cart</h1>
     {% if cart.item_count == 0 %}
       <p>Your cart is empty.</p>
-      <a class="button button-primary" href="{{ routes.collections_url }}">Continue shopping</a>
+      <a class="button button-primary" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
     {% else %}
       <form action="{{ routes.cart_url }}" method="post" data-cart-form>
         <div class="cart-carousel" data-cart-carousel>
@@ -18,20 +18,24 @@
                 <div class="cart-meta">
                   <h3>{{ item.product.title }}</h3>
                   <p class="price">{{ item.final_price | money }}</p>
-                  <div class="cart-quantity">
-                    <label for="Quantity-{{ item.key }}">Qty</label>
-                    <input
-                      id="Quantity-{{ item.key }}"
-                      class="cart-quantity-input"
-                      type="number"
-                      name="updates[{{ item.key }}]"
-                      value="{{ item.quantity }}"
-                      min="0"
-                      inputmode="numeric"
-                      aria-label="Quantity for {{ item.product.title }}"
-                      data-cart-qty
-                      data-cart-title="{{ item.product.title | escape }}"
-                    >
+                  <div class="cart-quantity" data-cart-qty-wrap>
+                    <span class="cart-quantity-label">Qty</span>
+                    <div class="cart-quantity-pill" role="group" aria-label="Quantity controls for {{ item.product.title }}">
+                      <button class="cart-quantity-btn" type="button" data-cart-qty-btn="minus" aria-label="Decrease quantity">-</button>
+                      <input
+                        id="Quantity-{{ item.key }}"
+                        class="cart-quantity-input"
+                        type="number"
+                        name="updates[{{ item.key }}]"
+                        value="{{ item.quantity }}"
+                        min="0"
+                        inputmode="numeric"
+                        aria-label="Quantity for {{ item.product.title }}"
+                        data-cart-qty
+                        data-cart-title="{{ item.product.title | escape }}"
+                      >
+                      <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" aria-label="Increase quantity">+</button>
+                    </div>
                   </div>
                   <div class="cart-actions">
                     <a class="button button-secondary" href="{{ item.url }}">View item</a>

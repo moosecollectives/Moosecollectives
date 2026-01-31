@@ -91,69 +91,142 @@ window.addEventListener('load', () => {
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
 
   const cartForm = document.querySelector('[data-cart-form]');
-  if (!cartForm) return;
+  if (cartForm) {
+    const updateDelay = 500;
+    const timers = new Map();
+    const previousValues = new Map();
+    const updateButton = cartForm.querySelector('button[name="update"]');
 
-  const updateDelay = 500;
-  const timers = new Map();
-  const previousValues = new Map();
-  const updateButton = cartForm.querySelector('button[name="update"]');
+    const submitCart = () => {
+      if (typeof cartForm.requestSubmit === 'function') {
+        cartForm.requestSubmit(updateButton || undefined);
+        return;
+      }
+      cartForm.submit();
+    };
 
-  const submitCart = () => {
-    if (typeof cartForm.requestSubmit === 'function') {
-      cartForm.requestSubmit(updateButton || undefined);
-      return;
-    }
-    cartForm.submit();
-  };
+    const scheduleSubmit = (input) => {
+      const existing = timers.get(input);
+      if (existing) {
+        clearTimeout(existing);
+      }
+      const timer = setTimeout(() => {
+        submitCart();
+      }, updateDelay);
+      timers.set(input, timer);
+    };
 
-  const scheduleSubmit = (input) => {
-    const existing = timers.get(input);
-    if (existing) {
-      clearTimeout(existing);
-    }
-    const timer = setTimeout(() => {
-      submitCart();
-    }, updateDelay);
-    timers.set(input, timer);
-  };
+    const resetInput = (input) => {
+      const previous = previousValues.get(input);
+      if (previous !== undefined) {
+        input.value = previous;
+      }
+    };
 
-  const resetInput = (input) => {
-    const previous = previousValues.get(input);
-    if (previous !== undefined) {
-      input.value = previous;
-    }
-  };
+    cartForm.querySelectorAll('[data-cart-qty]').forEach((input) => {
+      const wrap = input.closest('[data-cart-qty-wrap]');
+      if (wrap) {
+        wrap.querySelectorAll('[data-cart-qty-btn]').forEach((button) => {
+          button.addEventListener('click', () => {
+            const direction = button.dataset.cartQtyBtn;
+            const current = parseInt(input.value, 10) || 0;
+            const nextValue = direction === 'plus' ? current + 1 : Math.max(0, current - 1);
 
-  cartForm.querySelectorAll('[data-cart-qty]').forEach((input) => {
-    input.addEventListener('focus', () => {
-      previousValues.set(input, input.value);
-    });
+            if (nextValue === 0) {
+              const title = input.dataset.cartTitle || 'this item';
+              const confirmed = window.confirm(`Remove ${title} from your cart?`);
+              if (!confirmed) {
+                return;
+              }
+            }
 
-    input.addEventListener('input', () => {
-      if (input.value === '') return;
-
-      const value = Math.max(0, parseInt(input.value, 10));
-      if (Number.isNaN(value)) return;
-      input.value = value;
-
-      if (value === 0) {
-        const title = input.dataset.cartTitle || 'this item';
-        const confirmed = window.confirm(`Remove ${title} from your cart?`);
-        if (!confirmed) {
-          resetInput(input);
-          return;
-        }
+            input.value = nextValue;
+            scheduleSubmit(input);
+          });
+        });
       }
 
-      scheduleSubmit(input);
-    });
+      input.addEventListener('focus', () => {
+        previousValues.set(input, input.value);
+      });
 
-    input.addEventListener('blur', () => {
-      if (input.value === '') {
-        resetInput(input);
+      input.addEventListener('input', () => {
+        if (input.value === '') return;
+
+        const value = Math.max(0, parseInt(input.value, 10));
+        if (Number.isNaN(value)) return;
+        input.value = value;
+
+        if (value === 0) {
+          const title = input.dataset.cartTitle || 'this item';
+          const confirmed = window.confirm(`Remove ${title} from your cart?`);
+          if (!confirmed) {
+            resetInput(input);
+            return;
+          }
+        }
+
+        scheduleSubmit(input);
+      });
+
+      input.addEventListener('blur', () => {
+        if (input.value === '') {
+          resetInput(input);
+        }
+      });
+    });
+  }
+
+  const cartCount = document.querySelector('[data-cart-count]');
+  const cartAdded = document.querySelector('[data-cart-added]');
+  let addedTimer;
+
+  const showAddedMessage = () => {
+    if (!cartAdded) return;
+    cartAdded.classList.add('is-visible');
+    clearTimeout(addedTimer);
+    addedTimer = setTimeout(() => {
+      cartAdded.classList.remove('is-visible');
+    }, 1600);
+  };
+
+  const refreshCartCount = async () => {
+    if (!cartCount) return;
+    const response = await fetch('/cart.js', { headers: { Accept: 'application/json' } });
+    if (!response.ok) return;
+    const cart = await response.json();
+    cartCount.textContent = cart.item_count;
+  };
+
+  document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const submitButton = form.querySelector('[type="submit"]');
+      if (submitButton) {
+        submitButton.disabled = true;
+      }
+
+      try {
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          body: new FormData(form)
+        });
+
+        if (!response.ok) {
+          throw new Error('Add to cart failed');
+        }
+
+        await refreshCartCount();
+        showAddedMessage();
+      } catch (error) {
+        form.submit();
+      } finally {
+        if (submitButton) {
+          submitButton.disabled = false;
+        }
       }
     });
   });
-
-  // Remove links should act immediately; confirmation only happens on qty -> 0.
 });

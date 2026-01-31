@@ -15,7 +15,11 @@
         {% endunless %}
       {% endfor %}
       <a href="/pages/commissions">Commissions</a>
-      <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+      <a class="cart-link" href="{{ routes.cart_url }}">
+        <span>Cart</span>
+        <span class="cart-count-wrap">(<span data-cart-count>{{ cart.item_count }}</span>)</span>
+        <span class="cart-added" data-cart-added aria-hidden="true">Added!</span>
+      </a>
     </nav>
   </div>
 </header>
