@@ -523,9 +523,20 @@ a {
   display: block;
 }
 
+.cart-media {
+  display: block;
+}
+
 .cart-meta {
   display: grid;
   gap: 8px;
+}
+
+.cart-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .cart-quantity {
@@ -647,8 +658,12 @@ a {
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.02em;
-  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
-  color: var(--sky-1);
+  background: transparent;
+  border: 2px solid transparent;
+  background:
+    linear-gradient(transparent, transparent) padding-box,
+    linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2)) border-box;
+  color: var(--tangerine-1);
 }
 
 .cart-remove {
@@ -660,6 +675,7 @@ a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  margin-left: auto;
 }
 
 .cart-remove-form {
@@ -679,6 +695,7 @@ a {
 
 .cart-price {
   position: relative;
+  margin: 0;
 }
 
 .cart-price-breakdown {

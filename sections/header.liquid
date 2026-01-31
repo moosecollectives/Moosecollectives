@@ -17,7 +17,7 @@
       <a href="/pages/commissions">Commissions</a>
       <a class="cart-link" href="{{ routes.cart_url }}">
         <span class="cart-label">Cart</span>
-        <span class="cart-badge" aria-label="Cart items">
+        <span class="cart-badge" aria-label="Cart items" {% if cart.item_count == 0 %}hidden{% endif %}>
           <span data-cart-count>{{ cart.item_count }}</span>
         </span>
       </a>

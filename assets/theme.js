@@ -246,6 +246,10 @@ window.addEventListener('load', () => {
     if (cartCount) {
       cartCount.textContent = resolvedCart.item_count;
     }
+    const cartBadge = document.querySelector('.cart-badge');
+    if (cartBadge) {
+      cartBadge.hidden = resolvedCart.item_count === 0;
+    }
     return resolvedCart;
   };
 
