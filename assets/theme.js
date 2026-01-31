@@ -186,16 +186,16 @@ window.addEventListener('load', () => {
       });
     });
 
-    cartForm.querySelectorAll('[data-cart-remove-line]').forEach((button) => {
+    cartForm.querySelectorAll('[data-cart-remove-key]').forEach((button) => {
       button.addEventListener('click', async () => {
-        const line = parseInt(button.dataset.cartRemoveLine, 10);
-        if (!line) return;
+        const key = button.dataset.cartRemoveKey;
+        if (!key) return;
 
         const response = await fetch('/cart/change.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
           credentials: 'same-origin',
-          body: JSON.stringify({ line, quantity: 0 })
+          body: JSON.stringify({ id: key, quantity: 0 })
         });
 
         if (!response.ok) return;
