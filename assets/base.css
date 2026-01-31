@@ -678,6 +678,9 @@ a {
   background: rgba(10, 18, 32, 0.2);
   border: 1px solid rgba(255, 255, 255, 0.35);
   max-width: 520px;
+  display: grid;
+  gap: 10px;
+  padding: 12px;
 }
 
 .product-media img {
@@ -685,6 +688,41 @@ a {
   height: auto;
   object-fit: contain;
   display: block;
+}
+
+.product-media-video {
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px dashed rgba(12, 18, 32, 0.2);
+}
+
+.product-media-video video {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  display: block;
+}
+
+.product-media-placeholder {
+  padding: 18px;
+  text-align: center;
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--ink-soft);
+}
+
+.product-strip {
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  color: #2d1600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-size: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  text-align: center;
 }
 
 .product-info {

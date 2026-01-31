@@ -4,6 +4,14 @@
       {% if product.featured_image %}
         {{ product.featured_image | image_url: width: 900 | image_tag: loading: 'lazy', alt: product.title }}
       {% endif %}
+      <div class="product-media-video">
+        {% if section.settings.media_video != blank %}
+          {{ section.settings.media_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+        {% else %}
+          <div class="product-media-placeholder">Add product video</div>
+        {% endif %}
+      </div>
+      <div class="product-strip">No room on your floor? Take your rug to the walls.</div>
     </div>
     <div class="product-info">
       <h1 class="hero-title">{{ product.title }}</h1>
@@ -33,6 +41,8 @@
 {% schema %}
 {
   "name": "Main product",
-  "settings": []
+  "settings": [
+    {"type": "video", "id": "media_video", "label": "Product media video"}
+  ]
 }
 {% endschema %}
