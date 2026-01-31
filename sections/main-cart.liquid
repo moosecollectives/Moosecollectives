@@ -39,7 +39,7 @@
                   </div>
                   <div class="cart-actions">
                     <a class="button button-secondary" href="{{ item.url }}">View item</a>
-                    <a class="button button-secondary cart-remove" href="{{ routes.cart_change_url }}?line={{ forloop.index }}&quantity=0" data-cart-remove-line="{{ forloop.index }}">Remove</a>
+                    <button class="button button-secondary cart-remove" type="button" data-cart-remove-line="{{ forloop.index }}">Remove</button>
                   </div>
                 </div>
               </article>

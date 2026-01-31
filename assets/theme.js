@@ -186,10 +186,9 @@ window.addEventListener('load', () => {
       });
     });
 
-    cartForm.querySelectorAll('[data-cart-remove-line]').forEach((link) => {
-      link.addEventListener('click', async (event) => {
-        event.preventDefault();
-        const line = parseInt(link.dataset.cartRemoveLine, 10);
+    cartForm.querySelectorAll('[data-cart-remove-line]').forEach((button) => {
+      button.addEventListener('click', async () => {
+        const line = parseInt(button.dataset.cartRemoveLine, 10);
         if (!line) return;
 
         const response = await fetch('/cart/change.js', {
