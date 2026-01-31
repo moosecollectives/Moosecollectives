@@ -138,6 +138,27 @@ a {
   margin: 18px auto 0;
 }
 
+.page-content-commissions button,
+.page-content-commissions input[type="submit"] {
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  color: #2d1600;
+  border: none;
+  border-radius: 999px;
+  padding: 12px 24px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  box-shadow: 0 16px 32px -18px rgba(255, 90, 0, 0.55);
+  cursor: pointer;
+}
+
+.page-content-commissions button:hover,
+.page-content-commissions input[type="submit"]:hover {
+  filter: brightness(1.05);
+  transform: translateY(-1px);
+}
+
 .page-section-faq .section-title {
   text-align: center;
   margin-left: auto;
