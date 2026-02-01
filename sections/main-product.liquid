@@ -31,6 +31,10 @@
         </div>
       {% endif %}
     </div>
+    <div class="product-zoom-modal" data-zoom-modal>
+      <button class="product-zoom-close" type="button" aria-label="Close zoom">×</button>
+      <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title }}">
+    </div>
     <div class="product-info">
       <h1 class="hero-title">{{ product.title }}</h1>
       <p>{{ product.description | strip_html }}</p>

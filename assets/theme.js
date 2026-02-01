@@ -347,6 +347,9 @@ window.addEventListener('load', () => {
     const lens = media.querySelector('[data-zoom-lens]');
     const zoomWindow = media.querySelector('[data-zoom-window]');
     const mediaMain = media.querySelector('[data-media-main]');
+    const zoomModal = document.querySelector('[data-zoom-modal]');
+    const zoomModalImg = zoomModal ? zoomModal.querySelector('img') : null;
+    const zoomModalClose = zoomModal ? zoomModal.querySelector('.product-zoom-close') : null;
     console.log('[zoom] init', { mainImg, lens, zoomWindow, mediaMain });
     let zoomReady = false;
     let zoomSrc = mainImg.dataset.mediaZoom || mainImg.src;
@@ -378,6 +381,9 @@ window.addEventListener('load', () => {
         mainImg.removeAttribute('srcset');
         mainImg.removeAttribute('sizes');
         setZoomImage(zoomSrc);
+        if (zoomModalImg) {
+          zoomModalImg.src = src;
+        }
 
         media.querySelectorAll('[data-media-thumb]').forEach((button) => {
           button.classList.toggle('is-active', button === thumb);
@@ -424,6 +430,30 @@ window.addEventListener('load', () => {
     mediaMain.addEventListener('mouseenter', showZoom);
     mediaMain.addEventListener('mouseleave', hideZoom);
     mediaMain.addEventListener('mousemove', moveZoom);
+
+    if (zoomModal && zoomModalImg) {
+      const openModal = () => {
+        zoomModalImg.src = mainImg.src;
+        zoomModal.classList.add('is-visible');
+      };
+      const closeModal = () => {
+        zoomModal.classList.remove('is-visible');
+      };
+
+      mainImg.addEventListener('click', () => {
+        if (window.matchMedia('(max-width: 980px)').matches) {
+          openModal();
+        }
+      });
+      zoomModal.addEventListener('click', (event) => {
+        if (event.target === zoomModal) {
+          closeModal();
+        }
+      });
+      if (zoomModalClose) {
+        zoomModalClose.addEventListener('click', closeModal);
+      }
+    }
   });
 
   const cartCount = document.querySelector('[data-cart-count]');
