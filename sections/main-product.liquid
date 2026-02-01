@@ -5,8 +5,9 @@
     </a>
     <div class="product-media" data-product-media>
       {% if product.featured_image %}
+        {% assign zoom_url = product.featured_image | image_url: width: 2000 %}
         <div class="product-media-main" data-media-main>
-          {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title, data_media_img: true, data_media_zoom: product.featured_image | image_url: width: 2000 }}
+          {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title, data_media_img: true, data_media_zoom: zoom_url }}
           <div class="product-zoom-lens" data-zoom-lens></div>
           <div class="product-zoom-window" data-zoom-window></div>
         </div>
@@ -14,11 +15,13 @@
       {% if product.images.size > 1 %}
         <div class="product-media-strip" role="list">
           {% for image in product.images %}
+            {% assign thumb_zoom = image | image_url: width: 2000 %}
             <button
               class="product-media-thumb{% if image.id == product.featured_image.id %} is-active{% endif %}"
               type="button"
               data-media-thumb
               data-media-src="{{ image | image_url: width: 1200 }}"
+              data-media-zoom="{{ thumb_zoom }}"
               aria-label="View {{ product.title }} image {{ forloop.index }}"
               role="listitem"
             >

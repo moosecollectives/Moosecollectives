@@ -361,11 +361,12 @@ window.addEventListener('load', () => {
     media.querySelectorAll('[data-media-thumb]').forEach((thumb) => {
       thumb.addEventListener('click', () => {
         const src = thumb.dataset.mediaSrc;
+        const zoomSrc = thumb.dataset.mediaZoom || src;
         if (!src) return;
         mainImg.src = src;
         mainImg.removeAttribute('srcset');
         mainImg.removeAttribute('sizes');
-        setZoomImage(src);
+        setZoomImage(zoomSrc);
 
         media.querySelectorAll('[data-media-thumb]').forEach((button) => {
           button.classList.toggle('is-active', button === thumb);
