@@ -81,20 +81,19 @@ const initCarousel = (carousel) => {
     hoverPause = pause;
     if (pause) {
       targetSpeed = 0;
-    } else if (!edgeHovering) {
-      clearTimeout(edgeTimeout);
-      edgeTimeout = setTimeout(() => {
-        targetSpeed = tunedSpeed;
-      }, 2000);
     }
   };
 
   carousel.querySelectorAll('[data-carousel-card]').forEach((card) => {
     card.addEventListener('mouseenter', () => {
-      setHoverPause(true);
+      if (!edgeHovering) {
+        setHoverPause(true);
+      }
     });
     card.addEventListener('mouseleave', () => {
-      setHoverPause(false);
+      if (!edgeHovering) {
+        setHoverPause(false);
+      }
     });
   });
 
@@ -130,12 +129,14 @@ const initCarousel = (carousel) => {
       if (directionMultiplier !== baseDirection) {
         directionMultiplier = baseDirection;
       }
-      if (!hoverPause) {
-        clearTimeout(edgeTimeout);
-        edgeTimeout = setTimeout(() => {
-          targetSpeed = tunedSpeed;
-        }, 2000);
+      if (hoverPause) {
+        targetSpeed = 0;
+        return;
       }
+      clearTimeout(edgeTimeout);
+      edgeTimeout = setTimeout(() => {
+        targetSpeed = tunedSpeed;
+      }, 2000);
     }
   };
 
