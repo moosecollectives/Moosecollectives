@@ -91,6 +91,10 @@ a {
   margin-bottom: 32px;
 }
 
+.section-heading-center {
+  justify-content: center;
+}
+
 .section-title {
   font-family: var(--font-display);
   font-size: clamp(28px, 3.6vw, 44px);

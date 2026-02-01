@@ -27,7 +27,7 @@
       "settings": {
         "heading": "",
         "collection": "",
-        "cta_label": "Browse collection",
+        "cta_label": "Browse full collection",
         "direction": "left",
         "start_from_end": false,
         "max_products": 50,
