@@ -455,6 +455,11 @@ a {
   z-index: 2;
 }
 
+.product-carousel.edge-hover .product-carousel-card:hover {
+  transform: none;
+  box-shadow: 0 24px 60px -44px rgba(7, 18, 30, 0.6);
+}
+
 .product-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));

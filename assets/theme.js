@@ -124,6 +124,7 @@ const initCarousel = (carousel) => {
     const x = event.clientX - rect.left;
     const isLeft = x <= edgeSize;
     const isRight = x >= rect.width - edgeSize;
+    carousel.classList.toggle('edge-hover', isLeft || isRight);
 
     if (hoverPause) {
       edgeHovering = false;
