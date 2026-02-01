@@ -14,7 +14,7 @@ const initCarousel = (carousel) => {
   const baseSpeed = parseFloat(carousel.dataset.speed) || 0.6;
   const isMobile = window.matchMedia('(max-width: 980px)').matches;
   const mobileBoost = isMobile ? 1.1 : 0;
-  const tunedSpeed = Math.min(baseSpeed + mobileBoost, 2);
+  const tunedSpeed = Math.min((baseSpeed + mobileBoost) * 0.6, 2);
   speed = tunedSpeed;
   targetSpeed = tunedSpeed;
 
