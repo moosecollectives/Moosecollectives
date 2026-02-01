@@ -412,7 +412,7 @@ window.addEventListener('load', () => {
     const showZoom = () => {
       zoomWindow.classList.add('is-visible');
       lens.classList.add('is-visible');
-      console.log('[zoom] show');
+      console.log('[zoom] show', zoomWindow.style.backgroundImage);
     };
 
     const hideZoom = () => {

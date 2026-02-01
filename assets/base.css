@@ -896,6 +896,7 @@ a {
   border-radius: 22px;
   overflow: visible;
   position: relative;
+  z-index: 2;
 }
 
 .product-media-main img {
@@ -936,6 +937,7 @@ a {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.15s ease;
+  z-index: 5;
 }
 
 .product-zoom-lens.is-visible,
