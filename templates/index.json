@@ -25,7 +25,7 @@
     "product-carousel": {
       "type": "product-carousel",
       "settings": {
-        "heading": "All products",
+        "heading": "",
         "collection": "",
         "cta_label": "Browse collection",
         "direction": "left",
