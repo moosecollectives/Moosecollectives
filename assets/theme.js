@@ -84,8 +84,18 @@ const initCarousel = (carousel) => {
     }
   };
 
+  const isInEdgeZone = (clientX) => {
+    const rect = carousel.getBoundingClientRect();
+    const edgeSize = Math.min(80, rect.width * 0.18);
+    const x = clientX - rect.left;
+    return x <= edgeSize || x >= rect.width - edgeSize;
+  };
+
   carousel.querySelectorAll('[data-carousel-card]').forEach((card) => {
-    card.addEventListener('mouseenter', () => {
+    card.addEventListener('mouseenter', (event) => {
+      if (isInEdgeZone(event.clientX)) {
+        return;
+      }
       setHoverPause(true);
       edgeHovering = false;
       clearTimeout(edgeTimeout);
@@ -160,8 +170,8 @@ const initCarousel = (carousel) => {
     carousel.classList.remove('edge-hover');
   });
 
-  carousel.querySelectorAll('[data-carousel-card] a').forEach((link) => {
-    link.addEventListener('mousemove', (event) => {
+  carousel.querySelectorAll('[data-carousel-card]').forEach((card) => {
+    card.addEventListener('mousemove', (event) => {
       updateEdgeState(event.clientX);
     });
   });
