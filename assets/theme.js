@@ -334,6 +334,25 @@ window.addEventListener('load', () => {
     });
   });
 
+  document.querySelectorAll('[data-product-media]').forEach((media) => {
+    const mainImg = media.querySelector('[data-media-img]');
+    if (!mainImg) return;
+
+    media.querySelectorAll('[data-media-thumb]').forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        const src = thumb.dataset.mediaSrc;
+        if (!src) return;
+        mainImg.src = src;
+        mainImg.removeAttribute('srcset');
+        mainImg.removeAttribute('sizes');
+
+        media.querySelectorAll('[data-media-thumb]').forEach((button) => {
+          button.classList.toggle('is-active', button === thumb);
+        });
+      });
+    });
+  });
+
   const cartCount = document.querySelector('[data-cart-count]');
 
   let cartCache = null;
