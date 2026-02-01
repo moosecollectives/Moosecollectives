@@ -118,10 +118,10 @@ const initCarousel = (carousel) => {
 
   window.addEventListener('resize', refresh);
 
-  const edgeHover = (event) => {
+  const updateEdgeState = (clientX) => {
     const rect = carousel.getBoundingClientRect();
     const edgeSize = Math.min(80, rect.width * 0.18);
-    const x = event.clientX - rect.left;
+    const x = clientX - rect.left;
     const isLeft = x <= edgeSize;
     const isRight = x >= rect.width - edgeSize;
     carousel.classList.toggle('edge-hover', isLeft || isRight);
@@ -148,7 +148,23 @@ const initCarousel = (carousel) => {
     }
   };
 
+  const edgeHover = (event) => {
+    updateEdgeState(event.clientX);
+  };
+
   carousel.addEventListener('mousemove', edgeHover);
+  carousel.addEventListener('mouseenter', (event) => {
+    updateEdgeState(event.clientX);
+  });
+  carousel.addEventListener('mouseleave', () => {
+    carousel.classList.remove('edge-hover');
+  });
+
+  carousel.querySelectorAll('[data-carousel-card] a').forEach((link) => {
+    link.addEventListener('mousemove', (event) => {
+      updateEdgeState(event.clientX);
+    });
+  });
 
   requestAnimationFrame(step);
 };
