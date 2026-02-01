@@ -1,3 +1,7 @@
+console.log('[theme] loaded');
+window.addEventListener('error', (event) => {
+  console.log('[theme] error', event.message);
+});
 document.documentElement.classList.remove('no-js');
 
 const initCarousel = (carousel) => {
