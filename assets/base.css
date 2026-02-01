@@ -894,7 +894,7 @@ a {
 
 .product-media-main {
   border-radius: 22px;
-  overflow: hidden;
+  overflow: visible;
   position: relative;
 }
 
@@ -902,6 +902,7 @@ a {
   width: 100%;
   height: auto;
   object-fit: contain;
+  border-radius: 22px;
 }
 
 .product-zoom-lens {
