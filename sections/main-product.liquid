@@ -6,7 +6,9 @@
     <div class="product-media" data-product-media>
       {% if product.featured_image %}
         <div class="product-media-main" data-media-main>
-          {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title, data_media_img: true }}
+          {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title, data_media_img: true, data_media_zoom: product.featured_image | image_url: width: 2000 }}
+          <div class="product-zoom-lens" data-zoom-lens></div>
+          <div class="product-zoom-window" data-zoom-window></div>
         </div>
       {% endif %}
       {% if product.images.size > 1 %}

@@ -337,6 +337,26 @@ window.addEventListener('load', () => {
   document.querySelectorAll('[data-product-media]').forEach((media) => {
     const mainImg = media.querySelector('[data-media-img]');
     if (!mainImg) return;
+    const lens = media.querySelector('[data-zoom-lens]');
+    const zoomWindow = media.querySelector('[data-zoom-window]');
+    let zoomReady = false;
+    let zoomSrc = mainImg.dataset.mediaZoom || mainImg.src;
+
+    const setZoomImage = (src) => {
+      zoomSrc = src;
+      if (!zoomWindow) return;
+      zoomWindow.style.backgroundImage = `url("${src}")`;
+    };
+
+    if (zoomWindow) {
+      setZoomImage(zoomSrc);
+      mainImg.addEventListener('load', () => {
+        zoomReady = true;
+      });
+      if (mainImg.complete) {
+        zoomReady = true;
+      }
+    }
 
     media.querySelectorAll('[data-media-thumb]').forEach((thumb) => {
       thumb.addEventListener('click', () => {
@@ -345,12 +365,48 @@ window.addEventListener('load', () => {
         mainImg.src = src;
         mainImg.removeAttribute('srcset');
         mainImg.removeAttribute('sizes');
+        setZoomImage(src);
 
         media.querySelectorAll('[data-media-thumb]').forEach((button) => {
           button.classList.toggle('is-active', button === thumb);
         });
       });
     });
+
+    if (!zoomWindow || !lens) return;
+
+    const moveZoom = (event) => {
+      if (!zoomReady) return;
+      const rect = mainImg.getBoundingClientRect();
+      const x = Math.min(Math.max(0, event.clientX - rect.left), rect.width);
+      const y = Math.min(Math.max(0, event.clientY - rect.top), rect.height);
+
+      const lensSize = 120;
+      const lensX = Math.min(Math.max(x - lensSize / 2, 0), rect.width - lensSize);
+      const lensY = Math.min(Math.max(y - lensSize / 2, 0), rect.height - lensSize);
+
+      lens.style.transform = `translate(${lensX}px, ${lensY}px)`;
+      lens.style.width = `${lensSize}px`;
+      lens.style.height = `${lensSize}px`;
+
+      const zoomX = (x / rect.width) * 100;
+      const zoomY = (y / rect.height) * 100;
+      zoomWindow.style.backgroundPosition = `${zoomX}% ${zoomY}%`;
+    };
+
+    const showZoom = () => {
+      zoomWindow.classList.add('is-visible');
+      lens.classList.add('is-visible');
+    };
+
+    const hideZoom = () => {
+      zoomWindow.classList.remove('is-visible');
+      lens.classList.remove('is-visible');
+    };
+
+    mainImg.addEventListener('mouseenter', showZoom);
+    mainImg.addEventListener('mouseleave', hideZoom);
+    mainImg.addEventListener('mousemove', moveZoom);
   });
 
   const cartCount = document.querySelector('[data-cart-count]');
