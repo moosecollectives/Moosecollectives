@@ -339,6 +339,7 @@ window.addEventListener('load', () => {
     if (!mainImg) return;
     const lens = media.querySelector('[data-zoom-lens]');
     const zoomWindow = media.querySelector('[data-zoom-window]');
+    const mediaMain = media.querySelector('[data-media-main]');
     let zoomReady = false;
     let zoomSrc = mainImg.dataset.mediaZoom || mainImg.src;
 
@@ -374,11 +375,11 @@ window.addEventListener('load', () => {
       });
     });
 
-    if (!zoomWindow || !lens) return;
+    if (!zoomWindow || !lens || !mediaMain) return;
 
     const moveZoom = (event) => {
       if (!zoomReady) return;
-      const rect = mainImg.getBoundingClientRect();
+      const rect = mediaMain.getBoundingClientRect();
       const x = Math.min(Math.max(0, event.clientX - rect.left), rect.width);
       const y = Math.min(Math.max(0, event.clientY - rect.top), rect.height);
 
@@ -405,9 +406,9 @@ window.addEventListener('load', () => {
       lens.classList.remove('is-visible');
     };
 
-    mainImg.addEventListener('mouseenter', showZoom);
-    mainImg.addEventListener('mouseleave', hideZoom);
-    mainImg.addEventListener('mousemove', moveZoom);
+    mediaMain.addEventListener('mouseenter', showZoom);
+    mediaMain.addEventListener('mouseleave', hideZoom);
+    mediaMain.addEventListener('mousemove', moveZoom);
   });
 
   const cartCount = document.querySelector('[data-cart-count]');
