@@ -76,17 +76,39 @@ const initCarousel = (carousel) => {
     halfWidth = getHalfWidth();
   };
 
-  carousel.addEventListener('mouseenter', () => {
-    clearTimeout(edgeTimeout);
-    targetSpeed = tunedSpeed;
+  let hoverPause = false;
+  const setHoverPause = (pause) => {
+    hoverPause = pause;
+    if (pause) {
+      targetSpeed = 0;
+    } else if (!edgeHovering) {
+      clearTimeout(edgeTimeout);
+      edgeTimeout = setTimeout(() => {
+        targetSpeed = tunedSpeed;
+      }, 2000);
+    }
+  };
+
+  carousel.querySelectorAll('[data-carousel-card]').forEach((card) => {
+    card.addEventListener('mouseenter', () => {
+      setHoverPause(true);
+    });
+    card.addEventListener('mouseleave', () => {
+      setHoverPause(false);
+    });
   });
 
+  let edgeHovering = false;
+
   carousel.addEventListener('mouseleave', () => {
-    clearTimeout(edgeTimeout);
+    edgeHovering = false;
     directionMultiplier = baseDirection;
-    edgeTimeout = setTimeout(() => {
-      targetSpeed = tunedSpeed;
-    }, 2000);
+    if (!hoverPause) {
+      clearTimeout(edgeTimeout);
+      edgeTimeout = setTimeout(() => {
+        targetSpeed = tunedSpeed;
+      }, 2000);
+    }
   });
 
   window.addEventListener('resize', refresh);
@@ -100,16 +122,20 @@ const initCarousel = (carousel) => {
 
     if (isLeft || isRight) {
       clearTimeout(edgeTimeout);
+      edgeHovering = true;
       directionMultiplier = isLeft ? 1 : -1;
       targetSpeed = tunedSpeed * 0.9;
     } else {
+      edgeHovering = false;
       if (directionMultiplier !== baseDirection) {
         directionMultiplier = baseDirection;
       }
-      clearTimeout(edgeTimeout);
-      edgeTimeout = setTimeout(() => {
-        targetSpeed = tunedSpeed;
-      }, 2000);
+      if (!hoverPause) {
+        clearTimeout(edgeTimeout);
+        edgeTimeout = setTimeout(() => {
+          targetSpeed = tunedSpeed;
+        }, 2000);
+      }
     }
   };
 
