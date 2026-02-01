@@ -86,14 +86,20 @@ const initCarousel = (carousel) => {
 
   carousel.querySelectorAll('[data-carousel-card]').forEach((card) => {
     card.addEventListener('mouseenter', () => {
-      if (!edgeHovering) {
-        setHoverPause(true);
-      }
+      setHoverPause(true);
+      edgeHovering = false;
+      clearTimeout(edgeTimeout);
     });
     card.addEventListener('mouseleave', () => {
-      if (!edgeHovering) {
-        setHoverPause(false);
+      setHoverPause(false);
+      if (edgeHovering) {
+        targetSpeed = tunedSpeed * 0.9;
+        return;
       }
+      clearTimeout(edgeTimeout);
+      edgeTimeout = setTimeout(() => {
+        targetSpeed = tunedSpeed;
+      }, 2000);
     });
   });
 
@@ -119,6 +125,11 @@ const initCarousel = (carousel) => {
     const isLeft = x <= edgeSize;
     const isRight = x >= rect.width - edgeSize;
 
+    if (hoverPause) {
+      edgeHovering = false;
+      return;
+    }
+
     if (isLeft || isRight) {
       clearTimeout(edgeTimeout);
       edgeHovering = true;
@@ -128,10 +139,6 @@ const initCarousel = (carousel) => {
       edgeHovering = false;
       if (directionMultiplier !== baseDirection) {
         directionMultiplier = baseDirection;
-      }
-      if (hoverPause) {
-        targetSpeed = 0;
-        return;
       }
       clearTimeout(edgeTimeout);
       edgeTimeout = setTimeout(() => {
