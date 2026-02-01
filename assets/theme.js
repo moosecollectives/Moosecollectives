@@ -336,10 +336,14 @@ window.addEventListener('load', () => {
 
   document.querySelectorAll('[data-product-media]').forEach((media) => {
     const mainImg = media.querySelector('[data-media-img]');
-    if (!mainImg) return;
+    if (!mainImg) {
+      console.log('[zoom] missing main image');
+      return;
+    }
     const lens = media.querySelector('[data-zoom-lens]');
     const zoomWindow = media.querySelector('[data-zoom-window]');
     const mediaMain = media.querySelector('[data-media-main]');
+    console.log('[zoom] init', { mainImg, lens, zoomWindow, mediaMain });
     let zoomReady = false;
     let zoomSrc = mainImg.dataset.mediaZoom || mainImg.src;
 
@@ -353,9 +357,11 @@ window.addEventListener('load', () => {
       setZoomImage(zoomSrc);
       mainImg.addEventListener('load', () => {
         zoomReady = true;
+        console.log('[zoom] image loaded');
       });
       if (mainImg.complete) {
         zoomReady = true;
+        console.log('[zoom] image already complete');
       }
     }
 
@@ -375,7 +381,10 @@ window.addEventListener('load', () => {
       });
     });
 
-    if (!zoomWindow || !lens || !mediaMain) return;
+    if (!zoomWindow || !lens || !mediaMain) {
+      console.log('[zoom] missing required elements');
+      return;
+    }
 
     const moveZoom = (event) => {
       if (!zoomReady) return;
@@ -399,11 +408,13 @@ window.addEventListener('load', () => {
     const showZoom = () => {
       zoomWindow.classList.add('is-visible');
       lens.classList.add('is-visible');
+      console.log('[zoom] show');
     };
 
     const hideZoom = () => {
       zoomWindow.classList.remove('is-visible');
       lens.classList.remove('is-visible');
+      console.log('[zoom] hide');
     };
 
     mediaMain.addEventListener('mouseenter', showZoom);
