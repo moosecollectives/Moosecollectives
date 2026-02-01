@@ -3,6 +3,7 @@
     <h1 class="section-title">{{ page.title }}</h1>
     <div class="page-content{% if template.suffix == 'faq' %} page-content-faq{% endif %}{% if template.suffix == 'commissions' or page.handle == 'commissions' %} page-content-commissions{% endif %}">
       {% if template.suffix == 'commissions' or page.handle == 'commissions' %}
+        {{ page.content }}
         <div class="globo_widget_26011"></div>
       {% else %}
         {{ page.content }}
