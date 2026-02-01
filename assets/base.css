@@ -34,6 +34,7 @@ body {
   color: var(--ink);
   background: #bfe7ff;
   min-height: 100vh;
+  overflow-x: hidden;
 }
 
 .template-index,
@@ -415,7 +416,10 @@ a {
 
 .product-carousel {
   position: relative;
-  overflow: visible;
+  overflow: hidden;
+  max-width: 100%;
+  padding: 0 var(--page-gutter);
+  box-sizing: border-box;
 }
 
 .product-carousel-track {
