@@ -339,7 +339,7 @@ window.addEventListener('load', () => {
   });
 
   document.querySelectorAll('[data-product-media]').forEach((media) => {
-    const mainImg = media.querySelector('[data-media-img]');
+    const mainImg = media.querySelector('[data-media-main] img');
     if (!mainImg) {
       console.log('[zoom] missing main image');
       return;
