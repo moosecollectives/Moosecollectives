@@ -10,13 +10,15 @@ const initCarousel = (carousel) => {
   let position = 0;
   let speed = 0.6;
   let targetSpeed = speed;
-  const direction = carousel.dataset.direction === 'right' ? 1 : -1;
+  const baseDirection = carousel.dataset.direction === 'right' ? 1 : -1;
   const baseSpeed = parseFloat(carousel.dataset.speed) || 0.6;
   const isMobile = window.matchMedia('(max-width: 980px)').matches;
   const mobileBoost = isMobile ? 1.1 : 0;
   const tunedSpeed = Math.min((baseSpeed + mobileBoost) * 0.6, 2);
   speed = tunedSpeed;
   targetSpeed = tunedSpeed;
+  let directionMultiplier = baseDirection;
+  let edgeTimeout;
 
   const getHalfWidth = () => track.scrollWidth / 2;
   let halfWidth = getHalfWidth();
@@ -57,12 +59,12 @@ const initCarousel = (carousel) => {
 
   const step = () => {
     speed += (targetSpeed - speed) * 0.06;
-    position += direction * speed;
+    position += directionMultiplier * speed;
 
-    if (direction === -1 && Math.abs(position) >= halfWidth) {
+    if (directionMultiplier === -1 && Math.abs(position) >= halfWidth) {
       position = 0;
     }
-    if (direction === 1 && position >= 0) {
+    if (directionMultiplier === 1 && position >= 0) {
       position = -halfWidth;
     }
 
@@ -75,14 +77,43 @@ const initCarousel = (carousel) => {
   };
 
   carousel.addEventListener('mouseenter', () => {
-    targetSpeed = 0;
-  });
-
-  carousel.addEventListener('mouseleave', () => {
+    clearTimeout(edgeTimeout);
     targetSpeed = tunedSpeed;
   });
 
+  carousel.addEventListener('mouseleave', () => {
+    clearTimeout(edgeTimeout);
+    directionMultiplier = baseDirection;
+    edgeTimeout = setTimeout(() => {
+      targetSpeed = tunedSpeed;
+    }, 2000);
+  });
+
   window.addEventListener('resize', refresh);
+
+  const edgeHover = (event) => {
+    const rect = carousel.getBoundingClientRect();
+    const edgeSize = Math.min(80, rect.width * 0.18);
+    const x = event.clientX - rect.left;
+    const isLeft = x <= edgeSize;
+    const isRight = x >= rect.width - edgeSize;
+
+    if (isLeft || isRight) {
+      clearTimeout(edgeTimeout);
+      directionMultiplier = isLeft ? 1 : -1;
+      targetSpeed = tunedSpeed * 0.9;
+    } else {
+      if (directionMultiplier !== baseDirection) {
+        directionMultiplier = baseDirection;
+      }
+      clearTimeout(edgeTimeout);
+      edgeTimeout = setTimeout(() => {
+        targetSpeed = tunedSpeed;
+      }, 2000);
+    }
+  };
+
+  carousel.addEventListener('mousemove', edgeHover);
 
   requestAnimationFrame(step);
 };
