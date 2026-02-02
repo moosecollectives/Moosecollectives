@@ -84,8 +84,6 @@
       {{ section.settings.media_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
     {% elsif section.settings.media_image != blank %}
       {{ section.settings.media_image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: product.title }}
-    {% else %}
-      <p>Add an image or video here later.</p>
     {% endif %}
   </div>
 </section>
