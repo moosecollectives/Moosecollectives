@@ -893,8 +893,8 @@ a {
 
 .product-detail-container {
   max-width: 100%;
-  padding-left: clamp(12px, 2vw, 24px);
-  padding-right: clamp(12px, 2vw, 24px);
+  padding-left: 0;
+  padding-right: 0;
 }
 
 .product-media {
