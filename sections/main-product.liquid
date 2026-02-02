@@ -78,22 +78,24 @@
   </div>
 </section>
 
-<section class="section product-feature-block">
-  <div class="container feature-placeholder">
-    <h2 class="section-title">Featured drop</h2>
-    <p>Add your featured content here soon.</p>
-  </div>
-</section>
-
 <section class="section product-media-block">
   <div class="container media-placeholder">
-    <p>Add an image or video here later.</p>
+    {% if section.settings.media_video != blank %}
+      {{ section.settings.media_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+    {% elsif section.settings.media_image != blank %}
+      {{ section.settings.media_image | image_url: width: 1600 | image_tag: loading: 'lazy', alt: product.title }}
+    {% else %}
+      <p>Add an image or video here later.</p>
+    {% endif %}
   </div>
 </section>
 
 {% schema %}
 {
   "name": "Main product",
-  "settings": []
+  "settings": [
+    {"type": "image_picker", "id": "media_image", "label": "Media image"},
+    {"type": "video", "id": "media_video", "label": "Media video"}
+  ]
 }
 {% endschema %}
