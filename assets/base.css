@@ -461,7 +461,7 @@ a {
 
 .product-carousel-card:hover {
   transform: translateY(-6px) rotate(0deg) scale(1.05);
-  box-shadow: 0 30px 70px -44px rgba(7, 18, 30, 0.65);
+  box-shadow: 0 22px 50px -38px rgba(7, 18, 30, 0.5);
   z-index: 2;
 }
 
