@@ -408,8 +408,8 @@ a {
 .carousel-section {
   padding-top: 16px;
   padding-bottom: 12px;
-  background: rgba(12, 52, 110, 0.12);
-  border-radius: 28px;
+  background: rgba(12, 52, 110, 0.22);
+  border-radius: 0;
 }
 
 .carousel-section + .carousel-section {
