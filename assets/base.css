@@ -1208,10 +1208,10 @@ a {
 
 .product-feature-block .feature-placeholder,
 .product-media-block .media-placeholder {
-  background: rgba(255, 255, 255, 0.72);
-  border-radius: 22px;
-  padding: clamp(18px, 3vw, 28px);
-  border: 1px dashed rgba(12, 18, 32, 0.2);
+  background: transparent;
+  border-radius: 0;
+  padding: 0;
+  border: none;
   text-align: center;
 }
 
