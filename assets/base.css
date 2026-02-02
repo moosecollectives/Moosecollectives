@@ -707,6 +707,15 @@ a {
   min-width: 96px;
 }
 
+.cart-price.is-tapped {
+  transition: color 0.2s ease;
+}
+
+.cart-price.is-tapped .cart-price-total,
+.cart-price.is-tapped .cart-price-breakdown {
+  color: rgba(255, 90, 0, 0.7);
+}
+
 .cart-price-total,
 .cart-price-breakdown {
   position: absolute;

@@ -320,7 +320,11 @@ window.addEventListener('load', () => {
     }
 
     price.addEventListener('click', () => {
+      if (!window.matchMedia('(max-width: 980px)').matches) {
+        return;
+      }
       price.classList.toggle('is-breakdown');
+      price.classList.add('is-tapped');
       if (row) {
         row.classList.toggle('is-breakdown', price.classList.contains('is-breakdown'));
       }
@@ -328,12 +332,16 @@ window.addEventListener('load', () => {
         clearTimeout(price._breakdownTimer);
         price._breakdownTimer = setTimeout(() => {
           price.classList.remove('is-breakdown');
+          price.classList.remove('is-tapped');
           if (row) {
             row.classList.remove('is-breakdown');
           }
         }, 10000);
       } else {
         clearTimeout(price._breakdownTimer);
+        setTimeout(() => {
+          price.classList.remove('is-tapped');
+        }, 200);
       }
     });
   });
