@@ -259,11 +259,12 @@ a {
   gap: 10px;
   padding: 12px 24px;
   border-radius: 999px;
-  border: 2px solid transparent;
+  border: 0;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background-clip: padding-box;
 }
 
 .button-primary {
@@ -274,7 +275,7 @@ a {
 
 .button-secondary {
   background: rgba(255, 255, 255, 0.9);
-  border-color: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.25);
 }
 
 .button:hover {
