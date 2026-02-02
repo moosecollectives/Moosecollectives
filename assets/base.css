@@ -1263,7 +1263,7 @@ a {
 }
 
 .footer {
-  padding: 56px 0;
+  padding: 24px 0;
   border-top: 2px solid rgba(12, 18, 32, 0.12);
   background:
     radial-gradient(120% 120% at 12% 0%, rgba(255, 122, 0, 0.2) 0%, transparent 60%),
