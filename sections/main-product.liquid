@@ -1,8 +1,5 @@
 <section class="section product-detail">
-  <div class="container product-detail-grid">
-    <a class="product-back" href="{{ routes.all_products_collection_url }}" aria-label="Back to products">
-      <span aria-hidden="true">‹</span>
-    </a>
+  <div class="container product-detail-grid product-detail-container">
     <div class="product-media" data-product-media>
       {% if product.featured_image %}
         {% assign zoom_url = product.featured_image | image_url: width: 2000 %}
@@ -55,24 +52,6 @@
           </div>
         </div>
       </form>
-      {% assign upsell_product = all_products['adhesive-wall-strip'] %}
-      {% if upsell_product != blank and product.handle != upsell_product.handle %}
-        <div class="product-upsell-inline">
-          <div class="upsell-card">
-            <div>
-              <span class="upsell-eyebrow">Recommended add-on</span>
-              <h3 class="upsell-title">
-                <a class="upsell-link" href="{{ upsell_product.url }}">Add adhesive strips to your order</a>
-              </h3>
-              <p class="upsell-subtitle">Attach your rug to your wall!</p>
-            </div>
-            <form class="upsell-quick-add" method="post" action="/cart/add" data-upsell-quick-add>
-              <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
-              <button class="button button-secondary" type="submit">Add to cart</button>
-            </form>
-          </div>
-        </div>
-      {% endif %}
     </div>
   </div>
 </section>
@@ -82,6 +61,27 @@
     <div class="globo_widget_26011"></div>
   </div>
 </section>
+
+{% assign upsell_product = all_products['adhesive-wall-strip'] %}
+{% if upsell_product != blank and product.handle != upsell_product.handle %}
+  <section class="section product-upsell-bottom">
+    <div class="container">
+      <div class="upsell-card">
+        <div>
+          <span class="upsell-eyebrow">Recommended add-on</span>
+          <h3 class="upsell-title">
+            <a class="upsell-link" href="{{ upsell_product.url }}">Add adhesive strips to your order</a>
+          </h3>
+          <p class="upsell-subtitle">Attach your rug to your wall!</p>
+        </div>
+        <form class="upsell-quick-add" method="post" action="/cart/add" data-upsell-quick-add>
+          <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
+          <button class="button button-secondary" type="submit">Add to cart</button>
+        </form>
+      </div>
+    </div>
+  </section>
+{% endif %}
 
 {% schema %}
 {
