@@ -27,11 +27,6 @@
           {% endfor %}
         </div>
       {% endif %}
-      {% if section.settings.media_video != blank %}
-        <div class="product-inline-video">
-          {{ section.settings.media_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
-        </div>
-      {% endif %}
     </div>
     <div class="product-zoom-modal" data-zoom-modal>
       <button class="product-zoom-close" type="button" aria-label="Close zoom">×</button>

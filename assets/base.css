@@ -926,17 +926,6 @@ a {
   border-radius: 0;
 }
 
-.product-inline-video {
-  border-radius: 16px;
-  overflow: hidden;
-}
-
-.product-inline-video video {
-  width: 100%;
-  height: 180px;
-  object-fit: cover;
-  display: block;
-}
 
 .product-zoom-lens {
   position: absolute;
