@@ -897,6 +897,10 @@ a {
   padding-right: 0;
 }
 
+.product-detail .container {
+  max-width: 100%;
+}
+
 .product-media {
   border-radius: 0;
   overflow: visible;
@@ -1057,6 +1061,23 @@ a {
   border: none;
   box-shadow: none;
   width: 100%;
+}
+
+.product-info .hero-title,
+.product-info p {
+  max-width: 100%;
+}
+
+.product-media-full {
+  padding: 0;
+  margin: 0;
+}
+
+.product-media-full img,
+.product-media-full video {
+  width: 100%;
+  height: auto;
+  display: block;
 }
 
 .product-cart-actions {
