@@ -11,7 +11,9 @@
   "sections": {
     "main": {
       "type": "main-product",
-      "settings": {}
+      "settings": {
+        "media_image": "shopify://shop_images/0786a579-8281-4033-a64a-9aa30a5ddb22.jpg"
+      }
     },
     "1769832804c5606922": {
       "type": "apps",
