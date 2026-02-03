@@ -1091,6 +1091,12 @@ a {
   margin: 0;
 }
 
+.product-description-list .desc-size {
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
 .product-media-full {
   padding: 0;
   margin: 0;
