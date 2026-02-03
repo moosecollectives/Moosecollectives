@@ -7,24 +7,49 @@
       {% endif %}
     </div>
 
-    {% assign featured_products = '' | split: ',' %}
-    {% if section.settings.product_1 != blank %}{% assign featured_products = featured_products | push: section.settings.product_1 %}{% endif %}
-    {% if section.settings.product_2 != blank %}{% assign featured_products = featured_products | push: section.settings.product_2 %}{% endif %}
-    {% if section.settings.product_3 != blank %}{% assign featured_products = featured_products | push: section.settings.product_3 %}{% endif %}
+    {% assign product_1 = section.settings.product_1 %}
+    {% assign product_2 = section.settings.product_2 %}
+    {% assign product_3 = section.settings.product_3 %}
+    {% assign has_custom = false %}
+    {% if product_1 != blank or product_2 != blank or product_3 != blank %}
+      {% assign has_custom = true %}
+    {% endif %}
 
-    {% if featured_products.size > 0 %}
+    {% if has_custom %}
       <div class="product-grid">
-        {% for product in featured_products %}
+        {% if product_1 != blank %}
           <article class="product-card">
-            <a href="{{ product.url }}">
-              {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
+            <a href="{{ product_1.url }}">
+              {% if product_1.featured_image %}
+                {{ product_1.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product_1.title }}
               {% endif %}
-              <h3>{{ product.title }}</h3>
-              <span class="price">{{ product.price | money }}</span>
+              <h3>{{ product_1.title }}</h3>
+              <span class="price">{{ product_1.price | money }}</span>
             </a>
           </article>
-        {% endfor %}
+        {% endif %}
+        {% if product_2 != blank %}
+          <article class="product-card">
+            <a href="{{ product_2.url }}">
+              {% if product_2.featured_image %}
+                {{ product_2.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product_2.title }}
+              {% endif %}
+              <h3>{{ product_2.title }}</h3>
+              <span class="price">{{ product_2.price | money }}</span>
+            </a>
+          </article>
+        {% endif %}
+        {% if product_3 != blank %}
+          <article class="product-card">
+            <a href="{{ product_3.url }}">
+              {% if product_3.featured_image %}
+                {{ product_3.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product_3.title }}
+              {% endif %}
+              <h3>{{ product_3.title }}</h3>
+              <span class="price">{{ product_3.price | money }}</span>
+            </a>
+          </article>
+        {% endif %}
       </div>
     {% elsif section.settings.collection != blank %}
       <div class="product-grid">
