@@ -15,10 +15,7 @@ const initCarousel = (carousel) => {
   let speed = 0.6;
   let targetSpeed = speed;
   const baseDirection = carousel.dataset.direction === 'right' ? 1 : -1;
-  const baseSpeed = parseFloat(carousel.dataset.speed) || 0.6;
-  const isMobile = window.matchMedia('(max-width: 980px)').matches;
-  const mobileBoost = isMobile ? 1.1 : 0;
-  const tunedSpeed = Math.min((baseSpeed + mobileBoost) * 0.6, 2);
+  const tunedSpeed = 50;
   speed = tunedSpeed;
   targetSpeed = tunedSpeed;
   let directionMultiplier = baseDirection;
