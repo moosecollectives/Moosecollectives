@@ -195,29 +195,22 @@ window.addEventListener('load', () => {
     const resultAdd = result ? result.querySelector('[data-case-result-add]') : null;
     if (!track || items.length === 0 || !spinButton) return;
 
-    const ensureRepeats = () => {
+    const ensureLoop = () => {
       const currentItems = Array.from(track.querySelectorAll('[data-case-item]'));
       if (currentItems.length === 0) return;
-      const trackStyle = window.getComputedStyle(track);
-      const gap = parseFloat(trackStyle.gap || trackStyle.columnGap) || 0;
-      const itemWidth = currentItems[0].offsetWidth + gap;
-      const viewport = carousel.querySelector('.case-viewport');
-      const viewportWidth = viewport ? viewport.offsetWidth : 0;
-      const baseWidth = itemWidth * currentItems.length;
-      const targetWidth = Math.max(viewportWidth * 6, 3000);
-      const clonesNeeded = Math.max(1, Math.ceil((targetWidth - baseWidth) / baseWidth));
-      const fragment = document.createDocumentFragment();
-      for (let i = 0; i < clonesNeeded; i += 1) {
-        currentItems.forEach((item) => {
-          const clone = item.cloneNode(true);
-          fragment.appendChild(clone);
-        });
+      if (currentItems.length % 2 === 0) {
+        items = currentItems;
+        return;
       }
+      const fragment = document.createDocumentFragment();
+      currentItems.forEach((item) => {
+        fragment.appendChild(item.cloneNode(true));
+      });
       track.appendChild(fragment);
       items = Array.from(track.querySelectorAll('[data-case-item]'));
     };
 
-    ensureRepeats();
+    ensureLoop();
 
     const rarityPool = [
       { name: 'common', weight: 35 },
@@ -246,12 +239,27 @@ window.addEventListener('load', () => {
 
     let currentX = 0;
     let spinning = false;
+    let velocity = 0;
+    let halfWidth = track.scrollWidth / 2;
 
     const getItemMetrics = () => {
       const first = items[0];
       const trackStyle = window.getComputedStyle(track);
       const gap = parseFloat(trackStyle.gap || trackStyle.columnGap) || 0;
       return { width: first.offsetWidth + gap };
+    };
+
+    const wrapPosition = () => {
+      if (currentX <= -halfWidth) {
+        currentX += halfWidth;
+      }
+      if (currentX > 0) {
+        currentX -= halfWidth;
+      }
+    };
+
+    const updateHalfWidth = () => {
+      halfWidth = track.scrollWidth / 2;
     };
 
     const showResult = (item) => {
@@ -280,32 +288,41 @@ window.addEventListener('load', () => {
       hideResult();
       spinButton.hidden = true;
 
+      updateHalfWidth();
       const metrics = getItemMetrics();
       const viewport = carousel.querySelector('.case-viewport');
       if (!viewport) return;
-      const centerOffset = viewport.offsetWidth / 2 - metrics.width / 2;
-      const totalItems = items.length;
-      const loops = 2;
-      const winnerIndex = Math.floor(Math.random() * totalItems);
-      const targetIndex = winnerIndex + totalItems * loops;
-      const targetX = -(targetIndex * metrics.width) + centerOffset;
+      const center = viewport.offsetWidth / 2;
+      const baseCount = Math.floor(items.length / 2);
+      const baseItems = items.slice(0, baseCount);
 
-      track.style.transition = 'none';
-      track.style.transform = 'translateX(0px)';
-      void track.offsetHeight;
-      track.style.transition = 'transform 4.2s cubic-bezier(0.15, 0.8, 0.1, 1)';
-      track.style.transform = `translateX(${targetX}px)`;
-      currentX = targetX;
+      velocity = 30;
+      const decel = 0.985;
 
-      const onDone = () => {
-        track.removeEventListener('transitionend', onDone);
-        spinning = false;
-        const item = items[winnerIndex];
-        showResult(item);
-        spinButton.hidden = false;
+      const tick = () => {
+        currentX -= velocity;
+        wrapPosition();
+        track.style.transform = `translateX(${currentX}px)`;
+        velocity *= decel;
+
+        if (velocity <= 0.35) {
+          const indexFloat = (center - currentX - metrics.width / 2) / metrics.width;
+          const snapIndex = Math.round(indexFloat);
+          const target = center - (snapIndex * metrics.width + metrics.width / 2);
+          currentX = target;
+          wrapPosition();
+          track.style.transform = `translateX(${currentX}px)`;
+          spinning = false;
+          const winner = baseItems[((snapIndex % baseItems.length) + baseItems.length) % baseItems.length];
+          showResult(winner);
+          spinButton.hidden = false;
+          return;
+        }
+
+        requestAnimationFrame(tick);
       };
 
-      track.addEventListener('transitionend', onDone);
+      requestAnimationFrame(tick);
     };
 
     spinButton.addEventListener('click', spin);
