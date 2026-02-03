@@ -1069,7 +1069,7 @@ a {
 
 .product-description-block {
   margin: 0 0 16px;
-  padding: 10px 0 10px 14px;
+  padding: 6px 0 6px 10px;
   border-left: 3px solid rgba(255, 90, 0, 0.55);
   color: var(--ink-soft);
   line-height: 1.7;
