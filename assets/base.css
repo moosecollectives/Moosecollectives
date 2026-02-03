@@ -1069,27 +1069,26 @@ a {
 
 .product-description-block {
   margin: 0 0 16px;
-  padding: 0;
-  border-radius: 0;
-  color: var(--ink);
-  line-height: 1.55;
-  letter-spacing: 0.02em;
+  padding: 0 0 0 10px;
+  color: var(--ink-soft);
+  line-height: 1.4;
+  letter-spacing: 0.01em;
   background: transparent;
-  border: none;
-  box-shadow: none;
-  text-transform: uppercase;
-  font-weight: 600;
-  position: relative;
+  border-left: 3px solid rgba(255, 90, 0, 0.6);
+  text-transform: none;
+  font-weight: 400;
 }
 
-.product-description-block::before {
-  content: '';
-  display: block;
-  width: 80px;
-  height: 4px;
-  background: linear-gradient(90deg, var(--tangerine-1), var(--tangerine-2));
-  margin-bottom: 10px;
-  border-radius: 999px;
+.product-description-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 6px;
+}
+
+.product-description-list li {
+  margin: 0;
 }
 
 .product-media-full {
