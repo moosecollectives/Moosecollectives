@@ -1069,8 +1069,8 @@ a {
 
 .product-description-block {
   margin: 0;
-  padding: 0 0 0 6px;
-  border-left: 3px solid rgba(255, 90, 0, 0.55);
+  padding: 0;
+  border-left: 0;
   color: var(--ink-soft);
   line-height: 1;
   letter-spacing: 0.01em;
