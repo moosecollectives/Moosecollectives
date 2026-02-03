@@ -1068,17 +1068,28 @@ a {
 }
 
 .product-description-block {
-  margin: 0;
+  margin: 0 0 16px;
   padding: 0;
   border-radius: 0;
-  color: var(--ink-soft);
-  line-height: 1;
-  letter-spacing: 0.01em;
+  color: var(--ink);
+  line-height: 1.55;
+  letter-spacing: 0.02em;
   background: transparent;
   border: none;
   box-shadow: none;
-  text-transform: none;
-  white-space: normal;
+  text-transform: uppercase;
+  font-weight: 600;
+  position: relative;
+}
+
+.product-description-block::before {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(90deg, var(--tangerine-1), var(--tangerine-2));
+  margin-bottom: 10px;
+  border-radius: 999px;
 }
 
 .product-media-full {

@@ -35,14 +35,7 @@
     <div class="product-info">
       <h1 class="hero-title">{{ product.title }}</h1>
       <div class="product-description-block">
-        {% assign desc_lines = product.description | strip_html | split: '\n' %}
-        {% assign compact_lines = '' %}
-        {% for line in desc_lines %}
-          {% if line != blank %}
-            {% assign compact_lines = compact_lines | append: line | append: '\n' %}
-          {% endif %}
-        {% endfor %}
-        {{ compact_lines | strip | newline_to_br }}
+        {{ product.description | strip_html }}
       </div>
       <div class="price">{{ product.price | money }}</div>
       <form method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
