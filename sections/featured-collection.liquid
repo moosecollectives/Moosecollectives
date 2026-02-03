@@ -9,7 +9,7 @@
 
     {% if section.settings.collection != blank %}
       <div class="product-grid">
-        {% for product in section.settings.collection.products limit: 6 %}
+        {% for product in section.settings.collection.products limit: 3 %}
           <article class="product-card">
             <a href="{{ product.url }}">
               {% if product.featured_image %}

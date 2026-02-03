@@ -22,16 +22,12 @@
         "video": "shopify://files/videos/v12300gd0001d5qndifog65se3lkkdu0.MP4"
       }
     },
-    "product-carousel": {
-      "type": "product-carousel",
+    "featured-rugs": {
+      "type": "featured-collection",
       "settings": {
-        "heading": "",
-        "collection": "",
+        "heading": "Featured rugs",
         "cta_label": "Browse full collection",
-        "direction": "left",
-        "start_from_end": false,
-        "max_products": 50,
-        "speed": 1.1
+        "cta_link": ""
       }
     },
     "product-carousel-secondary": {
@@ -49,7 +45,7 @@
   },
   "order": [
     "main-hero",
-    "product-carousel",
+    "featured-rugs",
     "product-carousel-secondary"
   ]
 }
