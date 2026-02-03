@@ -35,7 +35,7 @@
     <div class="product-info">
       <h1 class="hero-title">{{ product.title }}</h1>
       <div class="product-description-block">
-        {{ product.description | strip_html | replace: '\n', ' ' }}
+        {{ product.description | strip_html }}
       </div>
       <div class="price">{{ product.price | money }}</div>
       <form method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
