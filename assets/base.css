@@ -1084,7 +1084,7 @@ a {
   padding: 0;
   margin: 0;
   display: grid;
-  gap: 6px;
+  gap: 12px;
 }
 
 .product-description-list li {
