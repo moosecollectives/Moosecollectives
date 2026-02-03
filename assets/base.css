@@ -1081,6 +1081,16 @@ a {
   margin-bottom: 0;
 }
 
+.product-description-block ul,
+.product-description-block ol {
+  padding-left: 18px;
+  margin: 0 0 12px;
+}
+
+.product-description-block li::marker {
+  color: var(--tangerine-1);
+}
+
 .product-media-full {
   padding: 0;
   margin: 0;
