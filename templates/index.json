@@ -26,9 +26,10 @@
       "type": "featured-collection",
       "settings": {
         "heading": "Featured rugs",
-        "product_1": "shopify://products/kid-buu",
-        "product_2": "shopify://products/cowboy-bebop",
-        "product_3": "shopify://products/rubiks-cube",
+        "product_1": "cloud",
+        "product_2": "misa",
+        "product_3": "invincible",
+        "collection": "",
         "cta_label": "Browse full collection",
         "cta_link": ""
       }
