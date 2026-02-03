@@ -185,7 +185,6 @@ window.addEventListener('load', () => {
     const track = carousel.querySelector('[data-case-track]');
     let items = Array.from(carousel.querySelectorAll('[data-case-item]'));
     const spinButton = carousel.querySelector('[data-case-spin]');
-    const spinAgainButton = carousel.querySelector('[data-case-spin-again]');
     const result = document.querySelector('[data-case-result]');
     const resultImage = result ? result.querySelector('[data-case-result-image]') : null;
     const resultTitle = result ? result.querySelector('[data-case-result-title]') : null;
@@ -197,15 +196,19 @@ window.addEventListener('load', () => {
     if (!track || items.length === 0 || !spinButton) return;
 
     const ensureRepeats = () => {
-      const minimumItems = 40;
       const currentItems = Array.from(track.querySelectorAll('[data-case-item]'));
-      if (currentItems.length >= minimumItems) {
-        items = currentItems;
-        return;
-      }
+      if (currentItems.length === 0) return;
+      const trackStyle = window.getComputedStyle(track);
+      const gap = parseFloat(trackStyle.gap || trackStyle.columnGap) || 0;
+      const itemWidth = currentItems[0].offsetWidth + gap;
+      const viewport = carousel.querySelector('.case-viewport');
+      const viewportWidth = viewport ? viewport.offsetWidth : 0;
+      const baseWidth = itemWidth * currentItems.length;
+      const targetWidth = Math.max(viewportWidth * 6, 3000);
+      const clonesNeeded = Math.max(1, Math.ceil((targetWidth - baseWidth) / baseWidth));
       const fragment = document.createDocumentFragment();
-      while (currentItems.length + fragment.childNodes.length < minimumItems) {
-        items.forEach((item) => {
+      for (let i = 0; i < clonesNeeded; i += 1) {
+        currentItems.forEach((item) => {
           const clone = item.cloneNode(true);
           fragment.appendChild(clone);
         });
@@ -267,6 +270,7 @@ window.addEventListener('load', () => {
     const hideResult = () => {
       if (!result) return;
       result.hidden = true;
+      spinButton.hidden = false;
     };
 
     const spin = () => {
@@ -275,9 +279,6 @@ window.addEventListener('load', () => {
       carousel.classList.add('is-active');
       hideResult();
       spinButton.hidden = true;
-      if (spinAgainButton) {
-        spinAgainButton.hidden = true;
-      }
 
       const metrics = getItemMetrics();
       const viewport = carousel.querySelector('.case-viewport');
@@ -301,18 +302,13 @@ window.addEventListener('load', () => {
         spinning = false;
         const item = items[winnerIndex];
         showResult(item);
-        if (spinAgainButton) {
-          spinAgainButton.hidden = false;
-        }
+        spinButton.hidden = false;
       };
 
       track.addEventListener('transitionend', onDone);
     };
 
     spinButton.addEventListener('click', spin);
-    if (spinAgainButton) {
-      spinAgainButton.addEventListener('click', spin);
-    }
     if (resultClose) {
       resultClose.addEventListener('click', hideResult);
     }
