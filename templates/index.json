@@ -43,7 +43,7 @@
         "direction": "right",
         "start_from_end": true,
         "max_products": 50,
-        "speed": 0.9
+        "speed": 1.2
       }
     }
   },
