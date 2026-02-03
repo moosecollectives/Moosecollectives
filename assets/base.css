@@ -502,6 +502,12 @@ a {
   object-fit: contain;
 }
 
+.featured-cta {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center;
+}
+
 .cart-section {
   overflow: hidden;
 }

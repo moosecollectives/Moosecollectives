@@ -2,9 +2,6 @@
   <div class="container">
     <div class="section-heading">
       <h2 class="section-title">{{ section.settings.heading }}</h2>
-      {% if section.settings.cta_label != blank %}
-        <a class="button button-secondary" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }}</a>
-      {% endif %}
     </div>
 
     {% assign product_1 = section.settings.product_1 %}
@@ -67,6 +64,12 @@
       </div>
     {% else %}
       <p>Select a collection to feature products here.</p>
+    {% endif %}
+
+    {% if section.settings.cta_label != blank %}
+      <div class="featured-cta">
+        <a class="button button-primary" href="{% if section.settings.cta_link != blank %}{{ section.settings.cta_link }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">{{ section.settings.cta_label }}</a>
+      </div>
     {% endif %}
   </div>
 </section>
