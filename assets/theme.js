@@ -1,7 +1,3 @@
-console.log('[theme] loaded');
-window.addEventListener('error', (event) => {
-  console.log('[theme] error', event.message);
-});
 document.documentElement.classList.remove('no-js');
 
 const initCarousel = (carousel) => {
@@ -15,7 +11,10 @@ const initCarousel = (carousel) => {
   let speed = 0.6;
   let targetSpeed = speed;
   const baseDirection = carousel.dataset.direction === 'right' ? 1 : -1;
-  const tunedSpeed = 50;
+  const baseSpeed = parseFloat(carousel.dataset.speed) || 0.6;
+  const isMobile = window.matchMedia('(max-width: 980px)').matches;
+  const mobileBoost = isMobile ? 1.1 : 0;
+  const tunedSpeed = Math.min((baseSpeed + mobileBoost) * 0.6, 2);
   speed = tunedSpeed;
   targetSpeed = tunedSpeed;
   let directionMultiplier = baseDirection;
@@ -182,6 +181,137 @@ const initCarousel = (carousel) => {
 
 window.addEventListener('load', () => {
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
+  document.querySelectorAll('[data-case-carousel]').forEach((carousel) => {
+    const track = carousel.querySelector('[data-case-track]');
+    const items = Array.from(carousel.querySelectorAll('[data-case-item]'));
+    const spinButton = carousel.querySelector('[data-case-spin]');
+    const spinAgainButton = carousel.querySelector('[data-case-spin-again]');
+    const result = document.querySelector('[data-case-result]');
+    const resultImage = result ? result.querySelector('[data-case-result-image]') : null;
+    const resultTitle = result ? result.querySelector('[data-case-result-title]') : null;
+    const resultDesc = result ? result.querySelector('[data-case-result-description]') : null;
+    const resultPrice = result ? result.querySelector('[data-case-result-price]') : null;
+    const resultVariant = result ? result.querySelector('[data-case-result-variant]') : null;
+    const resultClose = result ? result.querySelector('.case-result-close') : null;
+    const resultAdd = result ? result.querySelector('[data-case-result-add]') : null;
+    if (!track || items.length === 0 || !spinButton) return;
+
+    const rarityPool = [
+      { name: 'common', weight: 35 },
+      { name: 'common-light', weight: 25 },
+      { name: 'uncommon', weight: 18 },
+      { name: 'rare', weight: 10 },
+      { name: 'epic', weight: 8 },
+      { name: 'legendary', weight: 4 }
+    ];
+    const totalWeight = rarityPool.reduce((sum, item) => sum + item.weight, 0);
+    const pickRarity = () => {
+      let roll = Math.random() * totalWeight;
+      for (const entry of rarityPool) {
+        roll -= entry.weight;
+        if (roll <= 0) return entry.name;
+      }
+      return 'common';
+    };
+
+    items.forEach((item) => {
+      if (item.dataset.rarityApplied) return;
+      const rarity = pickRarity();
+      item.classList.add(`case-item--${rarity}`);
+      item.dataset.rarityApplied = 'true';
+    });
+
+    let currentX = 0;
+    let spinning = false;
+
+    const getItemMetrics = () => {
+      const first = items[0];
+      const trackStyle = window.getComputedStyle(track);
+      const gap = parseFloat(trackStyle.gap || trackStyle.columnGap) || 0;
+      return { width: first.offsetWidth + gap };
+    };
+
+    const showResult = (item) => {
+      if (!result) return;
+      resultImage.src = item.dataset.image || '';
+      resultImage.alt = item.dataset.title || '';
+      resultTitle.textContent = item.dataset.title || '';
+      resultDesc.textContent = item.dataset.description || '';
+      resultPrice.textContent = item.dataset.price || '';
+      if (resultVariant) {
+        resultVariant.value = item.dataset.variant || '';
+      }
+      result.hidden = false;
+    };
+
+    const hideResult = () => {
+      if (!result) return;
+      result.hidden = true;
+    };
+
+    const spin = () => {
+      if (spinning) return;
+      spinning = true;
+      carousel.classList.add('is-active');
+      hideResult();
+      if (spinAgainButton) {
+        spinAgainButton.hidden = true;
+      }
+
+      const metrics = getItemMetrics();
+      const viewport = carousel.querySelector('.case-viewport');
+      if (!viewport) return;
+      const centerOffset = viewport.offsetWidth / 2 - metrics.width / 2;
+      const totalItems = items.length;
+      const loops = 2;
+      const winnerIndex = Math.floor(Math.random() * totalItems);
+      const targetIndex = winnerIndex + totalItems * loops;
+      const targetX = -(targetIndex * metrics.width) + centerOffset;
+
+      track.style.transition = 'none';
+      track.style.transform = 'translateX(0px)';
+      void track.offsetHeight;
+      track.style.transition = 'transform 4.2s cubic-bezier(0.15, 0.8, 0.1, 1)';
+      track.style.transform = `translateX(${targetX}px)`;
+      currentX = targetX;
+
+      const onDone = () => {
+        track.removeEventListener('transitionend', onDone);
+        spinning = false;
+        const item = items[winnerIndex];
+        showResult(item);
+        if (spinAgainButton) {
+          spinAgainButton.hidden = false;
+        }
+      };
+
+      track.addEventListener('transitionend', onDone);
+    };
+
+    spinButton.addEventListener('click', spin);
+    if (spinAgainButton) {
+      spinAgainButton.addEventListener('click', spin);
+    }
+    if (resultClose) {
+      resultClose.addEventListener('click', hideResult);
+    }
+    if (resultAdd) {
+      resultAdd.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const response = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json' },
+          credentials: 'same-origin',
+          body: new FormData(resultAdd)
+        });
+        if (response.ok) {
+          hideResult();
+        } else {
+          resultAdd.submit();
+        }
+      });
+    }
+  });
 
   const cartForm = document.querySelector('[data-cart-form]');
   if (cartForm) {
@@ -273,17 +403,14 @@ window.addEventListener('load', () => {
       button.addEventListener('click', async () => {
         const key = button.dataset.cartRemoveKey;
         if (!key) return;
-        console.log('[cart-remove] key', key);
 
         const beforeCart = await fetchCart();
-        console.log('[cart-remove] before cart', beforeCart);
         if (!beforeCart) return;
 
         const updates = {};
         beforeCart.items.forEach((item) => {
           updates[item.key] = item.key === key ? 0 : item.quantity;
         });
-        console.log('[cart-remove] updates', updates);
 
         const response = await fetch('/cart/update.js', {
           method: 'POST',
@@ -293,12 +420,10 @@ window.addEventListener('load', () => {
         });
 
         if (!response.ok) {
-          console.log('[cart-remove] failed', response.status);
           return;
         }
 
         const updatedCart = await response.json();
-        console.log('[cart-remove] updated cart', updatedCart);
         await refreshCartCount(updatedCart);
         window.location.reload();
       });
@@ -346,7 +471,6 @@ window.addEventListener('load', () => {
   document.querySelectorAll('[data-product-media]').forEach((media) => {
     const mainImg = media.querySelector('[data-media-main] img');
     if (!mainImg) {
-      console.log('[zoom] missing main image');
       return;
     }
     const lens = media.querySelector('[data-zoom-lens]');
@@ -355,7 +479,6 @@ window.addEventListener('load', () => {
     const zoomModal = document.querySelector('[data-zoom-modal]');
     const zoomModalImg = zoomModal ? zoomModal.querySelector('img') : null;
     const zoomModalClose = zoomModal ? zoomModal.querySelector('.product-zoom-close') : null;
-    console.log('[zoom] init', { mainImg, lens, zoomWindow, mediaMain });
     let zoomReady = false;
     let zoomSrc = mainImg.dataset.mediaZoom || mainImg.src;
 
@@ -369,11 +492,9 @@ window.addEventListener('load', () => {
       setZoomImage(zoomSrc);
       mainImg.addEventListener('load', () => {
         zoomReady = true;
-        console.log('[zoom] image loaded');
       });
       if (mainImg.complete) {
         zoomReady = true;
-        console.log('[zoom] image already complete');
       }
     }
 
@@ -397,7 +518,6 @@ window.addEventListener('load', () => {
     });
 
     if (!zoomWindow || !lens || !mediaMain) {
-      console.log('[zoom] missing required elements');
       return;
     }
 
@@ -423,13 +543,11 @@ window.addEventListener('load', () => {
     const showZoom = () => {
       zoomWindow.classList.add('is-visible');
       lens.classList.add('is-visible');
-      console.log('[zoom] show', zoomWindow.style.backgroundImage);
     };
 
     const hideZoom = () => {
       zoomWindow.classList.remove('is-visible');
       lens.classList.remove('is-visible');
-      console.log('[zoom] hide');
     };
 
     mediaMain.addEventListener('mouseenter', showZoom);

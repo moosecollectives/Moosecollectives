@@ -20,30 +20,66 @@
   {% endif %}
 
   {% if carousel_collection != blank and carousel_collection.products_count > 0 %}
-    <div class="product-carousel" data-carousel data-direction="{{ section.settings.direction }}" data-start="{% if section.settings.start_from_end %}end{% else %}start{% endif %}" data-speed="{{ section.settings.speed }}">
-      <div class="product-carousel-track" data-carousel-track>
-        {% for product in carousel_collection.products limit: section.settings.max_products %}
-          <article class="product-carousel-card" data-carousel-card>
-            <a href="{{ product.url }}">
-              {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
-              {% endif %}
-              <h3>{{ product.title }}</h3>
-              <span class="price">{{ product.price | money }}</span>
-            </a>
-          </article>
-        {% endfor %}
-        {% for product in carousel_collection.products limit: section.settings.max_products %}
-          <article class="product-carousel-card" data-carousel-card>
-            <a href="{{ product.url }}">
-              {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
-              {% endif %}
-              <h3>{{ product.title }}</h3>
-              <span class="price">{{ product.price | money }}</span>
-            </a>
-          </article>
-        {% endfor %}
+    <div class="container">
+      <div class="case-opening" data-case-carousel>
+        <div class="case-viewport">
+          <div class="case-center-line" aria-hidden="true"></div>
+          <div class="case-track" data-case-track>
+            {% for product in carousel_collection.products limit: section.settings.max_products %}
+              <article
+                class="case-item"
+                data-case-item
+                data-title="{{ product.title | escape }}"
+                data-url="{{ product.url }}"
+                data-image="{{ product.featured_image | image_url: width: 900 }}"
+                data-description="{{ product.description | strip_html | truncate: 140 | escape }}"
+                data-variant="{{ product.selected_or_first_available_variant.id }}"
+                data-price="{{ product.price | money }}"
+              >
+                {% if product.featured_image %}
+                  {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.title }}
+                {% endif %}
+                <span class="case-item-title">{{ product.title }}</span>
+              </article>
+            {% endfor %}
+            {% for product in carousel_collection.products limit: section.settings.max_products %}
+              <article
+                class="case-item"
+                data-case-item
+                data-title="{{ product.title | escape }}"
+                data-url="{{ product.url }}"
+                data-image="{{ product.featured_image | image_url: width: 900 }}"
+                data-description="{{ product.description | strip_html | truncate: 140 | escape }}"
+                data-variant="{{ product.selected_or_first_available_variant.id }}"
+                data-price="{{ product.price | money }}"
+              >
+                {% if product.featured_image %}
+                  {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.title }}
+                {% endif %}
+                <span class="case-item-title">{{ product.title }}</span>
+              </article>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="case-actions">
+          <button class="button button-primary" type="button" data-case-spin>Open rugs</button>
+          <button class="button button-secondary" type="button" data-case-spin-again hidden>Spin again</button>
+        </div>
+      </div>
+    </div>
+    <div class="case-result" data-case-result hidden>
+      <div class="case-result-card">
+        <button class="case-result-close" type="button" aria-label="Close result">×</button>
+        <img data-case-result-image alt="">
+        <h3 data-case-result-title></h3>
+        <p data-case-result-description></p>
+        <div class="case-result-footer">
+          <span class="case-result-price" data-case-result-price></span>
+          <form method="post" action="/cart/add" data-case-result-add>
+            <input type="hidden" name="id" data-case-result-variant>
+            <button class="button button-primary" type="submit">Add to cart</button>
+          </form>
+        </div>
       </div>
     </div>
   {% else %}
@@ -61,22 +97,6 @@
     {"type": "collection", "id": "collection", "label": "Collection (defaults to All products)"},
     {"type": "text", "id": "cta_label", "label": "CTA label", "default": "Browse collection"},
     {
-      "type": "select",
-      "id": "direction",
-      "label": "Scroll direction",
-      "options": [
-        {"value": "left", "label": "Left"},
-        {"value": "right", "label": "Right"}
-      ],
-      "default": "left"
-    },
-    {
-      "type": "checkbox",
-      "id": "start_from_end",
-      "label": "Start from end of list",
-      "default": false
-    },
-    {
       "type": "range",
       "id": "max_products",
       "label": "Max products",
@@ -90,9 +110,9 @@
       "id": "speed",
       "label": "Scroll speed",
       "min": 0.2,
-      "max": 50,
+      "max": 1.2,
       "step": 0.1,
-      "default": 50
+      "default": 0.4
     }
   ],
   "presets": [{"name": "Product carousel"}]
