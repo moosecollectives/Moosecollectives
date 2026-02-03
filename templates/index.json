@@ -26,6 +26,9 @@
       "type": "featured-collection",
       "settings": {
         "heading": "Featured rugs",
+        "product_1": "kid-buu",
+        "product_2": "cowboy-bebop",
+        "product_3": "rubiks-cube",
         "cta_label": "Browse full collection",
         "cta_link": ""
       }
