@@ -1067,6 +1067,21 @@ a {
   max-width: 100%;
 }
 
+.product-description {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.product-description li {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(12, 18, 32, 0.12);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
 .product-media-full {
   padding: 0;
   margin: 0;

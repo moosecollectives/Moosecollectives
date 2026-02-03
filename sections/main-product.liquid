@@ -34,7 +34,14 @@
     </div>
     <div class="product-info">
       <h1 class="hero-title">{{ product.title }}</h1>
-      <p>{{ product.description | strip_html }}</p>
+      {% assign desc_lines = product.description | strip_html | newline_to_br | split: '<br />' %}
+      <ul class="product-description">
+        {% for line in desc_lines %}
+          {% if line != blank %}
+            <li>{{ line }}</li>
+          {% endif %}
+        {% endfor %}
+      </ul>
       <div class="price">{{ product.price | money }}</div>
       <form method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
