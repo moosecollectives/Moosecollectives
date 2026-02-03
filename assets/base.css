@@ -1067,19 +1067,13 @@ a {
   max-width: 100%;
 }
 
-.product-description {
-  list-style: none;
-  padding: 0;
+.product-description-block {
   margin: 0 0 16px;
-  display: grid;
-  gap: 8px;
-}
-
-.product-description li {
-  background: rgba(255, 255, 255, 0.4);
-  border: 1px solid rgba(12, 18, 32, 0.12);
-  border-radius: 12px;
-  padding: 10px 12px;
+  padding: 10px 0 10px 14px;
+  border-left: 3px solid rgba(255, 90, 0, 0.55);
+  color: var(--ink-soft);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
 }
 
 .product-media-full {
