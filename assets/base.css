@@ -1079,6 +1079,15 @@ a {
   display: block;
 }
 
+.section.product-media-full {
+  margin-top: -24px;
+  padding-bottom: 0;
+}
+
+.section.product-related {
+  padding-top: 16px;
+}
+
 .product-cart-actions {
   display: flex;
   flex-wrap: wrap;

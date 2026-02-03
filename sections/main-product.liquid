@@ -69,18 +69,18 @@
   </div>
 </section>
 
-<section class="section product-related">
-  <div class="container">
-    <div class="globo_widget_26011"></div>
-  </div>
-</section>
-
 <section class="section product-media-full">
   {% if section.settings.media_video != blank %}
     {{ section.settings.media_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
   {% elsif section.settings.media_image != blank %}
     {{ section.settings.media_image | image_url: width: 2400 | image_tag: loading: 'lazy', alt: product.title }}
   {% endif %}
+</section>
+
+<section class="section product-related">
+  <div class="container">
+    <div class="globo_widget_26011"></div>
+  </div>
 </section>
 
 {% schema %}
