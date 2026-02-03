@@ -183,7 +183,7 @@ window.addEventListener('load', () => {
   document.querySelectorAll('[data-carousel]').forEach(initCarousel);
   document.querySelectorAll('[data-case-carousel]').forEach((carousel) => {
     const track = carousel.querySelector('[data-case-track]');
-    const items = Array.from(carousel.querySelectorAll('[data-case-item]'));
+    let items = Array.from(carousel.querySelectorAll('[data-case-item]'));
     const spinButton = carousel.querySelector('[data-case-spin]');
     const spinAgainButton = carousel.querySelector('[data-case-spin-again]');
     const result = document.querySelector('[data-case-result]');
@@ -195,6 +195,26 @@ window.addEventListener('load', () => {
     const resultClose = result ? result.querySelector('.case-result-close') : null;
     const resultAdd = result ? result.querySelector('[data-case-result-add]') : null;
     if (!track || items.length === 0 || !spinButton) return;
+
+    const ensureRepeats = () => {
+      const minimumItems = 40;
+      const currentItems = Array.from(track.querySelectorAll('[data-case-item]'));
+      if (currentItems.length >= minimumItems) {
+        items = currentItems;
+        return;
+      }
+      const fragment = document.createDocumentFragment();
+      while (currentItems.length + fragment.childNodes.length < minimumItems) {
+        items.forEach((item) => {
+          const clone = item.cloneNode(true);
+          fragment.appendChild(clone);
+        });
+      }
+      track.appendChild(fragment);
+      items = Array.from(track.querySelectorAll('[data-case-item]'));
+    };
+
+    ensureRepeats();
 
     const rarityPool = [
       { name: 'common', weight: 35 },
@@ -254,6 +274,7 @@ window.addEventListener('load', () => {
       spinning = true;
       carousel.classList.add('is-active');
       hideResult();
+      spinButton.hidden = true;
       if (spinAgainButton) {
         spinAgainButton.hidden = true;
       }

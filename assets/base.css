@@ -486,6 +486,10 @@ a {
   padding: 20px 0;
 }
 
+.case-actions {
+  justify-content: center;
+}
+
 .case-opening .case-track,
 .case-opening .case-center-line {
   opacity: 0;
@@ -585,6 +589,19 @@ a {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
+}
+
+.case-overlay-button {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+.case-opening.is-active .case-overlay-button {
+  position: static;
+  transform: none;
 }
 
 .case-result {
