@@ -286,7 +286,6 @@ window.addEventListener('load', () => {
       if (spinning) return;
       spinning = true;
       carousel.classList.add('is-active');
-      carousel.classList.add('is-spinning');
       hideResult();
       spinButton.hidden = true;
 
@@ -299,15 +298,19 @@ window.addEventListener('load', () => {
       const baseItems = items.slice(0, baseCount);
 
       velocity = 30;
-      const decel = 0.99;
+      const duration = 5000;
+      const start = performance.now();
+      const endVelocity = 0.22;
 
-      const tick = () => {
+      const tick = (now) => {
+        const progress = Math.min(1, (now - start) / duration);
+        const ease = 1 - Math.pow(1 - progress, 3);
+        velocity = 30 + (endVelocity - 30) * ease;
         currentX -= velocity;
         wrapPosition();
         track.style.transform = `translateX(${currentX}px)`;
-        velocity *= decel;
 
-        if (velocity <= 0.22) {
+        if (progress >= 1) {
           const indexFloat = (center - currentX - metrics.width / 2) / metrics.width;
           const snapIndex = Math.round(indexFloat);
           const target = center - (snapIndex * metrics.width + metrics.width / 2);
@@ -318,7 +321,6 @@ window.addEventListener('load', () => {
           const winner = baseItems[((snapIndex % baseItems.length) + baseItems.length) % baseItems.length];
           showResult(winner);
           spinButton.hidden = false;
-          carousel.classList.remove('is-spinning');
           return;
         }
 

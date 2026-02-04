@@ -505,10 +505,6 @@ a {
   opacity: 0.6;
 }
 
-.case-opening.is-spinning .case-overlay-button {
-  opacity: 0;
-  pointer-events: none;
-}
 
 .case-center-line {
   position: absolute;
