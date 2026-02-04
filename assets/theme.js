@@ -297,7 +297,7 @@ window.addEventListener('load', () => {
       const baseItems = items.slice(0, baseCount);
 
       velocity = 30;
-      const duration = 5000;
+      const duration = 6000;
       const start = performance.now();
       const endVelocity = 0.22;
 

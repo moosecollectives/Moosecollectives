@@ -604,11 +604,6 @@ a {
   transform: translate(-50%, -50%);
 }
 
-.case-opening.is-active .case-overlay-button {
-  position: static;
-  transform: none;
-}
-
 .case-result {
   position: fixed;
   inset: 0;
