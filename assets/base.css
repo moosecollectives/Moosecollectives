@@ -1467,6 +1467,11 @@ a {
   color: inherit;
 }
 
+.upsell-quick-add .button {
+  color: #2d1600;
+  box-shadow: 0 12px 24px -18px rgba(255, 122, 0, 0.45);
+}
+
 .upsell-subtitle {
   margin: 0;
   color: var(--ink-soft);
@@ -1568,6 +1573,14 @@ a {
 
   .hero-grid {
     grid-template-columns: 1fr;
+  }
+
+  .product-media {
+    padding: 14px;
+  }
+
+  .product-info {
+    padding: clamp(18px, 4vw, 26px);
   }
 
   .hero {
