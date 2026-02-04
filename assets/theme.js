@@ -306,7 +306,7 @@ window.addEventListener('load', () => {
       const duration = 6000;
       const start = performance.now();
       let lastTime = start;
-      const startVelocityItems = 12;
+      const startVelocityItems = 18;
       const endVelocityItems = 0.2;
 
       const tick = (now) => {
