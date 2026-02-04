@@ -303,7 +303,7 @@ window.addEventListener('load', () => {
       const baseItems = items.slice(0, baseCount);
 
       velocity = 30;
-      const duration = 7000;
+      const duration = 6500;
       const start = performance.now();
       let lastTime = start;
       const startVelocityItems = 36;
@@ -330,9 +330,6 @@ window.addEventListener('load', () => {
           spinning = false;
           const winner = baseItems[((snapIndex % baseItems.length) + baseItems.length) % baseItems.length];
           showResult(winner);
-          if (spinAudio) {
-            spinAudio.pause();
-          }
           return;
         }
 
