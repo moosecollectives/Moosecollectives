@@ -359,6 +359,8 @@ window.addEventListener('load', () => {
         });
         if (response.ok) {
           hideResult();
+          carousel.classList.remove('is-active');
+          spinButton.hidden = false;
         } else {
           resultAdd.submit();
         }
