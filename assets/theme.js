@@ -305,13 +305,18 @@ window.addEventListener('load', () => {
       velocity = 30;
       const duration = 6000;
       const start = performance.now();
-      const endVelocity = 0.22;
+      let lastTime = start;
+      const startVelocityItems = 12;
+      const endVelocityItems = 0.2;
 
       const tick = (now) => {
         const progress = Math.min(1, (now - start) / duration);
         const ease = 1 - Math.pow(1 - progress, 3);
-        velocity = 30 + (endVelocity - 30) * ease;
-        currentX -= velocity;
+        const itemsPerSecond = startVelocityItems + (endVelocityItems - startVelocityItems) * ease;
+        velocity = itemsPerSecond * metrics.width;
+        const delta = Math.max(0, Math.min(0.05, (now - lastTime) / 1000));
+        lastTime = now;
+        currentX -= velocity * delta;
         wrapPosition();
         track.style.transform = `translateX(${currentX}px)`;
 
