@@ -279,7 +279,6 @@ window.addEventListener('load', () => {
       if (!result) return;
       result.hidden = true;
       spinButton.hidden = false;
-      carousel.classList.remove('is-active');
     };
 
     const spin = () => {
@@ -332,7 +331,10 @@ window.addEventListener('load', () => {
 
     spinButton.addEventListener('click', spin);
     if (resultClose) {
-      resultClose.addEventListener('click', hideResult);
+      resultClose.addEventListener('click', () => {
+        hideResult();
+        carousel.classList.remove('is-active');
+      });
     }
     if (resultAdd) {
       resultAdd.addEventListener('submit', async (event) => {
