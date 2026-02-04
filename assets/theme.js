@@ -185,6 +185,7 @@ window.addEventListener('load', () => {
     const track = carousel.querySelector('[data-case-track]');
     let items = Array.from(carousel.querySelectorAll('[data-case-item]'));
     const spinButton = carousel.querySelector('[data-case-spin]');
+    const spinAudio = carousel.querySelector('[data-case-audio]');
     const result = document.querySelector('[data-case-result]');
     const resultImage = result ? result.querySelector('[data-case-result-image]') : null;
     const resultTitle = result ? result.querySelector('[data-case-result-title]') : null;
@@ -288,6 +289,11 @@ window.addEventListener('load', () => {
       hideResult();
       spinButton.hidden = true;
 
+      if (spinAudio) {
+        spinAudio.currentTime = 0;
+        spinAudio.play().catch(() => {});
+      }
+
       updateHalfWidth();
       const metrics = getItemMetrics();
       const viewport = carousel.querySelector('.case-viewport');
@@ -319,6 +325,9 @@ window.addEventListener('load', () => {
           spinning = false;
           const winner = baseItems[((snapIndex % baseItems.length) + baseItems.length) % baseItems.length];
           showResult(winner);
+          if (spinAudio) {
+            spinAudio.pause();
+          }
           return;
         }
 

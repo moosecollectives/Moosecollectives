@@ -22,6 +22,7 @@
   {% if carousel_collection != blank and carousel_collection.products_count > 0 %}
     <div class="container">
       <div class="case-opening" data-case-carousel>
+        <audio data-case-audio src="{{ 'case-opening.mp3' | asset_url }}" preload="auto"></audio>
         <div class="case-viewport">
           <div class="case-center-line" aria-hidden="true"></div>
           <div class="case-track" data-case-track>
