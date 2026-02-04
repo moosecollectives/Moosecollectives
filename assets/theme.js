@@ -303,7 +303,7 @@ window.addEventListener('load', () => {
       const baseItems = items.slice(0, baseCount);
 
       velocity = 30;
-      const duration = 6000;
+      const duration = 8000;
       const start = performance.now();
       let lastTime = start;
       const startVelocityItems = 36;
