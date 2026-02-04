@@ -605,6 +605,10 @@ a {
   z-index: 2;
 }
 
+.case-overlay-button:hover {
+  transform: translate(-50%, -50%);
+}
+
 .case-opening.is-active .case-overlay-button {
   position: static;
   transform: none;
