@@ -278,13 +278,13 @@ window.addEventListener('load', () => {
     const hideResult = () => {
       if (!result) return;
       result.hidden = true;
-      spinButton.hidden = false;
     };
 
     const spin = () => {
       if (spinning) return;
       spinning = true;
       carousel.classList.add('is-active');
+      carousel.classList.add('is-spinning');
       hideResult();
       spinButton.hidden = true;
 
@@ -319,7 +319,6 @@ window.addEventListener('load', () => {
           spinning = false;
           const winner = baseItems[((snapIndex % baseItems.length) + baseItems.length) % baseItems.length];
           showResult(winner);
-          spinButton.hidden = false;
           return;
         }
 
@@ -334,6 +333,8 @@ window.addEventListener('load', () => {
       resultClose.addEventListener('click', () => {
         hideResult();
         carousel.classList.remove('is-active');
+        carousel.classList.remove('is-spinning');
+        spinButton.hidden = false;
       });
     }
     if (resultAdd) {

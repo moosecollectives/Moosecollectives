@@ -490,19 +490,14 @@ a {
   justify-content: center;
 }
 
-.case-opening .case-track,
-.case-opening .case-center-line {
-  opacity: 0;
-}
-
-.case-opening.is-active .case-track,
-.case-opening.is-active .case-center-line {
-  opacity: 1;
-}
-
 .case-opening:not(.is-active) .case-viewport {
   filter: blur(2px);
   opacity: 0.6;
+}
+
+.case-opening.is-spinning .case-overlay-button {
+  opacity: 0;
+  pointer-events: none;
 }
 
 
