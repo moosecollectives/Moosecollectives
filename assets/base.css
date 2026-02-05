@@ -81,7 +81,7 @@ a {
 }
 
 .section {
-  padding: clamp(52px, 8vw, 120px) 0;
+  padding: clamp(44px, 6vw, 96px) 0;
 }
 
 .section-heading {
@@ -958,7 +958,8 @@ a {
 }
 
 .featured-cta {
-  margin-top: 6px;
+  margin-top: 20px;
+  margin-bottom: 10px;
   display: flex;
   justify-content: center;
 }
