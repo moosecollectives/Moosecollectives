@@ -891,10 +891,6 @@ window.addEventListener('load', () => {
 
         const updatedCart = await refreshCartCount();
         updateProductControls(updatedCart);
-        const feedback = form.closest('.upsell-card')?.querySelector('[data-upsell-feedback]');
-        if (feedback) {
-          feedback.hidden = false;
-        }
         if (submitButton) {
           submitButton.textContent = 'Added';
           submitButton.disabled = true;
