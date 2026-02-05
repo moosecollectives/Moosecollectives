@@ -1314,10 +1314,41 @@ a {
 .collection-carousel-card {
   width: 100%;
   transform: none;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 22px;
+  padding: 12px;
+  box-shadow: 0 16px 34px -28px rgba(255, 140, 40, 0.35);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(8px);
 }
 
 .collection-carousel-card:hover {
   transform: translateY(-4px) scale(1.01);
+  box-shadow: 0 22px 46px -32px rgba(255, 140, 40, 0.45);
+}
+
+.collection-carousel-card img {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.22);
+}
+.collection-carousel-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 16px rgba(255, 255, 255, 0.25);
+}
+
+.collection-carousel-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  border: 1px solid rgba(255, 168, 60, 0.4);
 }
 
 .collection-card {
