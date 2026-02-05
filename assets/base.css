@@ -816,7 +816,7 @@ a {
 
 .featured-grid {
   display: grid;
-  gap: clamp(14px, 2.4vw, 20px);
+  gap: 0;
   grid-template-columns: 1fr;
   margin-top: 14px;
 }
@@ -824,9 +824,13 @@ a {
 .featured-grid-card {
   position: relative;
   overflow: hidden;
-  border-radius: 20px;
+  border-radius: 0;
   background: linear-gradient(135deg, rgba(255, 170, 60, 0.28), rgba(255, 210, 110, 0.22));
   box-shadow: 0 20px 44px -32px rgba(255, 140, 40, 0.45);
+}
+
+.featured-grid-card + .featured-grid-card {
+  border-top: 1px solid rgba(255, 255, 255, 0.35);
 }
 
 .featured-grid-card a {
