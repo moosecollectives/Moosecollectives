@@ -866,7 +866,7 @@ a {
 .featured-showcase-media img {
   width: 100%;
   aspect-ratio: 4 / 5;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.22);
 }
