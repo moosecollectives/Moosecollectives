@@ -522,35 +522,25 @@ a {
 }
 
 .carousel-section-fancy::before {
-  content: "";
-  position: absolute;
-  inset: -30% -10% auto -10%;
-  height: 220px;
-  background: radial-gradient(circle at top, rgba(90, 175, 255, 0.28), transparent 70%);
-  pointer-events: none;
+  content: none;
 }
 
 .carousel-section-fancy::after {
-  content: "";
-  position: absolute;
-  inset: auto -15% -40% -15%;
-  height: 220px;
-  background: radial-gradient(circle at bottom, rgba(255, 168, 60, 0.25), transparent 70%);
-  pointer-events: none;
+  content: none;
 }
 
 .carousel-section-fancy .product-carousel {
   padding: 18px var(--page-gutter) 12px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.08);
+  background: transparent;
   border: none;
-  box-shadow: inset 0 1px 18px rgba(255, 168, 60, 0.35);
+  box-shadow: 0 18px 36px -28px rgba(255, 168, 60, 0.35);
 }
 
 .carousel-section-fancy .product-carousel-card {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 168, 60, 0.14);
   border: none;
-  box-shadow: 0 16px 32px -26px rgba(7, 18, 30, 0.3);
+  box-shadow: 0 16px 32px -26px rgba(255, 168, 60, 0.35);
 }
 
 .carousel-section-fancy .product-carousel-card:hover {
@@ -838,38 +828,25 @@ a {
 }
 
 .featured-rug-card {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 168, 60, 0.14);
   border: none;
-  box-shadow: 0 18px 34px -28px rgba(7, 18, 30, 0.3);
+  box-shadow: 0 18px 34px -28px rgba(255, 168, 60, 0.35);
   backdrop-filter: blur(9px);
   transform: translateY(0);
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
 }
 
 .featured-rug-card::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-  pointer-events: none;
-  background: linear-gradient(135deg, rgba(255, 168, 60, 0.28), transparent 60%);
-  opacity: 0.6;
+  content: none;
 }
 
 .featured-rug-card::after {
-  content: "";
-  position: absolute;
-  inset: -45% -25% auto -25%;
-  height: 140px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255, 168, 60, 0.3), transparent 70%);
-  opacity: 0.5;
-  pointer-events: none;
+  content: none;
 }
 
 .featured-rug-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 26px 50px -36px rgba(7, 18, 30, 0.4);
+  box-shadow: 0 26px 50px -36px rgba(255, 168, 60, 0.45);
 }
 
 .featured-rug-card a {
