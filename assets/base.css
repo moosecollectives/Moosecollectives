@@ -801,6 +801,15 @@ a {
   box-shadow: 0 16px 32px -18px rgba(255, 122, 0, 0.55);
 }
 
+.cart-quantity-pill::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.32);
+  z-index: 0;
+}
+
 .cart-quantity-pill::before {
   content: '';
   position: absolute;
@@ -829,6 +838,8 @@ a {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 1;
 }
 
 .cart-quantity-btn:hover {
@@ -842,11 +853,13 @@ a {
   background: transparent;
   color: inherit;
   caret-color: transparent;
-  font-weight: 700;
+  font-weight: 800;
   background-image: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 1;
 }
 
 .cart-quantity-input:focus {
