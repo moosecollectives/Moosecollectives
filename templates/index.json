@@ -26,9 +26,9 @@
       "type": "featured-collection",
       "settings": {
         "heading": "Featured rugs",
-        "product_1": "cloud",
-        "product_2": "misa",
-        "product_3": "invincible",
+        "product_1": "hinata",
+        "product_2": "guts",
+        "product_3": "batman-og",
         "collection": "",
         "cta_label": "browse full collection",
         "cta_link": ""
@@ -40,8 +40,8 @@
         "heading": "",
         "collection": "",
         "cta_label": "",
-        "direction": "right",
-        "start_from_end": true,
+        "direction": "left",
+        "start_from_end": false,
         "max_products": 50,
         "speed": 1.2
       }
