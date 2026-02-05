@@ -872,6 +872,7 @@ window.addEventListener('load', () => {
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const submitButton = form.querySelector('[type="submit"]');
+      let added = false;
       if (submitButton) {
         submitButton.disabled = true;
       }
@@ -890,15 +891,20 @@ window.addEventListener('load', () => {
 
         const updatedCart = await refreshCartCount();
         updateProductControls(updatedCart);
-        const card = form.closest('.product-upsell-inline');
-        if (card) {
-          card.style.display = 'none';
+        const feedback = form.closest('.upsell-card')?.querySelector('[data-upsell-feedback]');
+        if (feedback) {
+          feedback.hidden = false;
         }
+        if (submitButton) {
+          submitButton.textContent = 'Added';
+          submitButton.disabled = true;
+        }
+        added = true;
       } catch (error) {
         form.submit();
       } finally {
         if (submitButton) {
-          submitButton.disabled = false;
+          submitButton.disabled = added;
         }
       }
     });

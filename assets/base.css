@@ -1524,6 +1524,19 @@ a {
   color: var(--ink-soft);
 }
 
+.upsell-feedback {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #2d1600;
+  background: rgba(255, 138, 29, 0.25);
+  border: 1px solid rgba(255, 138, 29, 0.5);
+}
+
 .product-info p {
   max-width: 46ch;
 }
