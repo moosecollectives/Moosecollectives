@@ -21,8 +21,9 @@
                 {{ product_1.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product_1.title }}
               {% endif %}
               <h3>{{ product_1.title }}</h3>
-              <span class="price">{{ product_1.price | money }}</span>
-              <span class="sale-pill">15% off</span>
+              {% assign product_1_compare = product_1.price | times: 100 | divided_by: 85 %}
+              <span class="price price-current">{{ product_1.price | money }}</span>
+              <span class="price-compare">{{ product_1_compare | money }}</span>
             </a>
           </article>
         {% endif %}
@@ -33,8 +34,9 @@
                 {{ product_2.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product_2.title }}
               {% endif %}
               <h3>{{ product_2.title }}</h3>
-              <span class="price">{{ product_2.price | money }}</span>
-              <span class="sale-pill">15% off</span>
+              {% assign product_2_compare = product_2.price | times: 100 | divided_by: 85 %}
+              <span class="price price-current">{{ product_2.price | money }}</span>
+              <span class="price-compare">{{ product_2_compare | money }}</span>
             </a>
           </article>
         {% endif %}
@@ -45,8 +47,9 @@
                 {{ product_3.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product_3.title }}
               {% endif %}
               <h3>{{ product_3.title }}</h3>
-              <span class="price">{{ product_3.price | money }}</span>
-              <span class="sale-pill">15% off</span>
+              {% assign product_3_compare = product_3.price | times: 100 | divided_by: 85 %}
+              <span class="price price-current">{{ product_3.price | money }}</span>
+              <span class="price-compare">{{ product_3_compare | money }}</span>
             </a>
           </article>
         {% endif %}
@@ -60,8 +63,9 @@
                 {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
               {% endif %}
               <h3>{{ product.title }}</h3>
-              <span class="price">{{ product.price | money }}</span>
-              <span class="sale-pill">15% off</span>
+              {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
+              <span class="price price-current">{{ product.price | money }}</span>
+              <span class="price-compare">{{ compare_price | money }}</span>
             </a>
           </article>
         {% endfor %}

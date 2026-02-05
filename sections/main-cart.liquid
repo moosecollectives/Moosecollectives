@@ -40,8 +40,12 @@
                     <h3>{{ item.product.title }}</h3>
                     <div class="cart-meta-row">
                       <p class="price cart-price" aria-label="Line item price">
+                        {% assign compare_line = item.final_line_price | times: 100 | divided_by: 85 %}
+                        {% assign compare_unit = item.final_price | times: 100 | divided_by: 85 %}
                         <span class="cart-price-total">{{ item.final_line_price | money }}</span>
                         <span class="cart-price-breakdown">{{ item.final_price | money }} x {{ item.quantity }}</span>
+                        <span class="price-compare cart-price-compare">{{ compare_line | money }}</span>
+                        <span class="price-compare cart-price-compare-breakdown">{{ compare_unit | money }} x {{ item.quantity }}</span>
                       </p>
                       <div class="cart-quantity" data-cart-qty-wrap>
                         <div class="cart-quantity-pill" role="group" aria-label="Quantity controls for {{ item.product.title }}">
@@ -76,8 +80,12 @@
           </div>
         </div>
         <div class="cart-footer">
-          <p class="cart-total">Total: {{ cart.total_price | money }}</p>
-          <span class="sale-note">Spring Opening Sale — 15% off already applied</span>
+          {% assign compare_total = cart.total_price | times: 100 | divided_by: 85 %}
+          <p class="cart-total">
+            Total:
+            <span class="price price-current">{{ cart.total_price | money }}</span>
+            <span class="price-compare">{{ compare_total | money }}</span>
+          </p>
           <button class="button button-primary" type="submit" name="checkout">Checkout</button>
         </div>
       </form>

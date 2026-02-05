@@ -261,6 +261,37 @@ a {
   text-transform: uppercase;
 }
 
+.price-compare {
+  margin-left: 8px;
+  color: rgba(12, 18, 32, 0.5);
+  text-decoration: line-through;
+  font-weight: 600;
+  font-size: 0.9em;
+}
+
+.product-card .price-compare,
+.collection-carousel-card .price-compare,
+.product-info .price-compare {
+  display: block;
+  margin-left: 0;
+  margin-top: 4px;
+}
+
+.cart-price-compare,
+.cart-price-compare-breakdown {
+  display: block;
+  margin-left: 0;
+}
+
+.price-current {
+  display: inline-block;
+}
+
+.case-result-compare {
+  display: block;
+  margin-top: 4px;
+}
+
 .brand {
   font-family: var(--font-display);
   font-size: clamp(22px, 3vw, 36px);
@@ -975,7 +1006,7 @@ a {
 .cart-price {
   position: relative;
   margin: 0;
-  min-height: 1.2em;
+  min-height: 2.2em;
   display: inline-block;
   min-width: 96px;
 }
@@ -999,6 +1030,19 @@ a {
   transition: opacity 0.2s ease;
 }
 
+.cart-price-compare,
+.cart-price-compare-breakdown {
+  position: absolute;
+  left: 0;
+  top: 20px;
+  white-space: nowrap;
+  transition: opacity 0.2s ease;
+}
+
+.cart-price-compare-breakdown {
+  opacity: 0;
+}
+
 .cart-price-breakdown {
   opacity: 0;
   pointer-events: none;
@@ -1012,6 +1056,16 @@ a {
 
 .cart-price:hover .cart-price-breakdown,
 .cart-price.is-breakdown .cart-price-breakdown {
+  opacity: 1;
+}
+
+.cart-price:hover .cart-price-compare,
+.cart-price.is-breakdown .cart-price-compare {
+  opacity: 0;
+}
+
+.cart-price:hover .cart-price-compare-breakdown,
+.cart-price.is-breakdown .cart-price-compare-breakdown {
   opacity: 1;
 }
 

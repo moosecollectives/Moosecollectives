@@ -36,6 +36,7 @@
                 data-description="{{ product.description | strip_html | truncate: 140 | escape }}"
                 data-variant="{{ product.selected_or_first_available_variant.id }}"
                 data-price="{{ product.price | money }}"
+                data-compare-price="{{ product.price | times: 100 | divided_by: 85 | money }}"
               >
                 {% if product.featured_image %}
                   {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.title }}
@@ -53,6 +54,7 @@
                 data-description="{{ product.description | strip_html | truncate: 140 | escape }}"
                 data-variant="{{ product.selected_or_first_available_variant.id }}"
                 data-price="{{ product.price | money }}"
+                data-compare-price="{{ product.price | times: 100 | divided_by: 85 | money }}"
               >
                 {% if product.featured_image %}
                   {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.title }}
@@ -75,7 +77,7 @@
         <p data-case-result-description></p>
         <div class="case-result-footer">
           <span class="case-result-price" data-case-result-price></span>
-          <span class="sale-pill">Spring Opening Sale · 15% off</span>
+          <span class="price-compare case-result-compare" data-case-result-compare></span>
           <form method="post" action="/cart/add" data-case-result-add>
             <input type="hidden" name="id" data-case-result-variant>
             <button class="button button-primary" type="submit">Add to cart</button>

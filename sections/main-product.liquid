@@ -37,8 +37,9 @@
       <div class="product-description-block">
         {{ product.description }}
       </div>
-      <div class="price">{{ product.price | money }}</div>
-      <div class="sale-note">Spring Opening Sale — 15% off already applied</div>
+      {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
+      <div class="price price-current">{{ product.price | money }}</div>
+      <div class="price-compare">{{ compare_price | money }}</div>
       <form method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         <div class="product-cart-actions" data-product-cart-actions>

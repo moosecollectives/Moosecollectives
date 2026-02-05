@@ -270,6 +270,12 @@ window.addEventListener('load', () => {
       resultTitle.textContent = item.dataset.title || '';
       resultDesc.textContent = item.dataset.description || '';
       resultPrice.textContent = item.dataset.price || '';
+      if (resultPrice && resultPrice.parentElement) {
+        const compare = resultPrice.parentElement.querySelector('[data-case-result-compare]');
+        if (compare) {
+          compare.textContent = item.dataset.comparePrice || '';
+        }
+      }
       if (resultVariant) {
         resultVariant.value = item.dataset.variant || '';
       }
