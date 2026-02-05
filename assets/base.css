@@ -1630,6 +1630,15 @@ a {
     padding: clamp(18px, 4vw, 26px);
   }
 
+  .section.product-media-full {
+    margin-top: 0;
+    padding-top: 18px;
+  }
+
+  .product-upsell-inline {
+    margin-top: 20px;
+  }
+
   .hero {
     padding-top: 16px;
     padding-bottom: 24px;
