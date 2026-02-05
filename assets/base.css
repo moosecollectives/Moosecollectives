@@ -814,101 +814,83 @@ a {
   gap: 10px;
 }
 
-.featured-orbit {
+.featured-strips {
   display: grid;
-  gap: clamp(18px, 3vw, 30px);
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  grid-template-areas:
-    "hero hero side"
-    "hero hero side2";
+  gap: clamp(18px, 3vw, 28px);
   margin-top: 24px;
 }
 
-.featured-orbit-card {
+.featured-strip {
   position: relative;
-  border-radius: 28px;
   overflow: hidden;
-  background: linear-gradient(130deg, rgba(255, 170, 60, 0.22), rgba(70, 165, 255, 0.22));
-  box-shadow: 0 28px 70px -48px rgba(7, 18, 30, 0.55);
+  border-radius: 24px;
+  background: linear-gradient(135deg, rgba(255, 170, 60, 0.2), rgba(70, 165, 255, 0.2));
+  box-shadow: 0 26px 60px -44px rgba(7, 18, 30, 0.5);
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.featured-orbit-card::before {
+.featured-strip::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(120deg, rgba(255, 255, 255, 0.65), transparent 55%);
-  opacity: 0.22;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.65), transparent 60%);
+  opacity: 0.2;
   pointer-events: none;
 }
 
-.featured-orbit-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 34px 82px -52px rgba(7, 18, 30, 0.65);
+.featured-strip:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 32px 70px -46px rgba(7, 18, 30, 0.6);
 }
 
-.featured-orbit-card a {
+.featured-strip a {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  align-items: center;
+  gap: clamp(16px, 4vw, 32px);
+  padding: clamp(16px, 3vw, 24px);
   color: inherit;
   text-decoration: none;
 }
 
-.featured-orbit-card--one {
-  grid-area: hero;
+.featured-strip--reverse a {
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
 }
 
-.featured-orbit-card--two {
-  grid-area: side;
-}
-
-.featured-orbit-card--three {
-  grid-area: side2;
-}
-
-.featured-orbit-media {
-  padding: 14px;
-}
-
-.featured-orbit-media img {
+.featured-strip-media img {
   width: 100%;
-  aspect-ratio: 5 / 4;
+  max-height: 320px;
   object-fit: contain;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.2);
 }
 
-.featured-orbit-card--one .featured-orbit-media img {
-  aspect-ratio: 4 / 5;
-}
-
-.featured-orbit-meta {
-  padding: 18px 22px 24px;
+.featured-strip-meta {
   display: grid;
   gap: 8px;
 }
 
-.featured-orbit-kicker {
+.featured-strip-kicker {
   font-size: 11px;
   letter-spacing: 0.3em;
   text-transform: uppercase;
   color: rgba(12, 18, 32, 0.6);
 }
 
-.featured-orbit-meta h3 {
+.featured-strip-meta h3 {
   margin: 0;
-  font-size: 18px;
-  letter-spacing: 0.1em;
+  font-size: 20px;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.featured-orbit-price {
+.featured-strip-price {
   display: flex;
   flex-direction: column;
   gap: 2px;
 }
 
-.featured-orbit-cta {
+.featured-strip-cta {
   margin-top: 6px;
   font-size: 12px;
   letter-spacing: 0.2em;
@@ -917,12 +899,9 @@ a {
 }
 
 @media (max-width: 980px) {
-  .featured-orbit {
+  .featured-strip a,
+  .featured-strip--reverse a {
     grid-template-columns: 1fr;
-    grid-template-areas:
-      "hero"
-      "side"
-      "side2";
   }
 }
 
