@@ -1006,6 +1006,39 @@ a {
   gap: 22px;
 }
 
+.collection-adhesive {
+  margin-top: clamp(28px, 5vw, 46px);
+}
+
+.collection-adhesive-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: clamp(18px, 3vw, 28px);
+  background: rgba(255, 138, 29, 0.16);
+  border: 1px solid rgba(255, 138, 29, 0.45);
+  border-radius: 22px;
+  box-shadow: 0 20px 40px -34px rgba(7, 18, 30, 0.35);
+}
+
+.collection-adhesive-card h2 {
+  margin: 0 0 6px;
+  font-size: clamp(20px, 2.2vw, 26px);
+}
+
+.collection-adhesive-copy {
+  margin: 0 0 10px;
+  max-width: 480px;
+}
+
+@media (max-width: 720px) {
+  .collection-adhesive-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
 .collection-carousel-card {
   width: 100%;
   transform: none;

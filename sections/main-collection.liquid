@@ -4,8 +4,13 @@
       <h1 class="section-title">Full collection</h1>
       <span>{{ collection.products_count }} items</span>
     </div>
+    {% assign adhesive_handle = 'adhesive-wall-strip' %}
+    {% assign adhesive_product = all_products[adhesive_handle] %}
     <div class="collection-grid">
       {% for product in collection.products %}
+        {% if product.handle == adhesive_handle %}
+          {% continue %}
+        {% endif %}
         <article class="product-carousel-card collection-carousel-card">
           <a href="{{ product.url }}">
             {% if product.featured_image %}
@@ -17,6 +22,18 @@
         </article>
       {% endfor %}
     </div>
+    {% if adhesive_product != blank %}
+      <div class="collection-adhesive">
+        <div class="collection-adhesive-card">
+          <div>
+            <h2>{{ adhesive_product.title }}</h2>
+            <p class="collection-adhesive-copy">Keep your rug attached to the wall with these mounting strips.</p>
+            <span class="price">{{ adhesive_product.price | money }}</span>
+          </div>
+          <a class="button button-primary" href="{{ adhesive_product.url }}">View adhesive wall strip</a>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </section>
 
