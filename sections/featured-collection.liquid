@@ -15,111 +15,96 @@
     {% endif %}
 
     {% if has_custom %}
-      <div class="featured-strips">
+      <div class="featured-tiles">
         {% if product_1 != blank %}
-          <article class="featured-strip">
+          <article class="featured-tile">
             <a href="{{ product_1.url }}">
-              <div class="featured-strip-media">
-                {% if product_1.featured_image %}
-                  {{ product_1.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product_1.title }}
-                {% endif %}
-              </div>
-              <div class="featured-strip-meta">
-                <span class="featured-strip-kicker">featured</span>
+              {% if product_1.featured_image %}
+                {{ product_1.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product_1.title }}
+              {% endif %}
+              <div class="featured-tile-overlay">
+                <span class="featured-tile-kicker">featured</span>
                 <h3>{{ product_1.title }}</h3>
                 {% assign product_1_compare = product_1.price | times: 100 | divided_by: 85 %}
-                <div class="featured-strip-price">
+                <div class="featured-tile-price">
                   <span class="price price-current">{{ product_1.price | money }}</span>
                   <span class="price-compare">{{ product_1_compare | money }}</span>
                 </div>
-                <span class="featured-strip-cta">View rug</span>
               </div>
             </a>
           </article>
         {% endif %}
         {% if product_2 != blank %}
-          <article class="featured-strip featured-strip--reverse">
+          <article class="featured-tile">
             <a href="{{ product_2.url }}">
-              <div class="featured-strip-media">
-                {% if product_2.featured_image %}
-                  {{ product_2.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product_2.title }}
-                {% endif %}
-              </div>
-              <div class="featured-strip-meta">
-                <span class="featured-strip-kicker">spotlight</span>
+              {% if product_2.featured_image %}
+                {{ product_2.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product_2.title }}
+              {% endif %}
+              <div class="featured-tile-overlay">
+                <span class="featured-tile-kicker">spotlight</span>
                 <h3>{{ product_2.title }}</h3>
                 {% assign product_2_compare = product_2.price | times: 100 | divided_by: 85 %}
-                <div class="featured-strip-price">
+                <div class="featured-tile-price">
                   <span class="price price-current">{{ product_2.price | money }}</span>
                   <span class="price-compare">{{ product_2_compare | money }}</span>
                 </div>
-                <span class="featured-strip-cta">View rug</span>
               </div>
             </a>
           </article>
         {% endif %}
         {% if product_3 != blank %}
-          <article class="featured-strip">
+          <article class="featured-tile">
             <a href="{{ product_3.url }}">
-              <div class="featured-strip-media">
-                {% if product_3.featured_image %}
-                  {{ product_3.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product_3.title }}
-                {% endif %}
-              </div>
-              <div class="featured-strip-meta">
-                <span class="featured-strip-kicker">limited</span>
+              {% if product_3.featured_image %}
+                {{ product_3.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product_3.title }}
+              {% endif %}
+              <div class="featured-tile-overlay">
+                <span class="featured-tile-kicker">limited</span>
                 <h3>{{ product_3.title }}</h3>
                 {% assign product_3_compare = product_3.price | times: 100 | divided_by: 85 %}
-                <div class="featured-strip-price">
+                <div class="featured-tile-price">
                   <span class="price price-current">{{ product_3.price | money }}</span>
                   <span class="price-compare">{{ product_3_compare | money }}</span>
                 </div>
-                <span class="featured-strip-cta">View rug</span>
               </div>
             </a>
           </article>
         {% endif %}
         {% if product_4 != blank %}
-          <article class="featured-strip">
+          <article class="featured-tile">
             <a href="{{ product_4.url }}">
-              <div class="featured-strip-media">
-                {% if product_4.featured_image %}
-                  {{ product_4.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product_4.title }}
-                {% endif %}
-              </div>
-              <div class="featured-strip-meta">
-                <span class="featured-strip-kicker">featured</span>
+              {% if product_4.featured_image %}
+                {{ product_4.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product_4.title }}
+              {% endif %}
+              <div class="featured-tile-overlay">
+                <span class="featured-tile-kicker">featured</span>
                 <h3>{{ product_4.title }}</h3>
                 {% assign product_4_compare = product_4.price | times: 100 | divided_by: 85 %}
-                <div class="featured-strip-price">
+                <div class="featured-tile-price">
                   <span class="price price-current">{{ product_4.price | money }}</span>
                   <span class="price-compare">{{ product_4_compare | money }}</span>
                 </div>
-                <span class="featured-strip-cta">View rug</span>
               </div>
             </a>
           </article>
         {% endif %}
       </div>
     {% elsif section.settings.collection != blank %}
-      <div class="featured-strips">
+      <div class="featured-tiles">
         {% for product in section.settings.collection.products limit: 4 %}
-          <article class="featured-strip{% if forloop.index == 2 %} featured-strip--reverse{% endif %}">
+          <article class="featured-tile">
             <a href="{{ product.url }}">
               {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
-              <div class="featured-strip-media">
-                {% if product.featured_image %}
-                  {{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product.title }}
-                {% endif %}
-              </div>
-              <div class="featured-strip-meta">
-                <span class="featured-strip-kicker">featured</span>
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 1000 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <div class="featured-tile-overlay">
+                <span class="featured-tile-kicker">featured</span>
                 <h3>{{ product.title }}</h3>
-                <div class="featured-strip-price">
+                <div class="featured-tile-price">
                   <span class="price price-current">{{ product.price | money }}</span>
                   <span class="price-compare">{{ compare_price | money }}</span>
                 </div>
-                <span class="featured-strip-cta">View rug</span>
               </div>
             </a>
           </article>
