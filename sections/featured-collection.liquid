@@ -9,6 +9,61 @@
     {% assign product_2 = section.settings.product_2 %}
     {% assign product_3 = section.settings.product_3 %}
     {% assign product_4 = section.settings.product_4 %}
+
+    <div class="collection-grid">
+      {% if product_1 != blank %}
+        <article class="product-carousel-card collection-carousel-card">
+          <a href="{{ product_1.url }}">
+            {% if product_1.featured_image %}
+              {{ product_1.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_1.title }}
+            {% endif %}
+            <h3>{{ product_1.title }}</h3>
+            {% assign product_1_compare = product_1.price | times: 100 | divided_by: 85 %}
+            <span class="price price-current">{{ product_1.price | money }}</span>
+            <span class="price-compare">{{ product_1_compare | money }}</span>
+          </a>
+        </article>
+      {% endif %}
+      {% if product_2 != blank %}
+        <article class="product-carousel-card collection-carousel-card">
+          <a href="{{ product_2.url }}">
+            {% if product_2.featured_image %}
+              {{ product_2.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_2.title }}
+            {% endif %}
+            <h3>{{ product_2.title }}</h3>
+            {% assign product_2_compare = product_2.price | times: 100 | divided_by: 85 %}
+            <span class="price price-current">{{ product_2.price | money }}</span>
+            <span class="price-compare">{{ product_2_compare | money }}</span>
+          </a>
+        </article>
+      {% endif %}
+      {% if product_3 != blank %}
+        <article class="product-carousel-card collection-carousel-card">
+          <a href="{{ product_3.url }}">
+            {% if product_3.featured_image %}
+              {{ product_3.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_3.title }}
+            {% endif %}
+            <h3>{{ product_3.title }}</h3>
+            {% assign product_3_compare = product_3.price | times: 100 | divided_by: 85 %}
+            <span class="price price-current">{{ product_3.price | money }}</span>
+            <span class="price-compare">{{ product_3_compare | money }}</span>
+          </a>
+        </article>
+      {% endif %}
+      {% if product_4 != blank %}
+        <article class="product-carousel-card collection-carousel-card">
+          <a href="{{ product_4.url }}">
+            {% if product_4.featured_image %}
+              {{ product_4.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_4.title }}
+            {% endif %}
+            <h3>{{ product_4.title }}</h3>
+            {% assign product_4_compare = product_4.price | times: 100 | divided_by: 85 %}
+            <span class="price price-current">{{ product_4.price | money }}</span>
+            <span class="price-compare">{{ product_4_compare | money }}</span>
+          </a>
+        </article>
+      {% endif %}
+    </div>
   </div>
 </section>
 
