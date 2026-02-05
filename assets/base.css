@@ -102,7 +102,7 @@ a {
   margin: 0;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  align-items: center;
+  text-align: center;
 }
 
 .page-content {
