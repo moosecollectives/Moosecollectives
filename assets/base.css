@@ -1607,6 +1607,7 @@ a {
   .header-inner {
     flex-direction: column;
     align-items: center;
+    padding: 18px 16px;
   }
 
   .nav {
