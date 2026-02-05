@@ -1413,6 +1413,15 @@ a {
   box-shadow: 0 16px 32px -18px rgba(255, 122, 0, 0.55);
 }
 
+.product-qty-controls::after {
+  content: "";
+  position: absolute;
+  inset: 1px;
+  border-radius: inherit;
+  background: rgba(255, 255, 255, 0.32);
+  z-index: 0;
+}
+
 .product-qty-controls::before {
   content: '';
   position: absolute;
@@ -1445,6 +1454,8 @@ a {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 1;
 }
 
 .product-qty-btn:hover {
@@ -1460,6 +1471,9 @@ a {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
+  font-weight: 800;
+  position: relative;
+  z-index: 1;
 }
 
 
