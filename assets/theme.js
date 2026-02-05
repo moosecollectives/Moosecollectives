@@ -737,6 +737,12 @@ window.addEventListener('load', () => {
       }
       state.inFlight = true;
 
+      if (!state.key && state.qty > 0) {
+        const refreshed = await refreshCartCount();
+        syncVariantState(refreshed);
+        updateProductControls(refreshed);
+      }
+
       const desiredQty = Math.max(0, state.qty + state.pendingDelta);
       state.pendingDelta = 0;
 
@@ -744,9 +750,6 @@ window.addEventListener('load', () => {
         state.inFlight = false;
         return;
       }
-
-      state.qty = desiredQty;
-      setProductQtyState(form, desiredQty);
 
       if (!state.key && desiredQty > 0) {
         const addResponse = await fetch('/cart/add.js', {
