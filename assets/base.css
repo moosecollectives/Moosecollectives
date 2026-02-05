@@ -105,6 +105,26 @@ a {
   text-align: center;
 }
 
+.section-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(12, 18, 32, 0.65);
+}
+
+.section-divider {
+  display: block;
+  width: clamp(120px, 30vw, 220px);
+  height: 3px;
+  margin: 10px auto 0;
+  background: linear-gradient(90deg, transparent, var(--tangerine-1), transparent);
+  border-radius: 999px;
+  opacity: 0.8;
+}
+
 .page-content {
   margin-top: 18px;
 }
@@ -496,6 +516,37 @@ a {
   border-radius: 0;
 }
 
+.carousel-section-fancy {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-section-fancy::before {
+  content: "";
+  position: absolute;
+  inset: auto -10% -40% -10%;
+  height: 240px;
+  background: radial-gradient(circle at bottom, rgba(47, 139, 227, 0.4), transparent 70%);
+  pointer-events: none;
+}
+
+.carousel-section-fancy .product-carousel {
+  padding: 14px var(--page-gutter) 6px;
+  border-radius: 20px;
+  background: rgba(10, 18, 32, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: inset 0 1px 12px rgba(255, 255, 255, 0.2);
+}
+
+.carousel-section-fancy .product-carousel-card {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.carousel-section-fancy .product-carousel-card:hover {
+  box-shadow: 0 24px 50px -38px rgba(7, 18, 30, 0.5);
+}
+
 .carousel-section + .carousel-section {
   padding-top: 6px;
 }
@@ -750,6 +801,47 @@ a {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 22px;
+}
+
+.featured-rugs-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.featured-rugs-section::before {
+  content: "";
+  position: absolute;
+  inset: -40% -10% auto;
+  height: 220px;
+  background: radial-gradient(circle at top, rgba(255, 138, 29, 0.28), transparent 65%);
+  pointer-events: none;
+}
+
+.featured-rugs-heading {
+  gap: 6px;
+}
+
+.featured-rugs-grid {
+  margin-top: 20px;
+}
+
+.featured-rug-card {
+  background: rgba(255, 255, 255, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.32);
+  box-shadow: 0 24px 46px -38px rgba(7, 18, 30, 0.45);
+  backdrop-filter: blur(10px);
+  transform: translateY(0);
+  transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.featured-rug-card:hover {
+  transform: translateY(-6px) scale(1.01);
+  border-color: rgba(255, 138, 29, 0.45);
+  box-shadow: 0 30px 60px -40px rgba(7, 18, 30, 0.5);
+}
+
+.featured-rug-card img {
+  border-radius: 18px;
 }
 
 .product-card {
