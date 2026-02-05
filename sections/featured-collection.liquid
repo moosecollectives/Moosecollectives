@@ -22,6 +22,7 @@
               {% endif %}
               <h3>{{ product_1.title }}</h3>
               <span class="price">{{ product_1.price | money }}</span>
+              <span class="sale-pill">15% off</span>
             </a>
           </article>
         {% endif %}
@@ -33,6 +34,7 @@
               {% endif %}
               <h3>{{ product_2.title }}</h3>
               <span class="price">{{ product_2.price | money }}</span>
+              <span class="sale-pill">15% off</span>
             </a>
           </article>
         {% endif %}
@@ -44,6 +46,7 @@
               {% endif %}
               <h3>{{ product_3.title }}</h3>
               <span class="price">{{ product_3.price | money }}</span>
+              <span class="sale-pill">15% off</span>
             </a>
           </article>
         {% endif %}
@@ -58,6 +61,7 @@
               {% endif %}
               <h3>{{ product.title }}</h3>
               <span class="price">{{ product.price | money }}</span>
+              <span class="sale-pill">15% off</span>
             </a>
           </article>
         {% endfor %}

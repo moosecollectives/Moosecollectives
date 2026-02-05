@@ -18,6 +18,7 @@
             {% endif %}
             <h3>{{ product.title }}</h3>
             <span class="price">{{ product.price | money }}</span>
+            <span class="sale-pill">15% off</span>
           </a>
         </article>
       {% endfor %}
@@ -29,6 +30,7 @@
             <h2>{{ adhesive_product.title }}</h2>
             <p class="collection-adhesive-copy">Keep your rug attached to the wall with these mounting strips.</p>
             <span class="price">{{ adhesive_product.price | money }}</span>
+            <span class="sale-pill">15% off</span>
           </div>
           <a class="button button-primary" href="{{ adhesive_product.url }}">View adhesive wall strip</a>
         </div>

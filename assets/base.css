@@ -223,6 +223,44 @@ a {
   gap: 18px;
 }
 
+.sale-banner {
+  background: linear-gradient(135deg, rgba(255, 138, 29, 0.9), rgba(255, 196, 0, 0.85));
+  color: #2d1600;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 11px;
+  font-weight: 700;
+  text-align: center;
+  padding: 10px 16px;
+}
+
+.sale-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 138, 29, 0.2);
+  border: 1px solid rgba(255, 138, 29, 0.5);
+  color: #2d1600;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.sale-note {
+  display: inline-block;
+  margin-top: 8px;
+  color: #2d1600;
+  background: rgba(255, 138, 29, 0.18);
+  border: 1px solid rgba(255, 138, 29, 0.4);
+  padding: 6px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .brand {
   font-family: var(--font-display);
   font-size: clamp(22px, 3vw, 36px);
