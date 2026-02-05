@@ -714,44 +714,40 @@ window.addEventListener('load', () => {
 
   const getVariantState = (variantId) => {
     if (!qtyState.has(variantId)) {
-      qtyState.set(variantId, {
-        pendingDelta: 0,
-        timer: null,
-        inFlight: false,
-        qty: 0,
-        key: null
-      });
+      qtyState.set(variantId, { inFlight: false });
     }
     return qtyState.get(variantId);
   };
 
-  const scheduleVariantUpdate = (variantId, form) => {
+  const updateVariantQuantity = async (variantId, form, delta) => {
     const state = getVariantState(variantId);
-    if (state.timer) {
-      clearTimeout(state.timer);
-    }
-    state.timer = setTimeout(async () => {
-      if (state.inFlight) {
-        scheduleVariantUpdate(variantId, form);
-        return;
-      }
-      state.inFlight = true;
+    if (state.inFlight) return;
+    state.inFlight = true;
 
-      if (!state.key && state.qty > 0) {
-        const refreshed = await refreshCartCount();
-        syncVariantState(refreshed);
-        updateProductControls(refreshed);
-      }
+    form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
+      btn.disabled = true;
+    });
 
-      const desiredQty = Math.max(0, state.qty + state.pendingDelta);
-      state.pendingDelta = 0;
+    try {
+      const cart = await fetchCart();
+      if (!cart) return;
+      const item = cart.items.find((entry) => entry.id === variantId);
+      const currentQty = item ? item.quantity : 0;
+      const desiredQty = Math.max(0, currentQty + delta);
 
-      if (desiredQty === state.qty) {
-        state.inFlight = false;
-        return;
-      }
+      if (desiredQty === currentQty) return;
 
-      if (!state.key && desiredQty > 0) {
+      if (item && item.key) {
+        const response = await fetch('/cart/change.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ id: item.key, quantity: desiredQty })
+        });
+        if (!response.ok) {
+          return;
+        }
+      } else if (desiredQty > 0) {
         const addResponse = await fetch('/cart/add.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -759,24 +755,6 @@ window.addEventListener('load', () => {
           body: JSON.stringify({ id: variantId, quantity: desiredQty })
         });
         if (!addResponse.ok) {
-          state.inFlight = false;
-          const refreshed = await refreshCartCount();
-          syncVariantState(refreshed);
-          updateProductControls(refreshed);
-          return;
-        }
-      } else if (state.key) {
-        const response = await fetch('/cart/change.js', {
-          method: 'POST',
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify({ id: state.key, quantity: desiredQty })
-        });
-        if (!response.ok) {
-          state.inFlight = false;
-          const refreshed = await refreshCartCount();
-          syncVariantState(refreshed);
-          updateProductControls(refreshed);
           return;
         }
       }
@@ -784,8 +762,12 @@ window.addEventListener('load', () => {
       const updatedCart = await refreshCartCount();
       syncVariantState(updatedCart);
       updateProductControls(updatedCart);
+    } finally {
       state.inFlight = false;
-    }, 350);
+      form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
+        btn.disabled = false;
+      });
+    }
   };
 
   document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
@@ -796,15 +778,8 @@ window.addEventListener('load', () => {
       controls.querySelectorAll('[data-product-qty-btn]').forEach((button) => {
         button.addEventListener('click', async () => {
           const direction = button.dataset.productQtyBtn;
-          const state = getVariantState(variantId);
-          if (direction === 'plus') {
-            state.pendingDelta += 1;
-          } else {
-            if (state.qty + state.pendingDelta <= 0) return;
-            state.pendingDelta -= 1;
-          }
-
-          scheduleVariantUpdate(variantId, form);
+          const delta = direction === 'plus' ? 1 : -1;
+          await updateVariantQuantity(variantId, form, delta);
         });
       });
     }
