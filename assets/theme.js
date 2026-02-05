@@ -745,6 +745,9 @@ window.addEventListener('load', () => {
         return;
       }
 
+      state.qty = desiredQty;
+      setProductQtyState(form, desiredQty);
+
       if (!state.key && desiredQty > 0) {
         const addResponse = await fetch('/cart/add.js', {
           method: 'POST',
