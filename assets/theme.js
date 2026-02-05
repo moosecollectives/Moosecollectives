@@ -733,11 +733,21 @@ window.addEventListener('load', () => {
       if (!cart) return;
       const item = cart.items.find((entry) => entry.id === variantId);
       const currentQty = item ? item.quantity : 0;
-      const desiredQty = Math.max(0, currentQty + delta);
 
-      if (desiredQty === currentQty) return;
-
-      if (item && item.key) {
+      if (delta > 0) {
+        const addResponse = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+          credentials: 'same-origin',
+          body: JSON.stringify({ id: variantId, quantity: delta })
+        });
+        if (!addResponse.ok) {
+          return;
+        }
+      } else {
+        if (!item || !item.key) return;
+        const desiredQty = Math.max(0, currentQty + delta);
+        if (desiredQty === currentQty) return;
         const response = await fetch('/cart/change.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -745,16 +755,6 @@ window.addEventListener('load', () => {
           body: JSON.stringify({ id: item.key, quantity: desiredQty })
         });
         if (!response.ok) {
-          return;
-        }
-      } else if (desiredQty > 0) {
-        const addResponse = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify({ id: variantId, quantity: desiredQty })
-        });
-        if (!addResponse.ok) {
           return;
         }
       }
