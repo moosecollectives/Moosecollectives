@@ -816,8 +816,8 @@ a {
 
 .featured-grid {
   display: grid;
-  gap: 0;
-  grid-template-columns: 1fr;
+  gap: clamp(12px, 2vw, 18px);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: 14px;
 }
 
@@ -829,8 +829,16 @@ a {
   box-shadow: 0 20px 44px -32px rgba(255, 140, 40, 0.45);
 }
 
-.featured-grid-card + .featured-grid-card {
-  border-top: 1px solid rgba(255, 255, 255, 0.35);
+@media (max-width: 980px) {
+  .featured-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .featured-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .featured-grid-card a {
