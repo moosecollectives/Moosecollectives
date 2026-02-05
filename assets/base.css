@@ -828,9 +828,9 @@ a {
 }
 
 .featured-rug-card {
-  background: rgba(255, 168, 60, 0.14);
+  background: linear-gradient(180deg, rgba(255, 170, 60, 0.22) 0%, rgba(85, 176, 255, 0.22) 100%);
   border: none;
-  box-shadow: 0 18px 34px -28px rgba(255, 168, 60, 0.35);
+  box-shadow: 0 18px 34px -28px rgba(42, 120, 220, 0.3);
   backdrop-filter: blur(9px);
   transform: translateY(0);
   transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
@@ -846,7 +846,7 @@ a {
 
 .featured-rug-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 26px 50px -36px rgba(255, 168, 60, 0.45);
+  box-shadow: 0 26px 50px -36px rgba(42, 120, 220, 0.4);
 }
 
 .featured-rug-card a {
