@@ -20,69 +20,40 @@
   {% endif %}
 
   {% if carousel_collection != blank and carousel_collection.products_count > 0 %}
-    <div class="container">
-      <div class="case-opening" data-case-carousel>
-        <audio data-case-audio src="{{ 'case-opening.mp3' | asset_url }}" preload="auto"></audio>
-        <div class="case-viewport">
-          <div class="case-center-line" aria-hidden="true"></div>
-          <div class="case-track" data-case-track>
-            {% for product in carousel_collection.products limit: section.settings.max_products %}
-              <article
-                class="case-item"
-                data-case-item
-                data-title="{{ product.title | escape }}"
-                data-url="{{ product.url }}"
-                data-image="{{ product.featured_image | image_url: width: 900 }}"
-                data-description="{{ product.description | strip_html | truncate: 140 | escape }}"
-                data-variant="{{ product.selected_or_first_available_variant.id }}"
-                data-price="{{ product.price | money }}"
-                data-compare-price="{{ product.price | times: 100 | divided_by: 85 | money }}"
-              >
-                {% if product.featured_image %}
-                  {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.title }}
-                {% endif %}
-                <span class="case-item-title">{{ product.title }}</span>
-              </article>
-            {% endfor %}
-            {% for product in carousel_collection.products limit: section.settings.max_products %}
-              <article
-                class="case-item"
-                data-case-item
-                data-title="{{ product.title | escape }}"
-                data-url="{{ product.url }}"
-                data-image="{{ product.featured_image | image_url: width: 900 }}"
-                data-description="{{ product.description | strip_html | truncate: 140 | escape }}"
-                data-variant="{{ product.selected_or_first_available_variant.id }}"
-                data-price="{{ product.price | money }}"
-                data-compare-price="{{ product.price | times: 100 | divided_by: 85 | money }}"
-              >
-                {% if product.featured_image %}
-                  {{ product.featured_image | image_url: width: 500 | image_tag: loading: 'lazy', alt: product.title }}
-                {% endif %}
-                <span class="case-item-title">{{ product.title }}</span>
-              </article>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="case-actions">
-          <button class="button button-primary case-overlay-button" type="button" data-case-spin>Open rugs</button>
-        </div>
-      </div>
-    </div>
-    <div class="case-result" data-case-result hidden>
-      <div class="case-result-card">
-        <button class="case-result-close" type="button" aria-label="Close result">×</button>
-        <img data-case-result-image alt="">
-        <h3 data-case-result-title></h3>
-        <p data-case-result-description></p>
-        <div class="case-result-footer">
-          <span class="case-result-price" data-case-result-price></span>
-          <span class="price-compare case-result-compare" data-case-result-compare></span>
-          <form method="post" action="/cart/add" data-case-result-add>
-            <input type="hidden" name="id" data-case-result-variant>
-            <button class="button button-primary" type="submit">Add to cart</button>
-          </form>
-        </div>
+    <div class="product-carousel" data-carousel data-direction="{{ section.settings.direction }}" data-start="{% if section.settings.start_from_end %}end{% else %}start{% endif %}" data-speed="{{ section.settings.speed }}">
+      <div class="product-carousel-track" data-carousel-track>
+        {% for product in carousel_collection.products limit: section.settings.max_products %}
+          {% if product.handle == 'adhesive-wall-strip' %}
+            {% continue %}
+          {% endif %}
+          <article class="product-carousel-card" data-carousel-card>
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <h3>{{ product.title }}</h3>
+              {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
+              <span class="price price-current">{{ product.price | money }}</span>
+              <span class="price-compare">{{ compare_price | money }}</span>
+            </a>
+          </article>
+        {% endfor %}
+        {% for product in carousel_collection.products limit: section.settings.max_products %}
+          {% if product.handle == 'adhesive-wall-strip' %}
+            {% continue %}
+          {% endif %}
+          <article class="product-carousel-card" data-carousel-card>
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <h3>{{ product.title }}</h3>
+              {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
+              <span class="price price-current">{{ product.price | money }}</span>
+              <span class="price-compare">{{ compare_price | money }}</span>
+            </a>
+          </article>
+        {% endfor %}
       </div>
     </div>
   {% else %}
@@ -99,6 +70,22 @@
     {"type": "text", "id": "heading", "label": "Heading", "default": "All products"},
     {"type": "collection", "id": "collection", "label": "Collection (defaults to All products)"},
     {"type": "text", "id": "cta_label", "label": "CTA label", "default": "Browse collection"},
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Scroll direction",
+      "options": [
+        {"value": "left", "label": "Left"},
+        {"value": "right", "label": "Right"}
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "start_from_end",
+      "label": "Start from end of list",
+      "default": false
+    },
     {
       "type": "range",
       "id": "max_products",
