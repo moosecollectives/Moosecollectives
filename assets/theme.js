@@ -656,12 +656,25 @@ window.addEventListener('load', () => {
   const refreshCartCount = async (cart) => {
     const resolvedCart = cart || (await fetchCart());
     if (!resolvedCart) return null;
+    const previousCount = cartCache ? cartCache.item_count : 0;
     cartCache = resolvedCart;
     if (cartCount) {
       cartCount.textContent = resolvedCart.item_count;
     }
     if (cartCount) {
       cartCount.hidden = resolvedCart.item_count === 0;
+    }
+    if (cartCount && resolvedCart.item_count > previousCount) {
+      cartCount.classList.remove('cart-count-pulse');
+      // force reflow to restart animation
+      void cartCount.offsetWidth;
+      cartCount.classList.add('cart-count-pulse');
+      const cartLink = cartCount.closest('.cart-link');
+      if (cartLink) {
+        cartLink.classList.remove('cart-link-pulse');
+        void cartLink.offsetWidth;
+        cartLink.classList.add('cart-link-pulse');
+      }
     }
     return resolvedCart;
   };

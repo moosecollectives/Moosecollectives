@@ -1181,6 +1181,41 @@ a {
   box-shadow: 0 8px 16px -10px rgba(255, 140, 40, 0.6);
 }
 
+.cart-count-pulse {
+  animation: cartCountPulse 0.9s ease-out;
+}
+
+.cart-link-pulse {
+  animation: cartLinkGlow 0.9s ease-out;
+}
+
+@keyframes cartCountPulse {
+  0% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(1.25);
+  }
+  60% {
+    transform: scale(0.95);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes cartLinkGlow {
+  0% {
+    text-shadow: 0 0 0 rgba(255, 155, 47, 0);
+  }
+  40% {
+    text-shadow: 0 0 14px rgba(255, 155, 47, 0.7);
+  }
+  100% {
+    text-shadow: 0 0 0 rgba(255, 155, 47, 0);
+  }
+}
+
 .cart-remove-tab {
   position: static;
   width: 28px;
