@@ -385,6 +385,23 @@ a {
   transform: translateY(-2px) rotate(-0.4deg);
 }
 
+.add-to-cart-added {
+  animation: addToCartPulse 0.9s ease;
+  box-shadow: 0 14px 28px -18px rgba(255, 140, 40, 0.6);
+}
+
+@keyframes addToCartPulse {
+  0% {
+    transform: scale(1);
+  }
+  40% {
+    transform: scale(1.06);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .hero {
   padding-top: clamp(36px, 7vw, 90px);
   position: relative;

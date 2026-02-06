@@ -807,6 +807,7 @@ window.addEventListener('load', () => {
       event.preventDefault();
 
       const submitButton = form.querySelector('[type="submit"]');
+      const originalLabel = submitButton ? submitButton.textContent : '';
       if (submitButton) {
         submitButton.disabled = true;
       }
@@ -826,6 +827,15 @@ window.addEventListener('load', () => {
         const updatedCart = await refreshCartCount();
         syncVariantState(updatedCart);
         updateProductControls(updatedCart);
+        if (submitButton) {
+          submitButton.classList.remove('add-to-cart-added');
+          void submitButton.offsetWidth;
+          submitButton.classList.add('add-to-cart-added');
+          submitButton.textContent = 'Added';
+          setTimeout(() => {
+            submitButton.textContent = originalLabel || 'Add to cart';
+          }, 1400);
+        }
       } catch (error) {
         form.submit();
       } finally {
