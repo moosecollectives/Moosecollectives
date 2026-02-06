@@ -47,6 +47,19 @@
           <button class="cart-drawer-close" type="button" data-cart-drawer-close aria-label="Close cart">×</button>
         </div>
         <div class="cart-drawer-body">
+          {% if drawer_upsell != blank %}
+            <div class="cart-drawer-upsell" data-cart-drawer-upsell>
+              <div>
+                <span class="upsell-eyebrow">Recommended add-on</span>
+                <h3 class="upsell-title">Add adhesive strips to your order</h3>
+                <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
+              </div>
+              <form class="cart-upsell-form" method="post" action="/cart/add" data-cart-upsell data-upsell-variant-id="{{ drawer_upsell.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="id" value="{{ drawer_upsell.selected_or_first_available_variant.id }}">
+                <button class="button button-secondary" type="submit">Add to cart</button>
+              </form>
+            </div>
+          {% endif %}
           <div class="cart-drawer-empty" data-cart-drawer-empty hidden>Your cart is empty.</div>
           <div class="cart-drawer-items" data-cart-drawer-items></div>
         </div>
@@ -57,19 +70,6 @@
           </div>
           <button class="button button-primary" type="button" data-cart-drawer-checkout data-checkout-url="{{ routes.checkout_url }}">Checkout</button>
         </div>
-        {% if drawer_upsell != blank %}
-          <div class="cart-drawer-upsell" data-cart-drawer-upsell>
-            <div>
-              <span class="upsell-eyebrow">Recommended add-on</span>
-              <h3 class="upsell-title">Add adhesive strips to your order</h3>
-              <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
-            </div>
-            <form class="cart-upsell-form" method="post" action="/cart/add" data-cart-upsell data-upsell-variant-id="{{ drawer_upsell.selected_or_first_available_variant.id }}">
-              <input type="hidden" name="id" value="{{ drawer_upsell.selected_or_first_available_variant.id }}">
-              <button class="button button-secondary" type="submit">Add to cart</button>
-            </form>
-          </div>
-        {% endif %}
       </aside>
     </div>
 
