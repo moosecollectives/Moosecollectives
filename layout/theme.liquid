@@ -38,6 +38,41 @@
       {{ content_for_layout }}
     </main>
 
+    {% assign drawer_upsell = all_products['adhesive-wall-strip'] %}
+    <div class="cart-drawer" data-cart-drawer hidden>
+      <div class="cart-drawer-backdrop" data-cart-drawer-close></div>
+      <aside class="cart-drawer-panel" aria-label="Cart">
+        <div class="cart-drawer-header">
+          <span>Cart</span>
+          <button class="cart-drawer-close" type="button" data-cart-drawer-close aria-label="Close cart">×</button>
+        </div>
+        <div class="cart-drawer-body">
+          <div class="cart-drawer-empty" data-cart-drawer-empty hidden>Your cart is empty.</div>
+          <div class="cart-drawer-items" data-cart-drawer-items></div>
+          {% if drawer_upsell != blank %}
+            <div class="cart-drawer-upsell" data-cart-drawer-upsell>
+              <div>
+                <span class="upsell-eyebrow">Recommended add-on</span>
+                <h3 class="upsell-title">Add adhesive strips to your order</h3>
+                <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
+              </div>
+              <form class="cart-upsell-form" method="post" action="/cart/add" data-cart-upsell>
+                <input type="hidden" name="id" value="{{ drawer_upsell.selected_or_first_available_variant.id }}">
+                <button class="button button-secondary" type="submit">Add to cart</button>
+              </form>
+            </div>
+          {% endif %}
+        </div>
+        <div class="cart-drawer-footer">
+          <div class="cart-drawer-total">
+            <span>Total</span>
+            <span class="price price-current" data-cart-drawer-total></span>
+          </div>
+          <button class="button button-primary" type="button" data-cart-drawer-checkout data-checkout-url="{{ routes.checkout_url }}">Checkout</button>
+        </div>
+      </aside>
+    </div>
+
     {% section 'footer' %}
   </body>
 </html>
