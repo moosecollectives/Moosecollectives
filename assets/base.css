@@ -402,6 +402,20 @@ a {
   }
 }
 
+.add-to-cart-fly {
+  position: fixed;
+  z-index: 60;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff9b2f, #ffc14d);
+  color: #2d1600;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  pointer-events: none;
+  box-shadow: 0 16px 32px -18px rgba(255, 140, 40, 0.6);
+}
+
 .hero {
   padding-top: clamp(36px, 7vw, 90px);
   position: relative;

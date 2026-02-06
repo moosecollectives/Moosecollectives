@@ -641,6 +641,7 @@ window.addEventListener('load', () => {
   });
 
   const cartCount = document.querySelector('[data-cart-count]');
+  const cartLink = document.querySelector('.cart-link');
 
   let cartCache = null;
 
@@ -677,6 +678,33 @@ window.addEventListener('load', () => {
       }
     }
     return resolvedCart;
+  };
+
+  const animateAddToCart = (sourceButton) => {
+    if (!sourceButton || !cartLink) return;
+    const sourceRect = sourceButton.getBoundingClientRect();
+    const targetRect = cartLink.getBoundingClientRect();
+    const fly = document.createElement('div');
+    fly.className = 'add-to-cart-fly';
+    fly.textContent = 'Added';
+    document.body.appendChild(fly);
+
+    const startX = sourceRect.left + sourceRect.width / 2;
+    const startY = sourceRect.top + sourceRect.height / 2;
+    const endX = targetRect.left + targetRect.width / 2;
+    const endY = targetRect.top + targetRect.height / 2;
+
+    fly.style.transform = `translate(${startX}px, ${startY}px) translate(-50%, -50%)`;
+
+    fly.animate(
+      [
+        { transform: `translate(${startX}px, ${startY}px) translate(-50%, -50%) scale(1)`, opacity: 1 },
+        { transform: `translate(${endX}px, ${endY}px) translate(-50%, -50%) scale(0.6)`, opacity: 0 }
+      ],
+      { duration: 700, easing: 'cubic-bezier(0.2, 0.8, 0.2, 1)' }
+    ).onfinish = () => {
+      fly.remove();
+    };
   };
 
   const setProductQtyState = (form, quantity) => {
@@ -835,6 +863,7 @@ window.addEventListener('load', () => {
           setTimeout(() => {
             submitButton.textContent = originalLabel || 'Add to cart';
           }, 1400);
+          animateAddToCart(submitButton);
         }
       } catch (error) {
         form.submit();
