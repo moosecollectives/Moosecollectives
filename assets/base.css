@@ -1174,7 +1174,11 @@ a {
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.04em;
-  color: var(--tangerine-1);
+  color: #2d1600;
+  background: linear-gradient(135deg, #ff9b2f, #ffc14d);
+  border-radius: 999px;
+  padding: 2px 6px;
+  box-shadow: 0 8px 16px -10px rgba(255, 140, 40, 0.6);
 }
 
 .cart-remove-tab {
