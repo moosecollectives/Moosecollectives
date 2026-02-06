@@ -776,7 +776,7 @@ window.addEventListener('load', () => {
       cartDrawerEmpty.hidden = cart.items.length > 0;
     }
     if (cartDrawerTotal) {
-      cartDrawerTotal.textContent = formatMoney(cart.total_price, cart.currency);
+      cartDrawerTotal.textContent = formatMoney(cart.total_price || 0, cart.currency);
     }
     bindCartDrawerEvents();
     bindCartPriceInteractions(cartDrawer);
@@ -806,7 +806,12 @@ window.addEventListener('load', () => {
 
   const handleCartUpdate = async (cart) => {
     const resolvedCart = cart || (await fetchCart());
-    if (!resolvedCart) return null;
+    if (!resolvedCart) {
+      if (cartDrawerTotal) {
+        cartDrawerTotal.textContent = formatMoney(0);
+      }
+      return null;
+    }
     await refreshCartCount(resolvedCart);
     if (typeof window.updateCartUI === 'function') {
       await window.updateCartUI(resolvedCart);
