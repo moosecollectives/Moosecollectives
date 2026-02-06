@@ -1032,10 +1032,7 @@ body.cart-drawer-open {
   position: relative;
   width: min(420px, 92vw);
   height: 100%;
-  background:
-    radial-gradient(circle at 20% 10%, rgba(255, 160, 60, 0.25), transparent 55%),
-    radial-gradient(circle at 80% 80%, rgba(74, 180, 255, 0.2), transparent 60%),
-    #e9f6ff;
+  background: #e9f6ff;
   border-left: 1px solid rgba(12, 18, 32, 0.12);
   box-shadow: -26px 0 52px -34px rgba(7, 18, 30, 0.6);
   display: grid;
@@ -1094,10 +1091,12 @@ body.cart-drawer-open {
   display: grid;
   grid-template-columns: 130px 1fr;
   gap: 10px;
-  padding: 6px 8px;
+  padding: 4px 8px;
   border-radius: 14px;
   background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.72), rgba(255, 255, 255, 0.4));
+    radial-gradient(circle at 15% 20%, rgba(255, 160, 60, 0.25), transparent 50%),
+    radial-gradient(circle at 85% 80%, rgba(74, 180, 255, 0.2), transparent 55%),
+    linear-gradient(140deg, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.35));
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 16px 30px -24px rgba(7, 18, 30, 0.35);
   align-items: center;
@@ -1105,7 +1104,7 @@ body.cart-drawer-open {
 
 .cart-drawer-item img {
   width: 100%;
-  height: 120px;
+  height: 110px;
   object-fit: contain;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.15);
