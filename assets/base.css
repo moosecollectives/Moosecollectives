@@ -958,8 +958,8 @@ a {
 }
 
 .featured-cta {
-  margin-top: 8px;
-  margin-bottom: 6px;
+  margin-top: 24px;
+  margin-bottom: 0;
   display: flex;
   justify-content: center;
 }
