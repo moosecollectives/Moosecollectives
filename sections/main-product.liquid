@@ -50,6 +50,9 @@
             <button class="product-qty-btn" type="button" data-product-qty-btn="plus" aria-label="Increase quantity">+</button>
           </div>
         </div>
+        <div class="product-cart-view" data-view-cart hidden>
+          <a class="button button-secondary" href="{{ routes.cart_url }}">View cart</a>
+        </div>
       </form>
       {% assign upsell_product = all_products['adhesive-wall-strip'] %}
       {% if upsell_product != blank and product.handle != upsell_product.handle %}

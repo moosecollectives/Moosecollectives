@@ -711,17 +711,24 @@ window.addEventListener('load', () => {
     const controls = form.querySelector('[data-product-qty-controls]');
     const count = form.querySelector('[data-product-qty-count]');
     const button = form.querySelector('[data-add-to-cart-button]');
+    const viewCart = form.querySelector('[data-view-cart]');
     if (!controls || !count || !button) return;
 
     if (quantity > 0) {
       form.classList.add('has-in-cart');
       controls.hidden = false;
       button.hidden = true;
+      if (viewCart) {
+        viewCart.hidden = false;
+      }
       count.textContent = `${quantity} in cart`;
     } else {
       form.classList.remove('has-in-cart');
       controls.hidden = true;
       button.hidden = false;
+      if (viewCart) {
+        viewCart.hidden = true;
+      }
       count.textContent = '';
     }
   };
@@ -863,7 +870,6 @@ window.addEventListener('load', () => {
           setTimeout(() => {
             submitButton.textContent = originalLabel || 'Add to cart';
           }, 1400);
-          animateAddToCart(submitButton);
         }
       } catch (error) {
         form.submit();

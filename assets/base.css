@@ -1785,6 +1785,10 @@ a {
   margin-top: 18px;
 }
 
+.product-cart-view {
+  margin-top: 10px;
+}
+
 .product-cart-actions [data-product-qty-controls] {
   display: none;
 }
