@@ -1169,8 +1169,8 @@ a {
 
 .cart-count {
   position: absolute;
-  top: -6px;
-  right: -8px;
+  top: -10px;
+  right: -14px;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.04em;
