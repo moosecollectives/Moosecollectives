@@ -29,7 +29,7 @@
         <div class="cart-carousel" data-cart-carousel>
           <div class="cart-track">
             {% for item in cart.items %}
-              <div class="cart-card-wrap">
+              <div class="cart-card-wrap" data-cart-key="{{ item.key }}">
                 <article class="cart-card">
                   <a class="cart-media" href="{{ item.url }}" aria-label="View {{ item.product.title }}">
                     {% if item.image %}
