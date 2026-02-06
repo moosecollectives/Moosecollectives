@@ -1270,10 +1270,11 @@ a {
   transform: translateY(-1px);
 }
 
-.cart-remove-tab svg {
+.cart-remove-tab img {
   width: 16px;
   height: 16px;
-  fill: rgba(12, 18, 32, 0.8);
+  object-fit: contain;
+  display: block;
 }
 
 .cart-price {
