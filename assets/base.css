@@ -1787,6 +1787,10 @@ a {
 
 .product-cart-view {
   margin-left: 10px;
+  display: none;
+}
+
+.product-cart-view.is-visible {
   display: inline-flex;
 }
 

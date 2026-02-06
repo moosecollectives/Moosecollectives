@@ -866,9 +866,9 @@ window.addEventListener('load', () => {
         }
         const viewCart = form.querySelector('[data-view-cart]');
         if (viewCart) {
-          viewCart.hidden = false;
+          viewCart.classList.add('is-visible');
           setTimeout(() => {
-            viewCart.hidden = true;
+            viewCart.classList.remove('is-visible');
           }, 2400);
         }
       } catch (error) {
