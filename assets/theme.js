@@ -780,6 +780,28 @@ window.addEventListener('load', () => {
     }
     bindCartDrawerEvents();
     bindCartPriceInteractions(cartDrawer);
+    updateUpsellState(cart);
+  };
+
+  const updateUpsellState = (cart) => {
+    if (!cart) return;
+    document.querySelectorAll('[data-cart-upsell]').forEach((form) => {
+      const input = form.querySelector('input[name="id"]');
+      const variantId = parseInt((form.dataset.upsellVariantId || (input && input.value)), 10);
+      if (!variantId) return;
+      const button = form.querySelector('button[type="submit"]');
+      const hasItem = cart.items.some((item) => item.id === variantId);
+      if (!button) return;
+      if (hasItem) {
+        button.textContent = 'Added';
+        button.classList.add('is-added');
+        button.disabled = true;
+      } else {
+        button.textContent = 'Add to cart';
+        button.classList.remove('is-added');
+        button.disabled = false;
+      }
+    });
   };
 
   const handleCartUpdate = async (cart) => {
@@ -790,6 +812,7 @@ window.addEventListener('load', () => {
       await window.updateCartUI(resolvedCart);
     }
     updateCartDrawer(resolvedCart);
+    updateUpsellState(resolvedCart);
     if (typeof window.syncVariantState === 'function') {
       window.syncVariantState(resolvedCart);
     }

@@ -56,7 +56,7 @@
                 <h3 class="upsell-title">Add adhesive strips to your order</h3>
                 <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
               </div>
-              <form class="cart-upsell-form" method="post" action="/cart/add" data-cart-upsell>
+              <form class="cart-upsell-form" method="post" action="/cart/add" data-cart-upsell data-upsell-variant-id="{{ drawer_upsell.selected_or_first_available_variant.id }}">
                 <input type="hidden" name="id" value="{{ drawer_upsell.selected_or_first_available_variant.id }}">
                 <button class="button button-secondary" type="submit">Add to cart</button>
               </form>
