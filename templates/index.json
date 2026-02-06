@@ -35,6 +35,10 @@
         "cta_link": ""
       }
     },
+    "collection-cta": {
+      "type": "collection-cta",
+      "settings": {}
+    },
     "product-carousel-secondary": {
       "type": "product-carousel",
       "settings": {
@@ -51,6 +55,7 @@
   "order": [
     "main-hero",
     "featured-rugs",
+    "collection-cta",
     "product-carousel-secondary"
   ]
 }

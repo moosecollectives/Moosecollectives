@@ -964,6 +964,16 @@ a {
   justify-content: center;
 }
 
+.collection-cta {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.collection-cta-inner {
+  display: flex;
+  justify-content: center;
+}
+
 .cart-section {
   overflow: hidden;
 }
