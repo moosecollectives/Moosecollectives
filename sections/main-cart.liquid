@@ -60,6 +60,7 @@
                             inputmode="numeric"
                             aria-label="Quantity for {{ item.product.title }}"
                             data-cart-qty
+                            data-cart-key="{{ item.key }}"
                             data-cart-title="{{ item.product.title | escape }}"
                           >
                           <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" aria-label="Increase quantity">+</button>

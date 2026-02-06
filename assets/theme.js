@@ -425,6 +425,7 @@ window.addEventListener('load', () => {
                       inputmode="numeric"
                       aria-label="Quantity for ${escapeHtml(item.product_title)}"
                       data-cart-qty
+                      data-cart-key="${item.key}"
                       data-cart-title="${escapeHtml(item.product_title)}"
                     >
                     <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" aria-label="Increase quantity">+</button>
@@ -487,8 +488,7 @@ window.addEventListener('load', () => {
     const bindCartItemEvents = () => {
       cartForm.querySelectorAll('[data-cart-qty]').forEach((input) => {
         const wrap = input.closest('[data-cart-qty-wrap]');
-        const keyMatch = input.name.match(/updates\[(.+)\]/);
-        const key = keyMatch ? keyMatch[1] : null;
+        const key = input.dataset.cartKey || (input.name.match(/updates\[(.+)\]/) || [])[1];
         if (!key) return;
 
         if (wrap) {
@@ -837,7 +837,9 @@ window.addEventListener('load', () => {
     try {
       const cart = await fetchCart();
       if (!cart) return;
-      const item = cart.items.find((entry) => entry.id === variantId);
+      const cachedCart = cartCache || cart;
+      const item = (cart.items.find((entry) => entry.id === variantId)
+        || cachedCart.items.find((entry) => entry.id === variantId));
       const currentQty = item ? item.quantity : 0;
 
       if (delta > 0) {

@@ -1974,6 +1974,8 @@ a {
 
 .upsell-quick-add .button {
   color: #2d1600;
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  border: 0;
   box-shadow: 0 12px 24px -18px rgba(255, 122, 0, 0.45);
 }
 
