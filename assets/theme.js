@@ -679,10 +679,12 @@ window.addEventListener('load', () => {
     await handleCartUpdate(updatedCart);
   };
 
+  let drawerBusy = false;
   const applyDrawerChange = async (key, quantity) => {
     if (!cartDrawer) return;
-    if (cartDrawer.dataset.loading === 'true') return;
-    cartDrawer.dataset.loading = 'true';
+    if (drawerBusy) return;
+    drawerBusy = true;
+    cartDrawer.classList.add('is-loading');
     cartDrawer.querySelectorAll('[data-cart-qty-btn], [data-cart-remove-key]').forEach((button) => {
       button.disabled = true;
       button.classList.add('is-loading');
@@ -693,8 +695,14 @@ window.addEventListener('load', () => {
       credentials: 'same-origin',
       body: JSON.stringify({ id: key, quantity })
     });
+    let updatedCart = null;
     if (response.ok) {
-      const updatedCart = await response.json();
+      updatedCart = await response.json();
+    }
+    if (!updatedCart) {
+      updatedCart = await fetchCart();
+    }
+    if (updatedCart) {
       await refreshCartCount(updatedCart);
       updateCartDrawer(updatedCart);
       updateUpsellState(updatedCart);
@@ -702,11 +710,12 @@ window.addEventListener('load', () => {
         window.updateProductControls(updatedCart);
       }
     }
-    cartDrawer.dataset.loading = 'false';
+    cartDrawer.classList.remove('is-loading');
     cartDrawer.querySelectorAll('[data-cart-qty-btn], [data-cart-remove-key]').forEach((button) => {
       button.disabled = false;
       button.classList.remove('is-loading');
     });
+    drawerBusy = false;
   };
 
   const bindCartDrawerEvents = () => {

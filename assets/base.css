@@ -423,6 +423,39 @@ a {
   }
 }
 
+.cart-drawer.is-loading .cart-drawer-panel::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 100%;
+  background: linear-gradient(90deg, rgba(255, 138, 29, 0.2), rgba(255, 138, 29, 0.9), rgba(255, 138, 29, 0.2));
+  animation: drawerLoad 0.8s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes drawerLoad {
+  0% {
+    transform: translateX(-20%);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(20%);
+    opacity: 0.4;
+  }
+}
+
+.cart-quantity-btn.is-loading,
+.cart-drawer-remove-peel.is-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
 @keyframes addToCartPulse {
   0% {
     transform: scale(1);
