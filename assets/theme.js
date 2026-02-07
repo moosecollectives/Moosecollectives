@@ -781,7 +781,7 @@ window.addEventListener('load', () => {
       }
       const drawerBody = cartDrawer.querySelector('.cart-drawer-body');
       if (!drawerBody) return;
-      const isScrollable = drawerBody.scrollHeight > drawerBody.clientHeight + 1;
+      const isScrollable = drawerBody.scrollHeight > drawerBody.clientHeight + 4;
       if (!isScrollable) {
         cartDrawerMore.hidden = true;
         return;
@@ -815,7 +815,7 @@ window.addEventListener('load', () => {
     bindCartDrawerEvents();
     bindCartPriceInteractions(cartDrawer);
     updateUpsellState(cart);
-    setTimeout(updateCartDrawerMore, 0);
+    requestAnimationFrame(updateCartDrawerMore);
   };
 
   const updateUpsellState = (cart) => {
@@ -930,9 +930,8 @@ window.addEventListener('load', () => {
       drawerBody.addEventListener('scroll', updateCartDrawerMore);
     }
 
-    if (cartDrawerMore) {
+    if (cartDrawerMore && drawerBody) {
       cartDrawerMore.addEventListener('click', () => {
-        if (!drawerBody) return;
         drawerBody.scrollTo({ top: drawerBody.scrollHeight, behavior: 'smooth' });
       });
     }
