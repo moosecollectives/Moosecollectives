@@ -456,6 +456,18 @@ a {
   pointer-events: none;
 }
 
+.cart-quantity-btn.is-loading::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 138, 29, 0.2), rgba(255, 138, 29, 0.9), rgba(255, 138, 29, 0.2));
+  animation: buttonLoad 0.8s ease-in-out infinite;
+}
+
 @keyframes addToCartPulse {
   0% {
     transform: scale(1);
