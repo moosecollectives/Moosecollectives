@@ -773,23 +773,23 @@ window.addEventListener('load', () => {
     `;
   };
 
-  const updateCartDrawerMore = () => {
-    if (!cartDrawerItems || !cartDrawerMore || !cartDrawerMoreText) return;
-    const items = Array.from(cartDrawerItems.children);
-    if (items.length === 0) {
-      cartDrawerMore.hidden = true;
-      return;
-    }
-    const container = cartDrawerItems.parentElement;
-    if (!container) return;
-    const cutoff = container.scrollTop + container.clientHeight;
-    let visible = 0;
-    items.forEach((item) => {
-      if (item.offsetTop + item.offsetHeight <= cutoff) {
-        visible += 1;
+    const updateCartDrawerMore = () => {
+      if (!cartDrawerItems || !cartDrawerMore || !cartDrawerMoreText) return;
+      const items = Array.from(cartDrawerItems.children);
+      if (items.length === 0) {
+        cartDrawerMore.hidden = true;
+        return;
       }
-    });
-    const more = Math.max(0, items.length - visible);
+      const container = cartDrawerItems;
+      if (!container) return;
+      const cutoff = container.scrollTop + container.clientHeight;
+      let visible = 0;
+      items.forEach((item) => {
+        if (item.offsetTop + item.offsetHeight <= cutoff) {
+          visible += 1;
+        }
+      });
+      const more = Math.max(0, items.length - visible);
     if (more > 0) {
       cartDrawerMoreText.textContent = `${more} more item${more === 1 ? '' : 's'}`;
       cartDrawerMore.hidden = false;
