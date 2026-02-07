@@ -680,20 +680,33 @@ window.addEventListener('load', () => {
   };
 
   const applyDrawerChange = async (key, quantity) => {
+    if (!cartDrawer) return;
+    if (cartDrawer.dataset.loading === 'true') return;
+    cartDrawer.dataset.loading = 'true';
+    cartDrawer.querySelectorAll('[data-cart-qty-btn], [data-cart-remove-key]').forEach((button) => {
+      button.disabled = true;
+      button.classList.add('is-loading');
+    });
     const response = await fetch('/cart/change.js', {
       method: 'POST',
       headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
       credentials: 'same-origin',
       body: JSON.stringify({ id: key, quantity })
     });
-    if (!response.ok) return;
-    const updatedCart = await response.json();
-    await refreshCartCount(updatedCart);
-    updateCartDrawer(updatedCart);
-    updateUpsellState(updatedCart);
-    if (typeof window.updateProductControls === 'function') {
-      window.updateProductControls(updatedCart);
+    if (response.ok) {
+      const updatedCart = await response.json();
+      await refreshCartCount(updatedCart);
+      updateCartDrawer(updatedCart);
+      updateUpsellState(updatedCart);
+      if (typeof window.updateProductControls === 'function') {
+        window.updateProductControls(updatedCart);
+      }
     }
+    cartDrawer.dataset.loading = 'false';
+    cartDrawer.querySelectorAll('[data-cart-qty-btn], [data-cart-remove-key]').forEach((button) => {
+      button.disabled = false;
+      button.classList.remove('is-loading');
+    });
   };
 
   const bindCartDrawerEvents = () => {
@@ -880,13 +893,17 @@ window.addEventListener('load', () => {
 
   initProductControls();
 
-    const updateVariantQuantity = async (variantId, form, delta) => {
-      form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
-        btn.disabled = true;
-      });
+  const updateVariantQuantity = async (variantId, form, delta) => {
+    form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
+      btn.disabled = true;
+    });
+    const primaryButton = form.querySelector('[data-add-to-cart-button]');
+    if (primaryButton) {
+      primaryButton.classList.add('is-loading');
+    }
 
-      try {
-        if (delta > 0) {
+    try {
+      if (delta > 0) {
           const addResponse = await fetch('/cart/add.js', {
             method: 'POST',
             headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -913,11 +930,14 @@ window.addEventListener('load', () => {
         if (!response.ok) return;
         const updatedCart = await response.json();
         await handleCartUpdate(updatedCart);
-      } finally {
-        form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
-          btn.disabled = false;
-        });
+    } finally {
+      form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
+        btn.disabled = false;
+      });
+      if (primaryButton) {
+        primaryButton.classList.remove('is-loading');
       }
+    }
   };
 
   document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
@@ -941,6 +961,7 @@ window.addEventListener('load', () => {
       const originalLabel = submitButton ? submitButton.textContent : '';
       if (submitButton) {
         submitButton.disabled = true;
+        submitButton.classList.add('is-loading');
       }
 
       try {
@@ -979,6 +1000,7 @@ window.addEventListener('load', () => {
       } finally {
         if (submitButton) {
           submitButton.disabled = false;
+          submitButton.classList.remove('is-loading');
         }
       }
     });
@@ -990,6 +1012,7 @@ window.addEventListener('load', () => {
       const submitButton = form.querySelector('[type="submit"]');
       if (submitButton) {
         submitButton.disabled = true;
+        submitButton.classList.add('is-loading');
       }
 
       try {
@@ -1010,6 +1033,7 @@ window.addEventListener('load', () => {
       } finally {
         if (submitButton) {
           submitButton.disabled = false;
+          submitButton.classList.remove('is-loading');
         }
       }
     });
@@ -1022,6 +1046,7 @@ window.addEventListener('load', () => {
       let added = false;
       if (submitButton) {
         submitButton.disabled = true;
+        submitButton.classList.add('is-loading');
       }
 
       try {
@@ -1047,6 +1072,7 @@ window.addEventListener('load', () => {
       } finally {
         if (submitButton) {
           submitButton.disabled = added;
+          submitButton.classList.remove('is-loading');
         }
       }
     });

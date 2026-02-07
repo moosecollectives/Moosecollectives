@@ -390,6 +390,39 @@ a {
   box-shadow: 0 14px 28px -18px rgba(255, 140, 40, 0.6);
 }
 
+.button.is-loading {
+  position: relative;
+  pointer-events: none;
+  opacity: 0.8;
+}
+
+.button.is-loading::after {
+  content: '';
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 6px;
+  height: 3px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(255, 138, 29, 0.2), rgba(255, 138, 29, 0.9), rgba(255, 138, 29, 0.2));
+  animation: buttonLoad 0.8s ease-in-out infinite;
+}
+
+@keyframes buttonLoad {
+  0% {
+    transform: translateX(-10%);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(10%);
+    opacity: 0.4;
+  }
+}
+
 @keyframes addToCartPulse {
   0% {
     transform: scale(1);
