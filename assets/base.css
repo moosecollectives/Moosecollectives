@@ -1519,6 +1519,29 @@ body.cart-drawer-open {
   transition: opacity 0.2s ease, transform 0.2s ease;
 }
 
+.cart-drawer .cart-remove-tab {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(255, 138, 29, 0.5);
+  box-shadow: 0 12px 22px -18px rgba(255, 138, 29, 0.55);
+  margin-bottom: 0;
+}
+
+.cart-drawer .cart-remove-tab svg {
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: rgba(255, 138, 29, 0.95);
+  stroke-width: 1.6;
+}
+
+.cart-drawer .cart-remove-tab svg path {
+  fill: none;
+  stroke: rgba(255, 138, 29, 0.95);
+}
+
 .cart-remove-tab:hover {
   opacity: 0.9;
   transform: translateY(-1px);
