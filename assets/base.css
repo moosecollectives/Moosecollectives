@@ -1126,15 +1126,16 @@ body.cart-drawer-open {
   width: min(440px, 92vw);
   height: 100%;
   background:
-    linear-gradient(170deg, rgba(255, 255, 255, 0.9), rgba(220, 238, 255, 0.8)),
-    radial-gradient(circle at 18% 8%, rgba(255, 166, 79, 0.25), transparent 60%);
+    radial-gradient(circle at 18% 12%, rgba(255, 175, 90, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 70%, rgba(110, 200, 255, 0.18), transparent 60%),
+    rgba(236, 246, 255, 0.96);
   border-left: 1px solid rgba(12, 18, 32, 0.08);
-  box-shadow: -26px 0 56px -36px rgba(7, 18, 30, 0.5);
+  box-shadow: -20px 0 48px -34px rgba(7, 18, 30, 0.45);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 14px;
-  border-radius: 30px 0 0 30px;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 22px 0 0 22px;
   z-index: 1;
   transform: translateX(100%);
   transition: transform 0.25s ease;
@@ -1149,24 +1150,25 @@ body.cart-drawer-open {
   align-items: center;
   justify-content: space-between;
   font-family: var(--font-display);
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  padding: 10px 12px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.8);
-  border: 1px solid rgba(255, 140, 40, 0.3);
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.65);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.6);
 }
 
 .cart-drawer-summary {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(86, 183, 255, 0.35);
-  box-shadow: 0 16px 30px -24px rgba(7, 18, 30, 0.28);
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(86, 183, 255, 0.25);
+  box-shadow: 0 12px 24px -20px rgba(7, 18, 30, 0.22);
 }
 
 .cart-drawer-summary-label {
@@ -1190,9 +1192,9 @@ body.cart-drawer-open {
 
 .cart-drawer-body {
   overflow-y: auto;
-  padding: 0 0 12px;
+  padding: 0 0 8px;
   display: grid;
-  gap: 14px;
+  gap: 8px;
   min-height: 0;
   flex: 1;
 }
@@ -1200,7 +1202,7 @@ body.cart-drawer-open {
 .cart-drawer-items {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   flex: 0 0 auto;
   overflow-y: auto;
   padding: 0;
@@ -1210,12 +1212,12 @@ body.cart-drawer-open {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 10px 10px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(255, 140, 40, 0.35);
-  box-shadow: 0 18px 32px -26px rgba(255, 140, 40, 0.35);
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.88);
+  border: 1px solid rgba(255, 140, 40, 0.25);
+  box-shadow: 0 12px 22px -20px rgba(255, 140, 40, 0.3);
   margin: 0;
 }
 
@@ -1258,14 +1260,14 @@ body.cart-drawer-open {
 .cart-drawer-item {
   display: grid;
   grid-template-columns: 120px 1fr;
-  gap: 12px;
-  padding: 10px;
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.95);
-  border: 1px solid rgba(86, 183, 255, 0.35);
-  box-shadow: 0 18px 32px -28px rgba(7, 18, 30, 0.25);
+  gap: 10px;
+  padding: 8px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 14px 24px -22px rgba(7, 18, 30, 0.2);
   align-items: stretch;
-  height: 160px;
+  height: 150px;
   position: relative;
   flex: 0 0 auto;
 }
@@ -1273,9 +1275,9 @@ body.cart-drawer-open {
 
 .cart-drawer-item-media {
   width: 100%;
-  height: 120px;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.7);
+  height: 112px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.6);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1368,12 +1370,12 @@ body.cart-drawer-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(255, 140, 40, 0.35);
-  box-shadow: 0 18px 34px -26px rgba(255, 140, 40, 0.4);
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 140, 40, 0.25);
+  box-shadow: 0 12px 22px -20px rgba(255, 140, 40, 0.3);
   flex-wrap: wrap;
 }
 
