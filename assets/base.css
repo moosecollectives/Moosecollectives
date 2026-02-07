@@ -1261,7 +1261,7 @@ body.cart-drawer-open {
   border: 1px solid rgba(12, 18, 32, 0.08);
   box-shadow: 0 12px 18px -16px rgba(7, 18, 30, 0.2);
   align-items: center;
-  min-height: 128px;
+  height: 132px;
   width: 100%;
   box-sizing: border-box;
 }
@@ -1294,8 +1294,10 @@ body.cart-drawer-open {
 
 .cart-drawer-item-details {
   display: grid;
+  grid-template-rows: auto 1fr auto;
   gap: 8px;
   min-width: 0;
+  height: 100%;
 }
 
 .cart-drawer-item-top {
@@ -1312,7 +1314,7 @@ body.cart-drawer-open {
   letter-spacing: 0.04em;
   text-transform: uppercase;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1322,6 +1324,7 @@ body.cart-drawer-open {
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
+  margin-top: auto;
 }
 
 .cart-drawer-remove-peel {
