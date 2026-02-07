@@ -1123,7 +1123,7 @@ body.cart-drawer-open {
 
 .cart-drawer-panel {
   position: relative;
-  width: min(440px, 92vw);
+  width: min(440px, 100%);
   height: 100%;
   background:
     radial-gradient(circle at 18% 12%, rgba(255, 175, 90, 0.18), transparent 55%),
@@ -1239,6 +1239,9 @@ body.cart-drawer-open {
   justify-content: space-between;
   gap: 8px;
   padding: 4px 0;
+  height: 56px;
+  min-height: 56px;
+  max-height: 56px;
   min-height: 0;
   flex: 0 0 auto;
   border-radius: 0;
@@ -1246,12 +1249,14 @@ body.cart-drawer-open {
   border: 0;
   box-shadow: none;
   margin: 0;
+  overflow: hidden;
 }
 
 .cart-drawer-upsell > div {
   display: grid;
   gap: 2px;
   min-height: 0;
+  overflow: hidden;
 }
 
 .cart-drawer-upsell .upsell-eyebrow {
@@ -1262,11 +1267,17 @@ body.cart-drawer-open {
 .cart-drawer-upsell .upsell-title {
   font-size: 13px;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cart-drawer-upsell .upsell-subtitle {
   font-size: 10px;
   margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .cart-drawer-upsell .button {
