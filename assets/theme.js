@@ -727,10 +727,14 @@ window.addEventListener('load', () => {
   const buildCartDrawerItem = (item) => {
     const compareLine = calcCompare(item.final_line_price);
     const compareUnit = calcCompare(item.final_price);
-    const image = item.image ? `<img src="${item.image}" alt="${escapeHtml(item.product_title)}" loading="lazy">` : '';
+    const media = item.image
+      ? `<img src="${item.image}" alt="${escapeHtml(item.product_title)}" loading="lazy">`
+      : `<div class="cart-drawer-item-placeholder" aria-hidden="true"></div>`;
     return `
       <div class="cart-drawer-item" data-cart-key="${item.key}">
-        ${image}
+        <div class="cart-drawer-item-media">
+          ${media}
+        </div>
         <div class="cart-drawer-item-meta">
           <h4>${escapeHtml(item.product_title)}</h4>
           <p class="price cart-price" aria-label="Line item price">
@@ -758,13 +762,11 @@ window.addEventListener('load', () => {
                 <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" aria-label="Increase quantity">+</button>
               </div>
             </div>
-            <button class="cart-remove-tab" type="button" data-cart-remove-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm1 6h2v9h-2V9zm4 0h2v9h-2V9zM7 9h2v9H7V9z"/>
-              </svg>
-            </button>
           </div>
         </div>
+        <button class="cart-drawer-remove-peel" type="button" data-cart-remove-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
+          <img src="/assets/trash.png" alt="">
+        </button>
       </div>
     `;
   };
@@ -894,6 +896,9 @@ window.addEventListener('load', () => {
   const openCartDrawer = async (cart) => {
     if (!cartDrawer) return;
     cartDrawer.hidden = false;
+    requestAnimationFrame(() => {
+      cartDrawer.classList.add('is-open');
+    });
     document.body.classList.add('cart-drawer-open');
     await handleCartUpdate(cart);
     const closeButton = cartDrawer.querySelector('[data-cart-drawer-close]');
@@ -904,8 +909,13 @@ window.addEventListener('load', () => {
 
   const closeCartDrawer = () => {
     if (!cartDrawer) return;
-    cartDrawer.hidden = true;
+    cartDrawer.classList.remove('is-open');
     document.body.classList.remove('cart-drawer-open');
+    setTimeout(() => {
+      if (!cartDrawer.classList.contains('is-open')) {
+        cartDrawer.hidden = true;
+      }
+    }, 280);
   };
 
   if (cartDrawer) {
