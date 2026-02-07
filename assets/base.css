@@ -1217,21 +1217,21 @@ body.cart-drawer-open {
   height: 28px;
   border: none;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 138, 29, 0.6);
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 80, 80, 0.7);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 12px 22px -18px rgba(255, 138, 29, 0.55);
+  box-shadow: 0 12px 22px -18px rgba(255, 80, 80, 0.55);
 }
 
 .cart-drawer-remove-peel svg {
   width: 14px;
   height: 14px;
   fill: none;
-  stroke: rgba(255, 138, 29, 0.95);
-  stroke-width: 1.6;
+  stroke: rgba(255, 118, 0, 1);
+  stroke-width: 2.2;
   stroke-linecap: round;
   stroke-linejoin: round;
 }
@@ -1239,7 +1239,7 @@ body.cart-drawer-open {
 .cart-drawer-remove-peel svg rect,
 .cart-drawer-remove-peel svg path {
   fill: none;
-  stroke: rgba(255, 138, 29, 0.95);
+  stroke: rgba(255, 118, 0, 1);
 }
 
 .cart-drawer-item .price {
