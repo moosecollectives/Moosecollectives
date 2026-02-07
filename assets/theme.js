@@ -579,6 +579,7 @@ window.addEventListener('load', () => {
                   min="0"
                   inputmode="numeric"
                   aria-label="Quantity for ${escapeHtml(item.product_title)}"
+                  readonly
                   data-cart-qty
                   data-cart-key="${item.key}"
                   data-cart-title="${escapeHtml(item.product_title)}"
@@ -678,30 +679,46 @@ window.addEventListener('load', () => {
     await handleCartUpdate(updatedCart);
   };
 
+  const applyDrawerChange = async (key, quantity) => {
+    const response = await fetch('/cart/change.js', {
+      method: 'POST',
+      headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ id: key, quantity })
+    });
+    if (!response.ok) return;
+    const updatedCart = await response.json();
+    await refreshCartCount(updatedCart);
+    updateCartDrawer(updatedCart);
+    updateUpsellState(updatedCart);
+    if (typeof window.updateProductControls === 'function') {
+      window.updateProductControls(updatedCart);
+    }
+  };
+
   const bindCartDrawerEvents = () => {
     if (!cartDrawer) return;
     if (cartDrawer._eventsBound) return;
     cartDrawer._eventsBound = true;
 
-    cartDrawer.addEventListener('click', (event) => {
+    cartDrawer.addEventListener('click', async (event) => {
       const qtyButton = event.target.closest('[data-cart-qty-btn]');
       if (qtyButton && cartDrawer.contains(qtyButton)) {
-        const wrap = qtyButton.closest('[data-cart-qty-wrap]');
-        const input = wrap ? wrap.querySelector('[data-cart-qty]') : null;
-        if (!input) return;
-        const key = qtyButton.dataset.cartKey || input.dataset.cartKey;
+        const key = qtyButton.dataset.cartKey || qtyButton.closest('.cart-drawer-item')?.dataset.cartKey;
         if (!key) return;
         const direction = qtyButton.dataset.cartQtyBtn;
-        const current = parseInt(input.value, 10) || 0;
-        const nextValue = direction === 'plus' ? current + 1 : Math.max(0, current - 1);
+        const cart = cartCache || await fetchCart();
+        if (!cart) return;
+        const item = cart.items.find((entry) => entry.key === key);
+        if (!item) return;
+        const nextValue = direction === 'plus' ? item.quantity + 1 : Math.max(0, item.quantity - 1);
         if (nextValue === 0) {
-          const title = input.dataset.cartTitle || 'this item';
-          const confirmed = window.confirm(`Remove ${title} from your cart?`);
+          const confirmed = window.confirm(`Remove ${item.product_title} from your cart?`);
           if (!confirmed) {
             return;
           }
         }
-        changeCartItem(key, nextValue);
+        await applyDrawerChange(key, nextValue);
         return;
       }
 
@@ -709,26 +726,8 @@ window.addEventListener('load', () => {
       if (removeButton && cartDrawer.contains(removeButton)) {
         const key = removeButton.dataset.cartRemoveKey;
         if (!key) return;
-        changeCartItem(key, 0);
+        await applyDrawerChange(key, 0);
       }
-    });
-
-    cartDrawer.addEventListener('change', (event) => {
-      const input = event.target.closest('[data-cart-qty]');
-      if (!input || !cartDrawer.contains(input)) return;
-      if (input.value === '') return;
-      const value = Math.max(0, parseInt(input.value, 10));
-      if (Number.isNaN(value)) return;
-      const key = input.dataset.cartKey;
-      if (!key) return;
-      if (value === 0) {
-        const title = input.dataset.cartTitle || 'this item';
-        const confirmed = window.confirm(`Remove ${title} from your cart?`);
-        if (!confirmed) {
-          return;
-        }
-      }
-      changeCartItem(key, value);
     });
   };
 
