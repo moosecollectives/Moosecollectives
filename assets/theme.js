@@ -516,6 +516,16 @@ window.addEventListener('load', () => {
     return response.json();
   };
 
+  const wait = (ms) => new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+
+  let cartRequest = Promise.resolve();
+  const queueCartRequest = (task) => {
+    cartRequest = cartRequest.then(task).catch(() => {});
+    return cartRequest;
+  };
+
   const refreshCartCount = async (cart) => {
     const resolvedCart = cart || (await fetchCart());
     if (!resolvedCart) return null;
@@ -679,65 +689,55 @@ window.addEventListener('load', () => {
     await handleCartUpdate(updatedCart);
   };
 
-  let drawerBusy = false;
   const applyDrawerChange = async (action) => {
     if (!cartDrawer) return;
-    if (drawerBusy) return;
-    drawerBusy = true;
-    const startTime = Date.now();
-    cartDrawer.classList.add('is-loading');
-    cartDrawer.querySelectorAll('[data-cart-qty-btn], [data-cart-remove-key]').forEach((button) => {
-      button.disabled = true;
-      button.classList.add('is-loading');
-    });
-    let updatedCart = null;
-    try {
-      if (action.type === 'add') {
-        const addResponse = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify({ id: action.variantId, quantity: 1 })
-        });
-        if (!addResponse.ok) return;
-      } else {
-        const changeResponse = await fetch('/cart/change.js', {
-          method: 'POST',
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify({ id: action.key, quantity: action.quantity })
-        });
-        if (changeResponse.ok) {
-          updatedCart = await changeResponse.json();
+    return queueCartRequest(async () => {
+      cartDrawer.classList.add('is-loading');
+      cartDrawer.querySelectorAll('[data-cart-qty-btn], [data-cart-remove-key]').forEach((button) => {
+        button.disabled = true;
+        button.classList.add('is-loading');
+      });
+      let updatedCart = null;
+      try {
+        if (action.type === 'add') {
+          const addResponse = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ id: action.variantId, quantity: 1 })
+          });
+          if (!addResponse.ok) return;
+        } else {
+          const changeResponse = await fetch('/cart/change.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ id: action.key, quantity: action.quantity })
+          });
+          if (changeResponse.ok) {
+            updatedCart = await changeResponse.json();
+          }
         }
-      }
-    } finally {
-      if (!updatedCart) {
-        updatedCart = await fetchCart();
-      }
-      if (updatedCart) {
-        await refreshCartCount(updatedCart);
-        updateCartDrawer(updatedCart);
-        updateUpsellState(updatedCart);
-        if (typeof window.updateProductControls === 'function') {
-          window.updateProductControls(updatedCart);
+      } finally {
+        if (!updatedCart) {
+          updatedCart = await fetchCart();
         }
-      }
-      const elapsed = Date.now() - startTime;
-      const settle = () => {
+        if (updatedCart) {
+          await refreshCartCount(updatedCart);
+          updateCartDrawer(updatedCart);
+          updateUpsellState(updatedCart);
+          if (typeof window.updateProductControls === 'function') {
+            window.updateProductControls(updatedCart);
+          }
+        }
+        await wait(300);
         cartDrawer.classList.remove('is-loading');
         cartDrawer.querySelectorAll('[data-cart-qty-btn], [data-cart-remove-key]').forEach((button) => {
           button.disabled = false;
           button.classList.remove('is-loading');
         });
-        drawerBusy = false;
-      };
-      if (elapsed < 350) {
-        setTimeout(settle, 350 - elapsed);
-      } else {
-        settle();
       }
-    }
+    });
   };
 
   const bindCartDrawerEvents = () => {
@@ -932,16 +932,17 @@ window.addEventListener('load', () => {
   initProductControls();
 
   const updateVariantQuantity = async (variantId, form, delta) => {
-    form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
-      btn.disabled = true;
-    });
-    const primaryButton = form.querySelector('[data-add-to-cart-button]');
-    if (primaryButton) {
-      primaryButton.classList.add('is-loading');
-    }
+    return queueCartRequest(async () => {
+      form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
+        btn.disabled = true;
+      });
+      const primaryButton = form.querySelector('[data-add-to-cart-button]');
+      if (primaryButton) {
+        primaryButton.classList.add('is-loading');
+      }
 
-    try {
-      if (delta > 0) {
+      try {
+        if (delta > 0) {
           const addResponse = await fetch('/cart/add.js', {
             method: 'POST',
             headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -968,14 +969,16 @@ window.addEventListener('load', () => {
         if (!response.ok) return;
         const updatedCart = await response.json();
         await handleCartUpdate(updatedCart);
-    } finally {
-      form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
-        btn.disabled = false;
-      });
-      if (primaryButton) {
-        primaryButton.classList.remove('is-loading');
+      } finally {
+        await wait(300);
+        form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
+          btn.disabled = false;
+        });
+        if (primaryButton) {
+          primaryButton.classList.remove('is-loading');
+        }
       }
-    }
+    });
   };
 
   document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
@@ -1003,36 +1006,39 @@ window.addEventListener('load', () => {
       }
 
       try {
-        const response = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { Accept: 'application/json' },
-          credentials: 'same-origin',
-          body: new FormData(form)
+        await queueCartRequest(async () => {
+          const response = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            credentials: 'same-origin',
+            body: new FormData(form)
+          });
+
+          if (!response.ok) {
+            throw new Error('Add to cart failed');
+          }
+
+          const updatedCart = await fetchCart();
+          if (updatedCart) {
+            await openCartDrawer(updatedCart);
+          } else {
+            await handleCartUpdate();
+          }
+          if (submitButton) {
+            submitButton.classList.remove('add-to-cart-added');
+            void submitButton.offsetWidth;
+            submitButton.classList.add('add-to-cart-added');
+            submitButton.textContent = 'Added';
+            setTimeout(() => {
+              submitButton.textContent = originalLabel || 'Add to cart';
+            }, 1400);
+          }
+          const viewCart = form.querySelector('[data-view-cart]');
+          if (viewCart) {
+            viewCart.classList.add('is-visible');
+          }
+          await wait(300);
         });
-
-        if (!response.ok) {
-          throw new Error('Add to cart failed');
-        }
-
-        const updatedCart = await fetchCart();
-        if (updatedCart) {
-          await openCartDrawer(updatedCart);
-        } else {
-          await handleCartUpdate();
-        }
-        if (submitButton) {
-          submitButton.classList.remove('add-to-cart-added');
-          void submitButton.offsetWidth;
-          submitButton.classList.add('add-to-cart-added');
-          submitButton.textContent = 'Added';
-          setTimeout(() => {
-            submitButton.textContent = originalLabel || 'Add to cart';
-          }, 1400);
-        }
-        const viewCart = form.querySelector('[data-view-cart]');
-        if (viewCart) {
-          viewCart.classList.add('is-visible');
-        }
       } catch (error) {
         form.submit();
       } finally {
