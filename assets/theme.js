@@ -784,7 +784,7 @@ window.addEventListener('load', () => {
       if (!drawerBody) return;
       const itemsRect = cartDrawerItems.getBoundingClientRect();
       const bodyRect = drawerBody.getBoundingClientRect();
-      const isOverflowing = cartDrawerItems.scrollHeight > drawerBody.clientHeight;
+      const isOverflowing = itemsRect.bottom > bodyRect.bottom + 1;
 
       if (!isOverflowing) {
         cartDrawerMore.hidden = true;
