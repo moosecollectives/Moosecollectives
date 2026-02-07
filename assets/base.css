@@ -1224,6 +1224,7 @@ body.cart-drawer-open {
   flex: 1;
   align-content: start;
   justify-content: start;
+  width: 100%;
 }
 
 .cart-drawer-items {
@@ -1234,6 +1235,7 @@ body.cart-drawer-open {
   overflow: visible;
   padding: 0;
   margin-top: -2px;
+  width: 100%;
 }
 
 .cart-drawer-upsell {
@@ -1312,6 +1314,7 @@ body.cart-drawer-open {
   height: 144px;
   position: relative;
   flex: 0 0 auto;
+  width: 100%;
 }
 
 
