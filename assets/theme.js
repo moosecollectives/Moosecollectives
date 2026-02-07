@@ -768,7 +768,12 @@ window.addEventListener('load', () => {
           </div>
         </div>
         <button class="cart-drawer-remove-peel" type="button" data-cart-remove-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
-          <img src="/assets/trash.png" alt="">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M5 7h14"/>
+            <path d="M9 7V5h6v2"/>
+            <rect x="7.5" y="7.5" width="9" height="11" rx="1.5"/>
+            <path d="M10.5 11v5M13.5 11v5"/>
+          </svg>
         </button>
       </div>
     `;
