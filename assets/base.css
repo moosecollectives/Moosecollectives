@@ -1542,6 +1542,11 @@ body.cart-drawer-open {
   stroke: rgba(255, 138, 29, 0.95);
 }
 
+.cart-drawer .cart-remove-tab svg rect {
+  fill: none;
+  stroke: rgba(255, 138, 29, 0.95);
+}
+
 .cart-remove-tab:hover {
   opacity: 0.9;
   transform: translateY(-1px);

@@ -478,11 +478,14 @@ window.addEventListener('load', () => {
               <div class="cart-actions"></div>
             </div>
           </article>
-          <button class="cart-remove-tab" type="button" data-cart-remove-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-              <path d="M9 3h6l1 2h4v2H4V5h4l1-2zm1 6h2v9h-2V9zm4 0h2v9h-2V9zM7 9h2v9H7V9z"/>
-            </svg>
-          </button>
+            <button class="cart-remove-tab" type="button" data-cart-remove-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 7h14"/>
+                <path d="M9 7V5h6v2"/>
+                <rect x="7.5" y="7.5" width="9" height="11" rx="1.5"/>
+                <path d="M10.5 11v5M13.5 11v5"/>
+              </svg>
+            </button>
         </div>
       `;
     };
