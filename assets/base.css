@@ -1178,9 +1178,9 @@ body.cart-drawer-open {
 }
 
 .cart-drawer-summary-total {
-  font-size: 18px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   margin-left: 0;
 }
 
