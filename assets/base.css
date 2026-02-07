@@ -1201,6 +1201,8 @@ body.cart-drawer-open {
   font-size: 11px;
   color: #2d1600;
   background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  background-clip: padding-box;
+  border: 0;
   box-shadow: 0 12px 22px -18px rgba(255, 138, 29, 0.6);
 }
 
