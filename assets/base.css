@@ -1297,7 +1297,7 @@ body.cart-drawer-open {
 .cart-drawer-item-details {
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: 8px;
+  gap: 4px;
   min-width: 0;
   height: 100%;
 }
@@ -1325,8 +1325,8 @@ body.cart-drawer-open {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  gap: 10px;
-  margin-top: auto;
+  gap: 6px;
+  margin-top: 2px;
 }
 
 .cart-drawer-remove-peel {
@@ -1498,7 +1498,7 @@ body.cart-drawer-open {
 .cart-quantity {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;
 }
 
 .cart-quantity-label {
@@ -1510,8 +1510,8 @@ body.cart-drawer-open {
 .cart-quantity-pill {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 6px 10px;
+  gap: 4px;
+  padding: 4px 8px;
   border-radius: 999px;
   border: 2px solid transparent;
   background: transparent;
@@ -1542,12 +1542,12 @@ body.cart-drawer-open {
 }
 
 .cart-quantity-btn {
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   border: none;
   background: none;
-  font-size: 16px;
+  font-size: 14px;
   line-height: 1;
   font-weight: 700;
   cursor: pointer;
@@ -1565,7 +1565,7 @@ body.cart-drawer-open {
 }
 
 .cart-quantity-input {
-  width: 46px;
+  width: 36px;
   text-align: center;
   border: none;
   background: transparent;
