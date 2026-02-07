@@ -659,8 +659,11 @@ window.addEventListener('load', () => {
   };
 
   const handleCartUpdate = async (cart) => {
-    const resolvedCart = cart || (await fetchCart());
-    if (!resolvedCart) {
+    let resolvedCart = cart || (await fetchCart());
+    if (!resolvedCart || !Array.isArray(resolvedCart.items)) {
+      resolvedCart = await fetchCart();
+    }
+    if (!resolvedCart || !Array.isArray(resolvedCart.items)) {
       if (cartDrawerTotal) {
         cartDrawerTotal.textContent = formatMoney(0);
       }
