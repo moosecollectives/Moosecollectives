@@ -46,6 +46,13 @@
           <span>Cart</span>
           <button class="cart-drawer-close" type="button" data-cart-drawer-close aria-label="Close cart">×</button>
         </div>
+        <div class="cart-drawer-footer">
+          <div class="cart-drawer-total">
+            <span>Total</span>
+            <span class="price price-current" data-cart-drawer-total></span>
+          </div>
+          <button class="button button-primary" type="button" data-cart-drawer-checkout data-checkout-url="{{ routes.checkout_url }}">Checkout</button>
+        </div>
         <div class="cart-drawer-body">
           {% if drawer_upsell != blank %}
             <div class="cart-drawer-upsell" data-cart-drawer-upsell>
@@ -62,13 +69,6 @@
           {% endif %}
           <div class="cart-drawer-empty" data-cart-drawer-empty hidden>Your cart is empty.</div>
           <div class="cart-drawer-items" data-cart-drawer-items></div>
-        </div>
-        <div class="cart-drawer-footer">
-          <div class="cart-drawer-total">
-            <span>Total</span>
-            <span class="price price-current" data-cart-drawer-total></span>
-          </div>
-          <button class="button button-primary" type="button" data-cart-drawer-checkout data-checkout-url="{{ routes.checkout_url }}">Checkout</button>
         </div>
       </aside>
     </div>
