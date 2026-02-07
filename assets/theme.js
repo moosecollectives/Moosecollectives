@@ -721,7 +721,6 @@ window.addEventListener('load', () => {
   const cartDrawer = document.querySelector('[data-cart-drawer]');
   const cartDrawerItems = cartDrawer ? cartDrawer.querySelector('[data-cart-drawer-items]') : null;
   const cartDrawerMore = cartDrawer ? cartDrawer.querySelector('[data-cart-drawer-more]') : null;
-  const cartDrawerMoreText = cartDrawer ? cartDrawer.querySelector('[data-cart-drawer-more-text]') : null;
   const cartDrawerEmpty = cartDrawer ? cartDrawer.querySelector('[data-cart-drawer-empty]') : null;
   const cartDrawerTotal = cartDrawer ? cartDrawer.querySelector('[data-cart-drawer-total]') : null;
   const cartDrawerCheckout = cartDrawer ? cartDrawer.querySelector('[data-cart-drawer-checkout]') : null;
@@ -774,7 +773,7 @@ window.addEventListener('load', () => {
   };
 
     const updateCartDrawerMore = () => {
-      if (!cartDrawerItems || !cartDrawerMore || !cartDrawerMoreText) return;
+      if (!cartDrawerItems || !cartDrawerMore) return;
       const items = Array.from(cartDrawerItems.children);
       if (items.length === 0) {
         cartDrawerMore.hidden = true;
@@ -782,29 +781,13 @@ window.addEventListener('load', () => {
       }
       const drawerBody = cartDrawer.querySelector('.cart-drawer-body');
       if (!drawerBody) return;
-      const itemsRect = cartDrawerItems.getBoundingClientRect();
-      const bodyRect = drawerBody.getBoundingClientRect();
-      const isOverflowing = itemsRect.bottom > bodyRect.bottom + 1;
-
-      if (!isOverflowing) {
+      const isScrollable = drawerBody.scrollHeight > drawerBody.clientHeight + 1;
+      if (!isScrollable) {
         cartDrawerMore.hidden = true;
         return;
       }
-
-      const cutoff = drawerBody.scrollTop + drawerBody.clientHeight - (itemsRect.top - bodyRect.top);
-      let visible = 0;
-      items.forEach((item) => {
-        if (item.offsetTop + item.offsetHeight <= cutoff) {
-          visible += 1;
-        }
-      });
-      const more = Math.max(0, items.length - visible);
-      if (more > 0) {
-        cartDrawerMoreText.textContent = `${more} more item${more === 1 ? '' : 's'}`;
-        cartDrawerMore.hidden = false;
-      } else {
-        cartDrawerMore.hidden = true;
-      }
+      const atBottom = drawerBody.scrollTop + drawerBody.clientHeight >= drawerBody.scrollHeight - 2;
+      cartDrawerMore.hidden = atBottom;
     };
 
   const updateCartDrawer = (cart) => {
@@ -893,8 +876,8 @@ window.addEventListener('load', () => {
     await handleCartUpdate(updatedCart);
   };
 
-  const bindCartDrawerEvents = () => {
-    if (!cartDrawer) return;
+    const bindCartDrawerEvents = () => {
+      if (!cartDrawer) return;
     cartDrawer.querySelectorAll('[data-cart-qty]').forEach((input) => {
       const wrap = input.closest('[data-cart-qty-wrap]');
       const key = input.dataset.cartKey;
@@ -946,7 +929,14 @@ window.addEventListener('load', () => {
     if (drawerBody) {
       drawerBody.addEventListener('scroll', updateCartDrawerMore);
     }
-  };
+
+    if (cartDrawerMore) {
+      cartDrawerMore.addEventListener('click', () => {
+        if (!drawerBody) return;
+        drawerBody.scrollTo({ top: drawerBody.scrollHeight, behavior: 'smooth' });
+      });
+    }
+    };
 
   const openCartDrawer = async (cart) => {
     if (!cartDrawer) return;

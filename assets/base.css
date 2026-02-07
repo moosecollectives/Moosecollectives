@@ -1099,7 +1099,7 @@ body.cart-drawer-open {
 
 .cart-drawer-upsell {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
   gap: 8px;
   padding: 6px 10px;
@@ -1160,21 +1160,22 @@ body.cart-drawer-open {
 }
 
 .cart-drawer-more {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
   padding: 6px 10px;
   margin: 6px 6px 0;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.85);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: linear-gradient(135deg, rgba(255, 90, 0, 0.65), rgba(255, 184, 0, 0.65));
+  border: 1px solid rgba(255, 255, 255, 0.3);
   font-size: 11px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--ink-soft);
+  color: #2d1600;
   position: sticky;
   bottom: 0;
+  cursor: pointer;
 }
 
 .cart-drawer-item-media {
