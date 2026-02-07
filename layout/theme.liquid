@@ -52,6 +52,8 @@
           <button class="button button-primary cart-drawer-summary-button" type="button" data-cart-drawer-checkout data-checkout-url="{{ routes.checkout_url }}">Checkout</button>
         </div>
         <div class="cart-drawer-body">
+          <div class="cart-drawer-empty" data-cart-drawer-empty hidden>Your cart is empty.</div>
+          <div class="cart-drawer-items" data-cart-drawer-items></div>
           {% if drawer_upsell != blank %}
             <div class="cart-drawer-upsell" data-cart-drawer-upsell>
               <div>
@@ -65,8 +67,6 @@
               </form>
             </div>
           {% endif %}
-          <div class="cart-drawer-empty" data-cart-drawer-empty hidden>Your cart is empty.</div>
-          <div class="cart-drawer-items" data-cart-drawer-items></div>
         </div>
       </aside>
     </div>

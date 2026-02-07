@@ -1223,7 +1223,7 @@ body.cart-drawer-open {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 8px 10px;
+  padding: 6px 8px;
   min-height: 0;
   flex: 0 0 auto;
   border-radius: 14px;
