@@ -558,66 +558,11 @@ window.addEventListener('load', () => {
   const cartDrawerTotal = cartDrawer ? cartDrawer.querySelector('[data-cart-drawer-total]') : null;
   const cartDrawerCheckout = cartDrawer ? cartDrawer.querySelector('[data-cart-drawer-checkout]') : null;
 
-  const buildCartDrawerItem = (item) => {
-    const compareLine = calcCompare(item.final_line_price);
-    const compareUnit = calcCompare(item.final_price);
-    const media = item.image
-      ? `<img src="${item.image}" alt="${escapeHtml(item.product_title)}" loading="lazy">`
-      : `<div class="cart-drawer-item-placeholder" aria-hidden="true"></div>`;
-    return `
-      <div class="cart-drawer-item" data-cart-key="${item.key}" data-variant-id="${item.id}">
-        <div class="cart-drawer-item-media">
-          ${media}
-        </div>
-        <div class="cart-drawer-item-body">
-          <div class="cart-drawer-item-title">
-            <h4>${escapeHtml(item.product_title)}</h4>
-          </div>
-          <p class="price cart-price" aria-label="Line item price">
-            <span class="cart-price-total">${formatMoney(item.final_line_price, item.currency)}</span>
-            <span class="price-compare cart-price-compare">${formatMoney(compareLine, item.currency)}</span>
-            <span class="cart-price-breakdown">${formatMoney(item.final_price, item.currency)} x ${item.quantity}</span>
-            <span class="price-compare cart-price-compare-breakdown">${formatMoney(compareUnit, item.currency)} x ${item.quantity}</span>
-          </p>
-          <div class="cart-drawer-item-controls">
-            <div class="cart-quantity" data-cart-qty-wrap>
-              <div class="cart-quantity-pill" role="group" aria-label="Quantity controls for ${escapeHtml(item.product_title)}">
-                <button class="cart-quantity-btn" type="button" data-cart-qty-btn="minus" data-cart-key="${item.key}" data-variant-id="${item.id}" aria-label="Decrease quantity">-</button>
-                <input
-                  id="Drawer-Quantity-${item.key}"
-                  class="cart-quantity-input"
-                  type="number"
-                  value="${item.quantity}"
-                  min="0"
-                  inputmode="numeric"
-                  aria-label="Quantity for ${escapeHtml(item.product_title)}"
-                  readonly
-                  data-cart-qty
-                  data-cart-key="${item.key}"
-                  data-cart-title="${escapeHtml(item.product_title)}"
-                >
-                <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" data-cart-key="${item.key}" data-variant-id="${item.id}" aria-label="Increase quantity">+</button>
-              </div>
-            </div>
-            <button class="cart-drawer-remove-peel" type="button" data-cart-remove-key="${item.key}" data-cart-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M5 7h14"/>
-                <path d="M9 7V5h6v2"/>
-                <rect x="7.5" y="7.5" width="9" height="11" rx="1.5"/>
-                <path d="M10.5 11v5M13.5 11v5"/>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
-  };
-
-    const updateCartDrawer = (cart) => {
-      if (!cartDrawer || !cartDrawerItems) return;
-      if (!cart || !Array.isArray(cart.items) || cart.items.length === 0) {
-        cartDrawerItems.innerHTML = '';
-        if (cartDrawerEmpty) {
+  const updateCartDrawer = (cart) => {
+    if (!cartDrawer || !cartDrawerItems) return;
+    if (!cart || !Array.isArray(cart.items) || cart.items.length === 0) {
+      cartDrawerItems.innerHTML = '';
+      if (cartDrawerEmpty) {
           cartDrawerEmpty.hidden = false;
         }
         if (cartDrawerTotal) {
@@ -625,7 +570,7 @@ window.addEventListener('load', () => {
         }
         return;
     }
-    cartDrawerItems.innerHTML = cart.items.map(buildCartDrawerItem).join('');
+    cartDrawerItems.innerHTML = '';
     cartDrawerItems.classList.toggle('is-single', cart.items.length === 1);
     if (cartDrawerEmpty) {
       cartDrawerEmpty.hidden = cart.items.length > 0;
