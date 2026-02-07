@@ -393,185 +393,6 @@ window.addEventListener('load', () => {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#39;');
 
-  const bindCartPriceInteractions = (scope) => {
-    if (!scope) return;
-    scope.querySelectorAll('.cart-price').forEach((price) => {
-      const row = price.closest('.cart-meta-row');
-      if (row) {
-        price.addEventListener('mouseenter', () => {
-          row.classList.add('is-breakdown');
-        });
-        price.addEventListener('mouseleave', () => {
-          row.classList.remove('is-breakdown');
-        });
-      }
-
-      price.addEventListener('click', () => {
-        if (!window.matchMedia('(max-width: 980px)').matches) {
-          return;
-        }
-        price.classList.toggle('is-breakdown');
-        price.classList.add('is-tapped');
-        if (row) {
-          row.classList.toggle('is-breakdown', price.classList.contains('is-breakdown'));
-        }
-        if (price.classList.contains('is-breakdown')) {
-          clearTimeout(price._breakdownTimer);
-          price._breakdownTimer = setTimeout(() => {
-            price.classList.remove('is-breakdown');
-            price.classList.remove('is-tapped');
-            if (row) {
-              row.classList.remove('is-breakdown');
-            }
-          }, 10000);
-        } else {
-          clearTimeout(price._breakdownTimer);
-          setTimeout(() => {
-            price.classList.remove('is-tapped');
-          }, 200);
-        }
-      });
-    });
-  };
-
-  const cartForm = document.querySelector('[data-cart-form]');
-  if (cartForm) {
-    const buildCartItem = (item) => {
-      const compareLine = calcCompare(item.final_line_price);
-      const compareUnit = calcCompare(item.final_price);
-      const image = item.image ? `<img src="${item.image}" alt="${escapeHtml(item.product_title)}" loading="lazy">` : '';
-      return `
-        <div class="cart-card-wrap" data-cart-key="${item.key}">
-          <article class="cart-card">
-            <a class="cart-media" href="${item.url}" aria-label="View ${escapeHtml(item.product_title)}">
-              ${image}
-            </a>
-            <div class="cart-meta">
-              <h3>${escapeHtml(item.product_title)}</h3>
-              <div class="cart-meta-row">
-                <p class="price cart-price" aria-label="Line item price">
-                  <span class="cart-price-total">${formatMoney(item.final_line_price, item.currency)}</span>
-                  <span class="cart-price-breakdown">${formatMoney(item.final_price, item.currency)} x ${item.quantity}</span>
-                  <span class="price-compare cart-price-compare">${formatMoney(compareLine, item.currency)}</span>
-                  <span class="price-compare cart-price-compare-breakdown">${formatMoney(compareUnit, item.currency)} x ${item.quantity}</span>
-                </p>
-                <div class="cart-quantity" data-cart-qty-wrap>
-                  <div class="cart-quantity-pill" role="group" aria-label="Quantity controls for ${escapeHtml(item.product_title)}">
-                    <button class="cart-quantity-btn" type="button" data-cart-qty-btn="minus" aria-label="Decrease quantity">-</button>
-                    <input
-                      id="Quantity-${item.key}"
-                      class="cart-quantity-input"
-                      type="number"
-                      name="updates[${item.key}]"
-                      value="${item.quantity}"
-                      min="0"
-                      inputmode="numeric"
-                      aria-label="Quantity for ${escapeHtml(item.product_title)}"
-                      data-cart-qty
-                      data-cart-key="${item.key}"
-                      data-cart-title="${escapeHtml(item.product_title)}"
-                    >
-                    <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" aria-label="Increase quantity">+</button>
-                  </div>
-                </div>
-              </div>
-              <div class="cart-actions"></div>
-            </div>
-          </article>
-            <button class="cart-remove-tab" type="button" data-cart-remove-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M5 7h14"/>
-                <path d="M9 7V5h6v2"/>
-                <rect x="7.5" y="7.5" width="9" height="11" rx="1.5"/>
-                <path d="M10.5 11v5M13.5 11v5"/>
-              </svg>
-            </button>
-        </div>
-      `;
-    };
-
-    const renderCartItems = (cart) => {
-      const track = cartForm.querySelector('.cart-track');
-      if (!track) return;
-      track.innerHTML = cart.items.map(buildCartItem).join('');
-      bindCartItemEvents();
-      bindCartPriceInteractions(cartForm);
-    };
-
-    const updateCartTotals = (cart) => {
-      const totalCurrent = cartForm.querySelector('.cart-total .price-current');
-      const totalCompare = cartForm.querySelector('.cart-total .price-compare');
-      if (totalCurrent) {
-        totalCurrent.textContent = formatMoney(cart.total_price, cart.currency);
-      }
-      if (totalCompare) {
-        totalCompare.textContent = formatMoney(calcCompare(cart.total_price), cart.currency);
-      }
-    };
-
-    const updateCartUI = async (cart) => {
-      const resolvedCart = cart || (await fetchCart());
-      if (!resolvedCart) return;
-      updateCartTotals(resolvedCart);
-      renderCartItems(resolvedCart);
-    };
-
-    const bindCartItemEvents = () => {
-      cartForm.querySelectorAll('[data-cart-qty]').forEach((input) => {
-        const wrap = input.closest('[data-cart-qty-wrap]');
-        const key = input.dataset.cartKey || (input.name.match(/updates\[(.+)\]/) || [])[1];
-        if (!key) return;
-
-        if (wrap) {
-          wrap.querySelectorAll('[data-cart-qty-btn]').forEach((button) => {
-            button.addEventListener('click', () => {
-              const direction = button.dataset.cartQtyBtn;
-              const current = parseInt(input.value, 10) || 0;
-              const nextValue = direction === 'plus' ? current + 1 : Math.max(0, current - 1);
-
-              if (nextValue === 0) {
-                const title = input.dataset.cartTitle || 'this item';
-                const confirmed = window.confirm(`Remove ${title} from your cart?`);
-                if (!confirmed) {
-                  return;
-                }
-              }
-              changeCartItem(key, nextValue);
-            });
-          });
-        }
-
-        input.addEventListener('change', () => {
-          if (input.value === '') return;
-          const value = Math.max(0, parseInt(input.value, 10));
-          if (Number.isNaN(value)) return;
-          if (value === 0) {
-            const title = input.dataset.cartTitle || 'this item';
-            const confirmed = window.confirm(`Remove ${title} from your cart?`);
-            if (!confirmed) {
-              return;
-            }
-          }
-          changeCartItem(key, value);
-        });
-      });
-
-      cartForm.querySelectorAll('[data-cart-remove-key]').forEach((button) => {
-        button.addEventListener('click', () => {
-          const key = button.dataset.cartRemoveKey;
-          if (!key) return;
-          changeCartItem(key, 0);
-        });
-      });
-    };
-
-    bindCartItemEvents();
-    bindCartPriceInteractions(cartForm);
-    window.updateCartUI = updateCartUI;
-  }
-
-  // cart price interactions are bound inside the cart form block
-
   document.querySelectorAll('[data-product-media]').forEach((media) => {
     const mainImg = media.querySelector('[data-media-main] img');
     if (!mainImg) {
@@ -749,7 +570,7 @@ window.addEventListener('load', () => {
           <div class="cart-drawer-actions">
             <div class="cart-quantity" data-cart-qty-wrap>
               <div class="cart-quantity-pill" role="group" aria-label="Quantity controls for ${escapeHtml(item.product_title)}">
-                <button class="cart-quantity-btn" type="button" data-cart-qty-btn="minus" aria-label="Decrease quantity">-</button>
+                <button class="cart-quantity-btn" type="button" data-cart-qty-btn="minus" data-cart-key="${item.key}" aria-label="Decrease quantity">-</button>
                 <input
                   id="Drawer-Quantity-${item.key}"
                   class="cart-quantity-input"
@@ -762,12 +583,12 @@ window.addEventListener('load', () => {
                   data-cart-key="${item.key}"
                   data-cart-title="${escapeHtml(item.product_title)}"
                 >
-                <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" aria-label="Increase quantity">+</button>
+                <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" data-cart-key="${item.key}" aria-label="Increase quantity">+</button>
               </div>
             </div>
           </div>
         </div>
-        <button class="cart-drawer-remove-peel" type="button" data-cart-remove-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
+        <button class="cart-drawer-remove-peel" type="button" data-cart-remove-key="${item.key}" data-cart-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <path d="M5 7h14"/>
             <path d="M9 7V5h6v2"/>
@@ -799,9 +620,8 @@ window.addEventListener('load', () => {
       cartDrawerTotal.textContent = formatMoney(cart.total_price || 0, cart.currency);
     }
       bindCartDrawerEvents();
-      bindCartPriceInteractions(cartDrawer);
-      updateUpsellState(cart);
-    };
+    updateUpsellState(cart);
+  };
 
   const updateUpsellState = (cart) => {
     if (!cart) return;
@@ -866,10 +686,10 @@ window.addEventListener('load', () => {
     cartDrawer.addEventListener('click', (event) => {
       const qtyButton = event.target.closest('[data-cart-qty-btn]');
       if (qtyButton && cartDrawer.contains(qtyButton)) {
-        const wrap = qtyButton.closest('[data-cart-qty-wrap]') || qtyButton.closest('.cart-drawer-item');
+        const wrap = qtyButton.closest('[data-cart-qty-wrap]');
         const input = wrap ? wrap.querySelector('[data-cart-qty]') : null;
         if (!input) return;
-        const key = input.dataset.cartKey;
+        const key = qtyButton.dataset.cartKey || input.dataset.cartKey;
         if (!key) return;
         const direction = qtyButton.dataset.cartQtyBtn;
         const current = parseInt(input.value, 10) || 0;
@@ -1061,27 +881,30 @@ window.addEventListener('load', () => {
 
   initProductControls();
 
-  const updateVariantQuantity = async (variantId, form, delta) => {
-    form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
-      btn.disabled = true;
-    });
+    const updateVariantQuantity = async (variantId, form, delta) => {
+      form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
+        btn.disabled = true;
+      });
 
-    try {
-      const cart = await fetchCart();
-      if (!cart) return;
-      const item = cart.items.find((entry) => entry.id === variantId);
-      const currentQty = item ? item.quantity : 0;
-      const nextQty = Math.max(0, currentQty + delta);
+      try {
+        if (delta > 0) {
+          const addResponse = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
+            credentials: 'same-origin',
+            body: JSON.stringify({ id: variantId, quantity: 1 })
+          });
+          if (!addResponse.ok) return;
+          const updatedCart = await fetchCart();
+          await handleCartUpdate(updatedCart);
+          return;
+        }
 
-      if (delta > 0 && !item) {
-        const addResponse = await fetch('/cart/add.js', {
-          method: 'POST',
-          headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
-          credentials: 'same-origin',
-          body: JSON.stringify({ id: variantId, quantity: delta })
-        });
-        if (!addResponse.ok) return;
-      } else if (item && item.key) {
+        const cart = await fetchCart();
+        if (!cart) return;
+        const item = cart.items.find((entry) => entry.id === variantId);
+        if (!item || !item.key) return;
+        const nextQty = Math.max(0, item.quantity - 1);
         const response = await fetch('/cart/change.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
@@ -1089,16 +912,13 @@ window.addEventListener('load', () => {
           body: JSON.stringify({ id: item.key, quantity: nextQty })
         });
         if (!response.ok) return;
-      } else {
-        return;
+        const updatedCart = await response.json();
+        await handleCartUpdate(updatedCart);
+      } finally {
+        form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
+          btn.disabled = false;
+        });
       }
-
-      await handleCartUpdate();
-    } finally {
-      form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
-        btn.disabled = false;
-      });
-    }
   };
 
   document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
