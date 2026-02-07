@@ -630,6 +630,9 @@ window.addEventListener('load', () => {
     if (cartDrawerTotal) {
       cartDrawerTotal.textContent = formatMoney(cart.total_price || 0, cart.currency);
     }
+    if (cartDrawer) {
+      cartDrawer.classList.toggle('is-empty', cart.items.length === 0);
+    }
       bindCartDrawerEvents();
     updateUpsellState(cart);
   };

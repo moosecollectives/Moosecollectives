@@ -1356,6 +1356,23 @@ body.cart-drawer-open {
   transform: none;
 }
 
+.cart-drawer.is-empty .cart-drawer-footer {
+  padding: 8px 10px;
+  border-radius: 10px;
+  margin: 0 6px;
+  box-shadow: 0 12px 24px -22px rgba(255, 140, 40, 0.45);
+}
+
+.cart-drawer.is-empty .cart-drawer-footer .button-primary {
+  padding: 6px 12px;
+  min-height: 32px;
+  border-radius: 10px;
+}
+
+.cart-drawer.is-empty .cart-drawer-total {
+  font-size: 11px;
+}
+
 .cart-drawer-footer::after {
   content: '';
   position: absolute;
