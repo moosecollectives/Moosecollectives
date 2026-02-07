@@ -861,57 +861,59 @@ window.addEventListener('load', () => {
     await handleCartUpdate(updatedCart);
   };
 
-    const bindCartDrawerEvents = () => {
-      if (!cartDrawer) return;
-    cartDrawer.querySelectorAll('[data-cart-qty]').forEach((input) => {
-      const wrap = input.closest('[data-cart-qty-wrap]');
-      const key = input.dataset.cartKey;
-      if (!key) return;
+  const bindCartDrawerEvents = () => {
+    if (!cartDrawer) return;
+    if (cartDrawer._eventsBound) return;
+    cartDrawer._eventsBound = true;
 
-      if (wrap) {
-        wrap.querySelectorAll('[data-cart-qty-btn]').forEach((button) => {
-          button.addEventListener('click', () => {
-            const direction = button.dataset.cartQtyBtn;
-            const current = parseInt(input.value, 10) || 0;
-            const nextValue = direction === 'plus' ? current + 1 : Math.max(0, current - 1);
-
-            if (nextValue === 0) {
-              const title = input.dataset.cartTitle || 'this item';
-              const confirmed = window.confirm(`Remove ${title} from your cart?`);
-              if (!confirmed) {
-                return;
-              }
-            }
-            changeCartItem(key, nextValue);
-          });
-        });
-      }
-
-      input.addEventListener('change', () => {
-        if (input.value === '') return;
-        const value = Math.max(0, parseInt(input.value, 10));
-        if (Number.isNaN(value)) return;
-        if (value === 0) {
+    cartDrawer.addEventListener('click', (event) => {
+      const qtyButton = event.target.closest('[data-cart-qty-btn]');
+      if (qtyButton && cartDrawer.contains(qtyButton)) {
+        const wrap = qtyButton.closest('[data-cart-qty-wrap]');
+        const input = wrap ? wrap.querySelector('[data-cart-qty]') : null;
+        if (!input) return;
+        const key = input.dataset.cartKey;
+        if (!key) return;
+        const direction = qtyButton.dataset.cartQtyBtn;
+        const current = parseInt(input.value, 10) || 0;
+        const nextValue = direction === 'plus' ? current + 1 : Math.max(0, current - 1);
+        if (nextValue === 0) {
           const title = input.dataset.cartTitle || 'this item';
           const confirmed = window.confirm(`Remove ${title} from your cart?`);
           if (!confirmed) {
             return;
           }
         }
-        changeCartItem(key, value);
-      });
-    });
+        changeCartItem(key, nextValue);
+        return;
+      }
 
-    cartDrawer.querySelectorAll('[data-cart-remove-key]').forEach((button) => {
-      button.addEventListener('click', () => {
-        const key = button.dataset.cartRemoveKey;
+      const removeButton = event.target.closest('[data-cart-remove-key]');
+      if (removeButton && cartDrawer.contains(removeButton)) {
+        const key = removeButton.dataset.cartRemoveKey;
         if (!key) return;
         changeCartItem(key, 0);
-      });
+      }
     });
 
-    const drawerBody = cartDrawer.querySelector('.cart-drawer-body');
-    };
+    cartDrawer.addEventListener('change', (event) => {
+      const input = event.target.closest('[data-cart-qty]');
+      if (!input || !cartDrawer.contains(input)) return;
+      if (input.value === '') return;
+      const value = Math.max(0, parseInt(input.value, 10));
+      if (Number.isNaN(value)) return;
+      const key = input.dataset.cartKey;
+      if (!key) return;
+      if (value === 0) {
+        const title = input.dataset.cartTitle || 'this item';
+        const confirmed = window.confirm(`Remove ${title} from your cart?`);
+        if (!confirmed) {
+          return;
+        }
+      }
+      changeCartItem(key, value);
+    });
+  };
 
   const openCartDrawer = async (cart) => {
     if (!cartDrawer) return;
@@ -1090,11 +1092,15 @@ window.addEventListener('load', () => {
     });
 
     try {
-      const cart = await fetchCart();
+      let cart = cartCache;
+      if (!cart) {
+        cart = await fetchCart();
+      }
       if (!cart) return;
-      const cachedCart = cartCache || cart;
-      const item = (cart.items.find((entry) => entry.id === variantId)
-        || cachedCart.items.find((entry) => entry.id === variantId));
+      let item = cart.items.find((entry) => entry.id === variantId);
+      if (!item && state.key) {
+        item = { key: state.key, quantity: state.qty || 0 };
+      }
       const currentQty = item ? item.quantity : 0;
 
       if (delta > 0) {
