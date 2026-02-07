@@ -1305,27 +1305,32 @@ body.cart-drawer-open {
 
 .cart-drawer-item {
   display: grid;
-  grid-template-columns: 120px 1fr;
-  gap: 10px;
-  padding: 8px;
+  grid-template-columns: minmax(92px, 110px) minmax(0, 1fr);
+  gap: 12px;
+  padding: 10px;
   border-radius: 14px;
   background: rgba(255, 255, 255, 0.82);
   border: 1px solid rgba(255, 255, 255, 0.6);
   box-shadow: 0 16px 24px -20px rgba(7, 18, 30, 0.32);
-  align-items: stretch;
-  height: 144px;
+  align-items: center;
+  min-height: 128px;
   position: relative;
   flex: 0 0 auto;
   width: 100%;
   box-sizing: border-box;
-  margin-right: -8px;
-  width: calc(100% + 8px);
+}
+
+.cart-drawer-item-content {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  gap: 8px;
+  min-width: 0;
 }
 
 
 .cart-drawer-item-media {
   width: 100%;
-  height: 104px;
+  height: 96px;
   border-radius: 12px;
   background: rgba(255, 255, 255, 0.6);
   display: flex;
@@ -1365,17 +1370,18 @@ body.cart-drawer-open {
   display: grid;
   gap: 8px;
   align-content: start;
-  padding: 10px 0;
+  padding: 0;
 }
 
 .cart-drawer-actions {
-  margin-top: 6px;
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .cart-drawer-remove-peel {
-  position: absolute;
-  top: 8px;
-  right: 8px;
   width: 28px;
   height: 28px;
   border: none;
@@ -1408,14 +1414,6 @@ body.cart-drawer-open {
 .cart-drawer-item .price {
   font-size: 12px;
 }
-
-.cart-drawer-actions {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  flex-wrap: wrap;
-}
-
 
 
 @media (max-width: 980px) {
