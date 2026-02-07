@@ -626,6 +626,7 @@ window.addEventListener('load', () => {
         return;
     }
     cartDrawerItems.innerHTML = cart.items.map(buildCartDrawerItem).join('');
+    cartDrawerItems.classList.toggle('is-single', cart.items.length === 1);
     if (cartDrawerEmpty) {
       cartDrawerEmpty.hidden = cart.items.length > 0;
     }

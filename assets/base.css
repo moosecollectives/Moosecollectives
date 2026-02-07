@@ -1240,6 +1240,15 @@ body.cart-drawer-open {
   align-items: stretch;
 }
 
+.cart-drawer-items.is-single {
+  flex: 1;
+}
+
+.cart-drawer-items.is-single .cart-drawer-item {
+  flex: 1;
+  align-items: stretch;
+}
+
 .cart-drawer-upsell {
   display: flex;
   align-items: center;
