@@ -1341,12 +1341,13 @@ body.cart-drawer-open {
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  border-top: 1px solid rgba(12, 18, 32, 0.08);
-  padding: 10px 14px;
-  margin: 6px 0 0;
+  border-top: 1px solid rgba(255, 140, 40, 0.35);
+  padding: 8px 12px;
+  margin: 0;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.85), rgba(233, 246, 255, 0.9));
-  box-shadow: 0 -8px 18px -16px rgba(7, 18, 30, 0.3);
+    linear-gradient(140deg, rgba(255, 255, 255, 0.9), rgba(255, 226, 204, 0.5));
+  border-radius: 16px;
+  box-shadow: 0 10px 26px -20px rgba(255, 140, 40, 0.45);
   position: static;
 }
 
