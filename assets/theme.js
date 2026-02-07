@@ -833,9 +833,6 @@ window.addEventListener('load', () => {
       return null;
     }
     await refreshCartCount(resolvedCart);
-    if (typeof window.updateCartUI === 'function') {
-      await window.updateCartUI(resolvedCart);
-    }
     updateCartDrawer(resolvedCart);
     updateUpsellState(resolvedCart);
     if (typeof window.syncVariantState === 'function') {
@@ -869,7 +866,7 @@ window.addEventListener('load', () => {
     cartDrawer.addEventListener('click', (event) => {
       const qtyButton = event.target.closest('[data-cart-qty-btn]');
       if (qtyButton && cartDrawer.contains(qtyButton)) {
-        const wrap = qtyButton.closest('[data-cart-qty-wrap]');
+        const wrap = qtyButton.closest('[data-cart-qty-wrap]') || qtyButton.closest('.cart-drawer-item');
         const input = wrap ? wrap.querySelector('[data-cart-qty]') : null;
         if (!input) return;
         const key = input.dataset.cartKey;
@@ -1051,15 +1048,6 @@ window.addEventListener('load', () => {
 
   const syncVariantState = (cart) => {
     if (!cart) return;
-    document.querySelectorAll('[data-add-to-cart]').forEach((form) => {
-      const variantId = parseInt(form.dataset.variantId, 10);
-      if (!variantId) return;
-      const item = cart.items.find((entry) => entry.id === variantId);
-      const state = getVariantState(variantId);
-      state.qty = item ? item.quantity : 0;
-      state.key = item ? item.key : null;
-      state.pendingDelta = 0;
-    });
   };
 
   window.updateProductControls = updateProductControls;
@@ -1073,64 +1061,40 @@ window.addEventListener('load', () => {
 
   initProductControls();
 
-  const qtyState = new Map();
-
-  const getVariantState = (variantId) => {
-    if (!qtyState.has(variantId)) {
-      qtyState.set(variantId, { inFlight: false });
-    }
-    return qtyState.get(variantId);
-  };
-
   const updateVariantQuantity = async (variantId, form, delta) => {
-    const state = getVariantState(variantId);
-    if (state.inFlight) return;
-    state.inFlight = true;
-
     form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
       btn.disabled = true;
     });
 
     try {
-      let cart = cartCache;
-      if (!cart) {
-        cart = await fetchCart();
-      }
+      const cart = await fetchCart();
       if (!cart) return;
-      let item = cart.items.find((entry) => entry.id === variantId);
-      if (!item && state.key) {
-        item = { key: state.key, quantity: state.qty || 0 };
-      }
+      const item = cart.items.find((entry) => entry.id === variantId);
       const currentQty = item ? item.quantity : 0;
+      const nextQty = Math.max(0, currentQty + delta);
 
-      if (delta > 0) {
+      if (delta > 0 && !item) {
         const addResponse = await fetch('/cart/add.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
           credentials: 'same-origin',
           body: JSON.stringify({ id: variantId, quantity: delta })
         });
-        if (!addResponse.ok) {
-          return;
-        }
-      } else {
-        if (!item || !item.key) return;
-        const desiredQty = Math.max(0, currentQty + delta);
-        if (desiredQty === currentQty) return;
+        if (!addResponse.ok) return;
+      } else if (item && item.key) {
         const response = await fetch('/cart/change.js', {
           method: 'POST',
           headers: { Accept: 'application/json', 'Content-Type': 'application/json' },
           credentials: 'same-origin',
-          body: JSON.stringify({ id: item.key, quantity: desiredQty })
+          body: JSON.stringify({ id: item.key, quantity: nextQty })
         });
-        if (!response.ok) {
-          return;
-        }
+        if (!response.ok) return;
+      } else {
+        return;
       }
 
       await handleCartUpdate();
     } finally {
-      state.inFlight = false;
       form.querySelectorAll('[data-product-qty-btn]').forEach((btn) => {
         btn.disabled = false;
       });
