@@ -569,16 +569,24 @@ window.addEventListener('load', () => {
         <div class="cart-drawer-item-media">
           ${media}
         </div>
-        <div class="cart-drawer-item-content">
-          <div class="cart-drawer-item-meta">
+        <div class="cart-drawer-item-info">
+          <div class="cart-drawer-item-head">
             <h4>${escapeHtml(item.product_title)}</h4>
-            <p class="price cart-price" aria-label="Line item price">
-              <span class="cart-price-total">${formatMoney(item.final_line_price, item.currency)}</span>
-              <span class="price-compare cart-price-compare">${formatMoney(compareLine, item.currency)}</span>
-              <span class="cart-price-breakdown">${formatMoney(item.final_price, item.currency)} x ${item.quantity}</span>
-              <span class="price-compare cart-price-compare-breakdown">${formatMoney(compareUnit, item.currency)} x ${item.quantity}</span>
-            </p>
+            <button class="cart-drawer-remove-peel" type="button" data-cart-remove-key="${item.key}" data-cart-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
+              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                <path d="M5 7h14"/>
+                <path d="M9 7V5h6v2"/>
+                <rect x="7.5" y="7.5" width="9" height="11" rx="1.5"/>
+                <path d="M10.5 11v5M13.5 11v5"/>
+              </svg>
+            </button>
           </div>
+          <p class="price cart-price" aria-label="Line item price">
+            <span class="cart-price-total">${formatMoney(item.final_line_price, item.currency)}</span>
+            <span class="price-compare cart-price-compare">${formatMoney(compareLine, item.currency)}</span>
+            <span class="cart-price-breakdown">${formatMoney(item.final_price, item.currency)} x ${item.quantity}</span>
+            <span class="price-compare cart-price-compare-breakdown">${formatMoney(compareUnit, item.currency)} x ${item.quantity}</span>
+          </p>
           <div class="cart-drawer-actions">
             <div class="cart-quantity" data-cart-qty-wrap>
               <div class="cart-quantity-pill" role="group" aria-label="Quantity controls for ${escapeHtml(item.product_title)}">
@@ -599,14 +607,6 @@ window.addEventListener('load', () => {
                 <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" data-cart-key="${item.key}" data-variant-id="${item.id}" aria-label="Increase quantity">+</button>
               </div>
             </div>
-            <button class="cart-drawer-remove-peel" type="button" data-cart-remove-key="${item.key}" data-cart-key="${item.key}" aria-label="Remove ${escapeHtml(item.product_title)} from cart">
-              <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-                <path d="M5 7h14"/>
-                <path d="M9 7V5h6v2"/>
-                <rect x="7.5" y="7.5" width="9" height="11" rx="1.5"/>
-                <path d="M10.5 11v5M13.5 11v5"/>
-              </svg>
-            </button>
           </div>
         </div>
       </div>
