@@ -780,9 +780,18 @@ window.addEventListener('load', () => {
         cartDrawerMore.hidden = true;
         return;
       }
-      const container = cartDrawerItems;
-      if (!container) return;
-      const cutoff = container.scrollTop + container.clientHeight;
+      const drawerBody = cartDrawer.querySelector('.cart-drawer-body');
+      if (!drawerBody) return;
+      const itemsRect = cartDrawerItems.getBoundingClientRect();
+      const bodyRect = drawerBody.getBoundingClientRect();
+      const isOverflowing = cartDrawerItems.scrollHeight > drawerBody.clientHeight;
+
+      if (!isOverflowing) {
+        cartDrawerMore.hidden = true;
+        return;
+      }
+
+      const cutoff = drawerBody.scrollTop + drawerBody.clientHeight - (itemsRect.top - bodyRect.top);
       let visible = 0;
       items.forEach((item) => {
         if (item.offsetTop + item.offsetHeight <= cutoff) {
@@ -790,13 +799,13 @@ window.addEventListener('load', () => {
         }
       });
       const more = Math.max(0, items.length - visible);
-    if (more > 0) {
-      cartDrawerMoreText.textContent = `${more} more item${more === 1 ? '' : 's'}`;
-      cartDrawerMore.hidden = false;
-    } else {
-      cartDrawerMore.hidden = true;
-    }
-  };
+      if (more > 0) {
+        cartDrawerMoreText.textContent = `${more} more item${more === 1 ? '' : 's'}`;
+        cartDrawerMore.hidden = false;
+      } else {
+        cartDrawerMore.hidden = true;
+      }
+    };
 
   const updateCartDrawer = (cart) => {
     if (!cartDrawer || !cartDrawerItems) return;

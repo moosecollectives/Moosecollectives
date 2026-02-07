@@ -1217,9 +1217,13 @@ body.cart-drawer-open {
 
 .cart-drawer-item-meta {
   display: grid;
-  gap: 2px;
+  gap: 6px;
   align-content: start;
-  padding: 4px 0;
+  padding: 8px 0;
+}
+
+.cart-drawer-actions {
+  margin-top: 4px;
 }
 
 .cart-drawer-remove-peel {
