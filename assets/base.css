@@ -1329,6 +1329,7 @@ body.cart-drawer-open {
   justify-content: flex-start;
   gap: 6px;
   margin-top: 0;
+  margin-left: 6px;
 }
 
 .cart-drawer-remove-peel {
@@ -1519,6 +1520,7 @@ body.cart-drawer-open {
   background: transparent;
   position: relative;
   box-shadow: 0 16px 32px -18px rgba(255, 122, 0, 0.55);
+  margin-top: 2px;
 }
 
 .cart-quantity-pill::after {
@@ -1544,12 +1546,12 @@ body.cart-drawer-open {
 }
 
 .cart-quantity-btn {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   border-radius: 50%;
   border: none;
   background: none;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1;
   font-weight: 700;
   cursor: pointer;
@@ -1567,7 +1569,7 @@ body.cart-drawer-open {
 }
 
 .cart-quantity-input {
-  width: 36px;
+  width: 30px;
   text-align: center;
   border: none;
   background: transparent;
