@@ -384,7 +384,10 @@ window.addEventListener('load', () => {
     return new Intl.NumberFormat(undefined, { style: 'currency', currency: resolvedCurrency }).format(cents / 100);
   };
 
-  const calcCompare = (cents) => Math.round((cents * 100) / 85);
+  const calcCompare = (cents) => {
+    const compare = (cents * 100) / 85;
+    return Math.ceil(compare / 100) * 100;
+  };
 
   const escapeHtml = (value) => String(value || '')
     .replace(/&/g, '&amp;')
