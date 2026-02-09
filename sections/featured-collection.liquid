@@ -19,6 +19,7 @@
             {% endif %}
             <h3>{{ product_1.title }}</h3>
             {% assign product_1_compare = product_1.price | times: 100 | divided_by: 85 %}
+            {% assign product_1_compare = product_1_compare | plus: 99 | divided_by: 100 | times: 100 %}
             <span class="price price-current">{{ product_1.price | money }}</span>
             <span class="price-compare">{{ product_1_compare | money }}</span>
           </a>
@@ -32,6 +33,7 @@
             {% endif %}
             <h3>{{ product_2.title }}</h3>
             {% assign product_2_compare = product_2.price | times: 100 | divided_by: 85 %}
+            {% assign product_2_compare = product_2_compare | plus: 99 | divided_by: 100 | times: 100 %}
             <span class="price price-current">{{ product_2.price | money }}</span>
             <span class="price-compare">{{ product_2_compare | money }}</span>
           </a>
@@ -45,6 +47,7 @@
             {% endif %}
             <h3>{{ product_3.title }}</h3>
             {% assign product_3_compare = product_3.price | times: 100 | divided_by: 85 %}
+            {% assign product_3_compare = product_3_compare | plus: 99 | divided_by: 100 | times: 100 %}
             <span class="price price-current">{{ product_3.price | money }}</span>
             <span class="price-compare">{{ product_3_compare | money }}</span>
           </a>
@@ -58,6 +61,7 @@
             {% endif %}
             <h3>{{ product_4.title }}</h3>
             {% assign product_4_compare = product_4.price | times: 100 | divided_by: 85 %}
+            {% assign product_4_compare = product_4_compare | plus: 99 | divided_by: 100 | times: 100 %}
             <span class="price price-current">{{ product_4.price | money }}</span>
             <span class="price-compare">{{ product_4_compare | money }}</span>
           </a>

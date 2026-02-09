@@ -41,7 +41,9 @@
                     <div class="cart-meta-row">
                       <p class="price cart-price" aria-label="Line item price">
                         {% assign compare_line = item.final_line_price | times: 100 | divided_by: 85 %}
+                        {% assign compare_line = compare_line | plus: 99 | divided_by: 100 | times: 100 %}
                         {% assign compare_unit = item.final_price | times: 100 | divided_by: 85 %}
+                        {% assign compare_unit = compare_unit | plus: 99 | divided_by: 100 | times: 100 %}
                         <span class="cart-price-total">{{ item.final_line_price | money }}</span>
                         <span class="cart-price-breakdown">{{ item.final_price | money }} x {{ item.quantity }}</span>
                         <span class="price-compare cart-price-compare">{{ compare_line | money }}</span>
@@ -80,6 +82,7 @@
         </div>
         <div class="cart-footer">
           {% assign compare_total = cart.total_price | times: 100 | divided_by: 85 %}
+          {% assign compare_total = compare_total | plus: 99 | divided_by: 100 | times: 100 %}
           <p class="cart-total">
             Total:
             <span class="price price-current">{{ cart.total_price | money }}</span>
