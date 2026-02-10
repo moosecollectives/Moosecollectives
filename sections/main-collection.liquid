@@ -4,10 +4,11 @@
       <h1 class="section-title">Full collection</h1>
       <div class="collection-heading-meta">
         <span>{{ collection.products_count }} items</span>
-        {% assign current_sort = collection.sort_by | default: collection.default_sort_by %}
+        {% assign current_sort = collection.sort_by %}
         <form class="collection-sort" method="get" action="{{ collection.url }}">
           <label for="CollectionSort">Sort</label>
           <select id="CollectionSort" name="sort_by" onchange="this.form.submit()">
+            <option value=""{% if current_sort == blank %} selected{% endif %} hidden>Sort by</option>
             <option value="price-ascending"{% if current_sort == 'price-ascending' %} selected{% endif %}>Price: Low to High</option>
             <option value="price-descending"{% if current_sort == 'price-descending' %} selected{% endif %}>Price: High to Low</option>
           </select>
