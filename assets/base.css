@@ -95,33 +95,34 @@ a {
 .collection-heading-meta {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 10px;
 }
 
 .collection-sort {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 12px;
+  gap: 6px;
+  font-size: 10px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .collection-sort label {
-  opacity: 0.7;
+  opacity: 0.6;
 }
 
 .collection-sort select {
   appearance: none;
-  border: 1px solid rgba(12, 18, 32, 0.18);
-  border-radius: 999px;
-  padding: 6px 26px 6px 12px;
+  border: 1px solid rgba(12, 18, 32, 0.12);
+  border-radius: 10px;
+  padding: 4px 20px 4px 10px;
   background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(236, 246, 255, 0.92));
+    linear-gradient(135deg, rgba(255, 255, 255, 0.7), rgba(236, 246, 255, 0.6));
   color: inherit;
-  font-size: 12px;
-  letter-spacing: 0.06em;
+  font-size: 10px;
+  letter-spacing: 0.05em;
   cursor: pointer;
+  box-shadow: 0 10px 20px -18px rgba(7, 18, 30, 0.2);
 }
 
 .section-heading-center {
