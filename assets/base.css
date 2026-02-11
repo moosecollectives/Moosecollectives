@@ -460,6 +460,18 @@ a {
   animation: buttonLoad 0.8s ease-in-out infinite;
 }
 
+.button[disabled] {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.product-cart-actions .button[disabled] {
+  background: rgba(12, 18, 32, 0.25);
+  border: 1px solid rgba(12, 18, 32, 0.2);
+  box-shadow: none;
+  color: rgba(12, 18, 32, 0.6);
+}
+
 @keyframes buttonLoad {
   0% {
     transform: translateX(-10%);

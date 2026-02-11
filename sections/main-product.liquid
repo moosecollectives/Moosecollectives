@@ -40,14 +40,11 @@
       {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
       {% assign compare_price = compare_price | plus: 99 | divided_by: 100 | times: 100 %}
       <div class="price price-current">{{ product.price | money }}</div>
-      {% unless product.available %}
-        <div class="stock-indicator">Out of stock</div>
-      {% endunless %}
       <div class="price-compare">{{ compare_price | money }}</div>
       <form method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
         <div class="product-cart-actions" data-product-cart-actions>
-          <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+          <button class="button button-primary"{% unless product.available %} disabled aria-disabled="true"{% endunless %} type="submit" data-add-to-cart-button>Add to cart</button>
           {% unless product.available %}
             <span class="stock-indicator stock-indicator-inline">Out of stock</span>
           {% endunless %}
