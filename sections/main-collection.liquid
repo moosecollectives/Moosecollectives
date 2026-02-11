@@ -31,6 +31,9 @@
             {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
             {% assign compare_price = compare_price | plus: 99 | divided_by: 100 | times: 100 %}
             <span class="price price-current">{{ product.price | money }}</span>
+            {% unless product.available %}
+              <span class="stock-indicator">Out of stock</span>
+            {% endunless %}
             <span class="price-compare">{{ compare_price | money }}</span>
           </a>
         </article>
