@@ -32,7 +32,7 @@ body {
   margin: 0;
   font-family: var(--font-body);
   color: var(--ink);
-  background: #bfe7ff;
+  background: #ffffff;
   min-height: 100vh;
   overflow-x: hidden;
 }
@@ -42,11 +42,11 @@ body {
 .template-page,
 .template-cart,
 .template-404 {
-  background: #bfe7ff;
+  background: #ffffff;
 }
 
 .template-collection {
-  background: #bfe7ff;
+  background: #ffffff;
 }
 
 img {
