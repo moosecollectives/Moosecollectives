@@ -783,7 +783,7 @@ a {
 .product-carousel-card img {
   width: 100%;
   height: clamp(210px, 26vw, 300px);
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.2);
 }
@@ -1959,6 +1959,9 @@ body.cart-drawer-open {
 .collection-carousel-card img {
   border-radius: 18px;
   background: rgba(255, 255, 255, 0.22);
+  width: 100%;
+  height: clamp(210px, 24vw, 280px);
+  object-fit: contain;
 }
 .collection-carousel-card::before {
   content: "";
