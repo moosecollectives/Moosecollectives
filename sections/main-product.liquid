@@ -4,8 +4,10 @@
       {% if product.featured_image %}
         {% assign zoom_url = product.featured_image | image_url: width: 2000 %}
         <div class="product-media-main" data-media-main>
-          {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title, data_media_img: true, data_media_zoom: zoom_url }}
-          <div class="product-zoom-lens" data-zoom-lens></div>
+          <div class="product-media-frame">
+            {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title, data_media_img: true, data_media_zoom: zoom_url }}
+            <div class="product-zoom-lens" data-zoom-lens></div>
+          </div>
           <div class="product-zoom-window" data-zoom-window></div>
         </div>
       {% endif %}
