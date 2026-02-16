@@ -1323,9 +1323,10 @@ body.cart-drawer-open {
   background: rgba(255, 255, 255, 0.2);
   border: 1px solid rgba(255, 140, 40, 0.16);
   box-shadow: 0 10px 20px -18px rgba(255, 122, 0, 0.38);
-  align-items: center;
-  height: 108px;
-  max-height: 108px;
+  align-items: start;
+  min-height: 112px;
+  height: auto;
+  max-height: none;
   width: 100%;
   min-width: 100%;
   box-sizing: border-box;
