@@ -1310,8 +1310,8 @@ body.cart-drawer-open {
 }
 
 .cart-drawer-items.is-single .cart-drawer-item {
-  flex: 1;
-  align-items: stretch;
+  flex: 0 0 auto;
+  align-items: start;
 }
 
 .cart-drawer-item {
