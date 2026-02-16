@@ -1363,7 +1363,7 @@ body.cart-drawer-open {
 .cart-drawer-item-details {
   display: grid;
   grid-template-rows: auto auto;
-  gap: 4px;
+  gap: 8px;
   min-width: 0;
   height: auto;
 }
@@ -1392,8 +1392,8 @@ body.cart-drawer-open {
   align-items: center;
   justify-content: flex-start;
   gap: 6px;
-  margin-top: 0;
-  margin-left: 6px;
+  margin-top: 6px;
+  margin-left: 0;
 }
 
 .cart-drawer-remove-peel {
@@ -1427,6 +1427,8 @@ body.cart-drawer-open {
 
 .cart-drawer-item .price {
   font-size: 12px;
+  margin-top: -2px;
+  margin-bottom: 4px;
 }
 .cart-drawer-upsell {
   display: flex;

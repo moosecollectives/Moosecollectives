@@ -651,6 +651,10 @@ window.addEventListener('load', () => {
       if (!variantId) return;
       const button = form.querySelector('button[type="submit"]');
       const hasItem = cart.items.some((item) => item.id === variantId);
+      const upsellContainer = form.closest('[data-cart-drawer-upsell], .cart-upsell');
+      if (upsellContainer) {
+        upsellContainer.hidden = hasItem;
+      }
       if (!button) return;
       if (hasItem) {
         button.textContent = 'Added';
