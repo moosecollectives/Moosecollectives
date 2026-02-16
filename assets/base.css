@@ -2299,7 +2299,8 @@ body.cart-drawer-open {
 }
 
 .section.product-media-full {
-  margin-top: -80px;
+  margin-top: 0;
+  padding-top: clamp(20px, 3vw, 40px);
   padding-bottom: 0;
 }
 
