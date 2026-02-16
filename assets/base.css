@@ -1426,6 +1426,16 @@ body.cart-drawer-open {
   stroke: rgba(255, 118, 0, 1);
 }
 
+.cart-drawer-remove-peel:hover {
+  background: rgba(220, 38, 38, 0.12);
+  border-color: rgba(220, 38, 38, 0.45);
+}
+
+.cart-drawer-remove-peel:hover svg rect,
+.cart-drawer-remove-peel:hover svg path {
+  stroke: rgba(220, 38, 38, 0.9);
+}
+
 .cart-drawer-item .price {
   font-size: 12px;
   margin-top: -2px;
