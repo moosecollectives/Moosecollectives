@@ -654,6 +654,7 @@ window.addEventListener('load', () => {
       const upsellContainer = form.closest('[data-cart-drawer-upsell], .cart-upsell');
       if (upsellContainer) {
         upsellContainer.hidden = hasItem;
+        upsellContainer.style.display = hasItem ? 'none' : '';
       }
       if (!button) return;
       if (hasItem) {

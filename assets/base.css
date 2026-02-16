@@ -1318,11 +1318,11 @@ body.cart-drawer-open {
   display: grid;
   grid-template-columns: 110px minmax(0, 1fr);
   gap: 14px;
-  padding: 8px 0;
+  padding: 8px 10px;
   border-radius: 10px;
-  background: transparent;
-  border: 0;
-  box-shadow: none;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 140, 40, 0.16);
+  box-shadow: 0 10px 20px -18px rgba(255, 122, 0, 0.38);
   align-items: center;
   height: 108px;
   max-height: 108px;
