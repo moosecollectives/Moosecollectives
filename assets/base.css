@@ -2884,6 +2884,12 @@ body.product-zoom-open {
     color: var(--ink);
   }
 
+  .price-compare,
+  .cart-price-compare,
+  .cart-price-compare-breakdown {
+    color: rgba(199, 212, 238, 0.5);
+  }
+
   .collection-sort select {
     background: rgba(18, 26, 44, 0.88);
     border-color: rgba(255, 255, 255, 0.14);
@@ -2900,6 +2906,11 @@ body.product-zoom-open {
 
   .product-zoom-modal {
     background: rgba(5, 10, 18, 0.86);
+  }
+
+  .template-index .collection-carousel-card::before,
+  .template-index .collection-carousel-card::after {
+    content: none;
   }
 }
 
