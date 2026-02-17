@@ -2212,10 +2212,6 @@ body.cart-drawer-open {
   .product-zoom-window {
     display: none;
   }
-
-  .product-zoom-strip {
-    display: flex;
-  }
 }
 
 .product-zoom-modal {
@@ -2290,6 +2286,12 @@ body.product-zoom-open {
 
 .product-zoom-thumb.is-active {
   border-color: rgba(255, 90, 0, 0.75);
+}
+
+@media (max-width: 980px) {
+  .product-zoom-strip {
+    display: flex;
+  }
 }
 
 .product-zoom-close {
