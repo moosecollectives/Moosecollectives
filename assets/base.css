@@ -1625,7 +1625,7 @@ body.cart-drawer-open {
   gap: 4px;
   padding: 4px 8px;
   border-radius: 999px;
-  border: 2px solid transparent;
+  border: 3px solid transparent;
   background: transparent;
   position: relative;
   overflow: hidden;
@@ -1636,7 +1636,7 @@ body.cart-drawer-open {
 .cart-quantity-pill::after {
   content: "";
   position: absolute;
-  inset: 2px;
+  inset: 3px;
   border-radius: inherit;
   background: rgba(255, 255, 255, 0.32);
   z-index: 0;
@@ -1645,9 +1645,9 @@ body.cart-drawer-open {
 .cart-quantity-pill::before {
   content: '';
   position: absolute;
-  inset: -2px;
+  inset: -3px;
   border-radius: 999px;
-  padding: 2px;
+  padding: 3px;
   background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
