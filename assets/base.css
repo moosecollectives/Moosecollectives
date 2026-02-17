@@ -2090,16 +2090,7 @@ body.cart-drawer-open {
 }
 
 .product-carousel-card::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  border-radius: inherit;
-  pointer-events: none;
-  background:
-    linear-gradient(140deg, rgba(255, 255, 255, 0.45), transparent 45%),
-    linear-gradient(320deg, rgba(255, 255, 255, 0.2), transparent 60%);
-  mix-blend-mode: screen;
-  opacity: 0.55;
+  content: none;
 }
 
 .price {
@@ -2825,6 +2816,24 @@ body.product-zoom-open {
 
   .hero-stat-number {
     font-size: 18px;
+  }
+
+  .collection-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .collection-heading .section-title {
+    white-space: nowrap;
+    font-size: clamp(34px, 10vw, 54px);
+  }
+
+  .collection-heading-meta {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 12px;
+    flex-wrap: wrap;
   }
 }
 
