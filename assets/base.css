@@ -425,7 +425,7 @@ a {
 .button-primary {
   background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
   color: #2d1600;
-  box-shadow: 0 16px 32px -18px rgba(255, 122, 0, 0.55);
+  box-shadow: 0 10px 18px -14px rgba(255, 122, 0, 0.42);
 }
 
 .button-secondary {
@@ -439,7 +439,7 @@ a {
 
 .add-to-cart-added {
   animation: addToCartPulse 0.9s ease;
-  box-shadow: 0 14px 28px -18px rgba(255, 140, 40, 0.6);
+  box-shadow: 0 10px 20px -16px rgba(255, 140, 40, 0.45);
 }
 
 .button.is-loading {
