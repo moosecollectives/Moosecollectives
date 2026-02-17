@@ -413,6 +413,7 @@ window.addEventListener('load', () => {
     let zoomReady = false;
     let zoomSrc = mainImg.dataset.mediaZoom || mainImg.src;
     let mediaLoadingToken = 0;
+    let modalLoadingToken = 0;
     let resetModalZoom = () => {};
 
     const setZoomImage = (src) => {
@@ -468,8 +469,25 @@ window.addEventListener('load', () => {
       }
       setZoomImage(nextZoomSrc);
       if (zoomModalImg) {
+        const nextModalToken = ++modalLoadingToken;
+        if (zoomViewport) {
+          zoomViewport.classList.add('is-loading');
+        }
+        zoomModalImg.classList.add('is-loading');
+        const clearModalLoadingState = () => {
+          if (nextModalToken !== modalLoadingToken) return;
+          zoomModalImg.classList.remove('is-loading');
+          if (zoomViewport) {
+            zoomViewport.classList.remove('is-loading');
+          }
+        };
+        zoomModalImg.addEventListener('load', clearModalLoadingState, { once: true });
+        zoomModalImg.addEventListener('error', clearModalLoadingState, { once: true });
         zoomModalImg.src = src;
         resetModalZoom();
+        if (zoomModalImg.complete) {
+          clearModalLoadingState();
+        }
       }
       setActiveThumbs(mediaId, thumb);
       if (mainImg.complete) {

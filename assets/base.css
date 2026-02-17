@@ -2267,6 +2267,29 @@ body.cart-drawer-open {
   overflow: hidden;
   touch-action: none;
   background: rgba(255, 255, 255, 0.06);
+  position: relative;
+}
+
+.product-zoom-viewport::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.45);
+  border-top-color: rgba(255, 122, 0, 0.95);
+  transform: translate(-50%, -50%);
+  animation: productMediaLoaderSpin 0.8s linear infinite;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 2;
+  transition: opacity 0.2s ease;
+}
+
+.product-zoom-viewport.is-loading::after {
+  opacity: 1;
 }
 
 .product-zoom-modal [data-zoom-modal-image] {
@@ -2282,6 +2305,11 @@ body.cart-drawer-open {
   user-select: none;
   -webkit-user-drag: none;
   display: block;
+  transition: filter 0.2s ease;
+}
+
+.product-zoom-modal [data-zoom-modal-image].is-loading {
+  filter: blur(8px) saturate(0.9);
 }
 
 body.product-zoom-open {
