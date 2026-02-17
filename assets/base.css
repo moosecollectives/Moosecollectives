@@ -799,6 +799,34 @@ a {
   box-shadow: 0 24px 60px -44px rgba(7, 18, 30, 0.6);
 }
 
+.template-index .hero-panel {
+  box-shadow: 0 24px 60px -40px rgba(255, 122, 0, 0.28);
+}
+
+.template-index .product-carousel-card {
+  box-shadow: 0 20px 44px -34px rgba(255, 122, 0, 0.32);
+}
+
+.template-index .product-carousel-card:hover {
+  box-shadow: 0 22px 50px -34px rgba(255, 122, 0, 0.4);
+}
+
+.template-index .product-carousel.edge-hover .product-carousel-card:hover {
+  box-shadow: 0 24px 60px -40px rgba(255, 122, 0, 0.42);
+}
+
+.template-index .carousel-section-fancy .product-carousel {
+  box-shadow: 0 18px 36px -28px rgba(255, 122, 0, 0.24);
+}
+
+.template-index .carousel-section-fancy .product-carousel-card {
+  box-shadow: 0 16px 32px -26px rgba(255, 122, 0, 0.3);
+}
+
+.template-index .carousel-section-fancy .product-carousel-card:hover {
+  box-shadow: 0 24px 50px -34px rgba(255, 122, 0, 0.38);
+}
+
 .case-opening {
   position: relative;
   display: grid;
@@ -2595,7 +2623,7 @@ body.product-zoom-open {
   border-radius: 22px;
   background: rgba(255, 255, 255, 0.85);
   border: 1px solid rgba(255, 255, 255, 0.55);
-  box-shadow: 0 14px 30px -22px rgba(7, 18, 30, 0.3);
+  box-shadow: 0 14px 30px -22px rgba(255, 122, 0, 0.3);
 }
 
 .upsell-eyebrow {
@@ -2800,6 +2828,12 @@ body.product-zoom-open {
   .collection-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 14px;
+  }
+
+  .featured-rugs-grid > .collection-carousel-card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    justify-self: center;
+    width: min(100%, 220px);
   }
 }
 
