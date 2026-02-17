@@ -2879,7 +2879,7 @@ body.product-zoom-open {
   }
 }
 
-@media (prefers-color-scheme: dark) {
+@media (prefers-color-scheme: dark) and (max-width: 0px) {
   :root {
     --ink: #e8eefc;
     --ink-soft: #b7c4de;
