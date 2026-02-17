@@ -1628,6 +1628,7 @@ body.cart-drawer-open {
   border: 2px solid transparent;
   background: transparent;
   position: relative;
+  overflow: hidden;
   box-shadow: 0 16px 32px -18px rgba(255, 122, 0, 0.55);
   margin-top: 2px;
 }
@@ -1635,7 +1636,7 @@ body.cart-drawer-open {
 .cart-quantity-pill::after {
   content: "";
   position: absolute;
-  inset: 1px;
+  inset: 0;
   border-radius: inherit;
   background: rgba(255, 255, 255, 0.32);
   z-index: 0;
