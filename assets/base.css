@@ -433,6 +433,10 @@ a {
   border: 2px solid rgba(255, 255, 255, 0.25);
 }
 
+.hero-actions .button-secondary {
+  box-shadow: 0 8px 16px -12px rgba(255, 122, 0, 0.35);
+}
+
 .button:hover {
   transform: translateY(-2px) rotate(-0.4deg);
 }
