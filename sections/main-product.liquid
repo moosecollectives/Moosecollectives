@@ -34,7 +34,9 @@
     <div class="product-zoom-modal" data-zoom-modal>
       <button class="product-zoom-close" type="button" aria-label="Close zoom">×</button>
       <div class="product-zoom-modal-content">
-        <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title }}">
+        <div class="product-zoom-viewport" data-zoom-viewport>
+          <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title }}" data-zoom-modal-image>
+        </div>
         {% if product.images.size > 1 %}
           <div class="product-zoom-strip" role="list">
             {% for image in product.images %}

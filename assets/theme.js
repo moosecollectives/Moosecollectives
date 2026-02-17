@@ -405,13 +405,15 @@ window.addEventListener('load', () => {
     const zoomWindow = media.querySelector('[data-zoom-window]');
     const mediaMain = media.querySelector('[data-media-main]');
     const zoomModal = document.querySelector('[data-zoom-modal]');
-    const zoomModalImg = zoomModal ? zoomModal.querySelector('img') : null;
+    const zoomViewport = zoomModal ? zoomModal.querySelector('[data-zoom-viewport]') : null;
+    const zoomModalImg = zoomModal ? zoomModal.querySelector('[data-zoom-modal-image]') : null;
     const zoomModalClose = zoomModal ? zoomModal.querySelector('.product-zoom-close') : null;
     const mediaThumbs = Array.from(media.querySelectorAll('[data-media-thumb]'));
     const modalThumbs = zoomModal ? Array.from(zoomModal.querySelectorAll('[data-zoom-modal-thumb]')) : [];
     let zoomReady = false;
     let zoomSrc = mainImg.dataset.mediaZoom || mainImg.src;
     let mediaLoadingToken = 0;
+    let resetModalZoom = () => {};
 
     const setZoomImage = (src) => {
       zoomSrc = src;
@@ -467,6 +469,7 @@ window.addEventListener('load', () => {
       setZoomImage(nextZoomSrc);
       if (zoomModalImg) {
         zoomModalImg.src = src;
+        resetModalZoom();
       }
       setActiveThumbs(mediaId, thumb);
       if (mainImg.complete) {
@@ -529,16 +532,117 @@ window.addEventListener('load', () => {
 
     if (zoomModal && zoomModalImg) {
       let zoomScrollY = 0;
+      let modalScale = 1;
+      let modalX = 0;
+      let modalY = 0;
+      let pinchStartDistance = 0;
+      let pinchStartScale = 1;
+      let pinchStartX = 0;
+      let pinchStartY = 0;
+      let pinchCenterStart = { x: 0, y: 0 };
+      const activePointers = new Map();
+
+      const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
+      const getDistance = (a, b) => Math.hypot(b.x - a.x, b.y - a.y);
+      const getCenter = (a, b) => ({ x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 });
+      const clampModalOffset = () => {
+        if (!zoomViewport) return;
+        const rect = zoomViewport.getBoundingClientRect();
+        const maxX = Math.max(0, ((rect.width * modalScale) - rect.width) / 2);
+        const maxY = Math.max(0, ((rect.height * modalScale) - rect.height) / 2);
+        modalX = clamp(modalX, -maxX, maxX);
+        modalY = clamp(modalY, -maxY, maxY);
+      };
+      const applyModalTransform = () => {
+        zoomModalImg.style.transform = `translate3d(${modalX}px, ${modalY}px, 0) scale(${modalScale})`;
+      };
+      resetModalZoom = () => {
+        activePointers.clear();
+        modalScale = 1;
+        modalX = 0;
+        modalY = 0;
+        pinchStartDistance = 0;
+        applyModalTransform();
+      };
+
+      if (zoomViewport) {
+        const updatePointer = (event) => {
+          const previous = activePointers.get(event.pointerId) || { x: event.clientX, y: event.clientY };
+          const current = { x: event.clientX, y: event.clientY };
+          activePointers.set(event.pointerId, current);
+          return { previous, current };
+        };
+
+        const onPointerDown = (event) => {
+          if (!window.matchMedia('(max-width: 980px)').matches) return;
+          zoomViewport.setPointerCapture(event.pointerId);
+          activePointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
+          if (activePointers.size === 2) {
+            const [a, b] = Array.from(activePointers.values());
+            pinchStartDistance = getDistance(a, b) || 1;
+            pinchStartScale = modalScale;
+            pinchStartX = modalX;
+            pinchStartY = modalY;
+            pinchCenterStart = getCenter(a, b);
+          }
+          event.preventDefault();
+        };
+
+        const onPointerMove = (event) => {
+          if (!activePointers.has(event.pointerId)) return;
+          const { previous } = updatePointer(event);
+          if (activePointers.size >= 2) {
+            const [a, b] = Array.from(activePointers.values());
+            const nextDistance = getDistance(a, b);
+            const nextCenter = getCenter(a, b);
+            modalScale = clamp(pinchStartScale * (nextDistance / (pinchStartDistance || 1)), 1, 4);
+            modalX = pinchStartX + (nextCenter.x - pinchCenterStart.x);
+            modalY = pinchStartY + (nextCenter.y - pinchCenterStart.y);
+            clampModalOffset();
+            applyModalTransform();
+            event.preventDefault();
+            return;
+          }
+          if (activePointers.size === 1 && modalScale > 1.01) {
+            modalX += event.clientX - previous.x;
+            modalY += event.clientY - previous.y;
+            clampModalOffset();
+            applyModalTransform();
+            event.preventDefault();
+          }
+        };
+
+        const endPointer = (event) => {
+          activePointers.delete(event.pointerId);
+          if (activePointers.size < 2) {
+            pinchStartDistance = 0;
+          }
+          if (modalScale <= 1.01 && activePointers.size === 0) {
+            resetModalZoom();
+          }
+        };
+
+        zoomViewport.addEventListener('pointerdown', onPointerDown);
+        zoomViewport.addEventListener('pointermove', onPointerMove);
+        zoomViewport.addEventListener('pointerup', endPointer);
+        zoomViewport.addEventListener('pointercancel', endPointer);
+        zoomViewport.addEventListener('gesturestart', (event) => event.preventDefault());
+        zoomViewport.addEventListener('gesturechange', (event) => event.preventDefault());
+        zoomViewport.addEventListener('gestureend', (event) => event.preventDefault());
+      }
+
       const openModal = () => {
         zoomScrollY = window.scrollY || window.pageYOffset || 0;
         document.body.classList.add('product-zoom-open');
         document.body.style.top = `-${zoomScrollY}px`;
         zoomModalImg.src = mainImg.src;
+        resetModalZoom();
         setActiveThumbs(mainImg.dataset.mediaId || '', null);
         zoomModal.classList.add('is-visible');
       };
       const closeModal = () => {
         zoomModal.classList.remove('is-visible');
+        resetModalZoom();
         document.body.classList.remove('product-zoom-open');
         document.body.style.top = '';
         window.scrollTo(0, zoomScrollY);

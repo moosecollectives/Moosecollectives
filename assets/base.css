@@ -2223,7 +2223,7 @@ body.cart-drawer-open {
   justify-content: center;
   z-index: 60;
   overscroll-behavior: contain;
-  touch-action: pinch-zoom;
+  touch-action: none;
 }
 
 .product-zoom-modal.is-visible {
@@ -2237,14 +2237,28 @@ body.cart-drawer-open {
   justify-items: center;
 }
 
-.product-zoom-modal img {
+.product-zoom-viewport {
   width: min(92vw, 520px);
+  max-height: 92vh;
+  border-radius: 22px;
+  overflow: hidden;
+  touch-action: none;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.product-zoom-modal [data-zoom-modal-image] {
+  width: 100%;
   max-height: 92vh;
   height: auto;
   object-fit: contain;
   border-radius: 22px;
   box-shadow: 0 24px 60px -30px rgba(7, 18, 30, 0.6);
-  touch-action: pinch-zoom;
+  touch-action: none;
+  transform-origin: center center;
+  will-change: transform;
+  user-select: none;
+  -webkit-user-drag: none;
+  display: block;
 }
 
 body.product-zoom-open {
