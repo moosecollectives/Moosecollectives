@@ -2841,6 +2841,66 @@ body.product-zoom-open {
   }
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: #e8eefc;
+    --ink-soft: #b7c4de;
+    --shadow: rgba(0, 0, 0, 0.48);
+  }
+
+  body,
+  .template-index,
+  .template-product,
+  .template-page,
+  .template-cart,
+  .template-404,
+  .template-collection {
+    background: #0d1322;
+    color: var(--ink);
+  }
+
+  .hero-panel,
+  .product-carousel-card,
+  .collection-carousel-card,
+  .cart-upsell,
+  .upsell-card,
+  .cart-drawer-item,
+  .cart-drawer-panel,
+  .collection-adhesive-card,
+  .product-zoom-viewport {
+    background: rgba(16, 24, 40, 0.86);
+    border-color: rgba(255, 255, 255, 0.1);
+  }
+
+  .cart-drawer-item-media,
+  .product-zoom-thumb img,
+  .collection-carousel-card img {
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  .button-secondary {
+    background: rgba(18, 26, 44, 0.92);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--ink);
+  }
+
+  .collection-sort select {
+    background: rgba(18, 26, 44, 0.88);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--ink);
+  }
+
+  .product-description-block,
+  .upsell-subtitle,
+  .collection-adhesive-copy,
+  .hero-subtitle,
+  .footer {
+    color: var(--ink-soft);
+  }
+
+  .product-zoom-modal {
+    background: rgba(5, 10, 18, 0.86);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
