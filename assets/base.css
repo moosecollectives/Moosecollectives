@@ -1636,7 +1636,7 @@ body.cart-drawer-open {
 .cart-quantity-pill::after {
   content: "";
   position: absolute;
-  inset: 0;
+  inset: 2px;
   border-radius: inherit;
   background: rgba(255, 255, 255, 0.32);
   z-index: 0;
