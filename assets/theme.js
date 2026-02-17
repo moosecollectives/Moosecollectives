@@ -407,6 +407,8 @@ window.addEventListener('load', () => {
     const zoomModal = document.querySelector('[data-zoom-modal]');
     const zoomModalImg = zoomModal ? zoomModal.querySelector('img') : null;
     const zoomModalClose = zoomModal ? zoomModal.querySelector('.product-zoom-close') : null;
+    const mediaThumbs = Array.from(media.querySelectorAll('[data-media-thumb]'));
+    const modalThumbs = zoomModal ? Array.from(zoomModal.querySelectorAll('[data-zoom-modal-thumb]')) : [];
     let zoomReady = false;
     let zoomSrc = mainImg.dataset.mediaZoom || mainImg.src;
     let mediaLoadingToken = 0;
@@ -427,86 +429,119 @@ window.addEventListener('load', () => {
       }
     }
 
-    media.querySelectorAll('[data-media-thumb]').forEach((thumb) => {
-      thumb.addEventListener('click', () => {
-        const src = thumb.dataset.mediaSrc;
-        const zoomSrc = thumb.dataset.mediaZoom || src;
-        if (!src) return;
-        const loadingToken = ++mediaLoadingToken;
-        if (mediaMain) {
-          mediaMain.classList.add('is-loading');
-        }
-        mainImg.classList.add('is-loading');
-        const clearLoadingState = () => {
-          if (loadingToken !== mediaLoadingToken) return;
-          mainImg.classList.remove('is-loading');
-          if (mediaMain) {
-            mediaMain.classList.remove('is-loading');
-          }
-        };
-        mainImg.addEventListener('load', clearLoadingState, { once: true });
-        mainImg.addEventListener('error', clearLoadingState, { once: true });
-        mainImg.src = src;
-        mainImg.removeAttribute('srcset');
-        mainImg.removeAttribute('sizes');
-        setZoomImage(zoomSrc);
-        if (zoomModalImg) {
-          zoomModalImg.src = src;
-        }
-        if (mainImg.complete) {
-          clearLoadingState();
-        }
+    const setActiveThumbs = (mediaId, sourceThumb) => {
+      mediaThumbs.forEach((button) => {
+        button.classList.toggle('is-active', button === sourceThumb || (mediaId && button.dataset.mediaId === mediaId));
+      });
+      modalThumbs.forEach((button) => {
+        button.classList.toggle('is-active', button === sourceThumb || (mediaId && button.dataset.mediaId === mediaId));
+      });
+    };
 
-        media.querySelectorAll('[data-media-thumb]').forEach((button) => {
-          button.classList.toggle('is-active', button === thumb);
-        });
+    const switchMedia = (thumb) => {
+      if (!thumb) return;
+      const src = thumb.dataset.mediaSrc;
+      const nextZoomSrc = thumb.dataset.mediaZoom || src;
+      const mediaId = thumb.dataset.mediaId || '';
+      if (!src) return;
+      const loadingToken = ++mediaLoadingToken;
+      if (mediaMain) {
+        mediaMain.classList.add('is-loading');
+      }
+      mainImg.classList.add('is-loading');
+      const clearLoadingState = () => {
+        if (loadingToken !== mediaLoadingToken) return;
+        mainImg.classList.remove('is-loading');
+        if (mediaMain) {
+          mediaMain.classList.remove('is-loading');
+        }
+      };
+      mainImg.addEventListener('load', clearLoadingState, { once: true });
+      mainImg.addEventListener('error', clearLoadingState, { once: true });
+      mainImg.src = src;
+      mainImg.removeAttribute('srcset');
+      mainImg.removeAttribute('sizes');
+      if (mediaId) {
+        mainImg.dataset.mediaId = mediaId;
+      }
+      setZoomImage(nextZoomSrc);
+      if (zoomModalImg) {
+        zoomModalImg.src = src;
+      }
+      setActiveThumbs(mediaId, thumb);
+      if (mainImg.complete) {
+        clearLoadingState();
+      }
+    };
+
+    mediaThumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        switchMedia(thumb);
       });
     });
 
-    if (!zoomWindow || !lens || !mediaMain) {
-      return;
+    modalThumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        switchMedia(thumb);
+      });
+    });
+
+    if (zoomWindow && lens && mediaMain) {
+      const canUseHoverZoom = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+      const moveZoom = (event) => {
+        if (!zoomReady) return;
+        const rect = mediaMain.getBoundingClientRect();
+        const x = Math.min(Math.max(0, event.clientX - rect.left), rect.width);
+        const y = Math.min(Math.max(0, event.clientY - rect.top), rect.height);
+
+        const lensSize = 120;
+        const lensX = Math.min(Math.max(x - lensSize / 2, 0), rect.width - lensSize);
+        const lensY = Math.min(Math.max(y - lensSize / 2, 0), rect.height - lensSize);
+
+        lens.style.transform = `translate(${lensX}px, ${lensY}px)`;
+        lens.style.width = `${lensSize}px`;
+        lens.style.height = `${lensSize}px`;
+
+        const zoomX = (x / rect.width) * 100;
+        const zoomY = (y / rect.height) * 100;
+        zoomWindow.style.backgroundPosition = `${zoomX}% ${zoomY}%`;
+      };
+
+      const showZoom = () => {
+        zoomWindow.classList.add('is-visible');
+        lens.classList.add('is-visible');
+      };
+
+      const hideZoom = () => {
+        zoomWindow.classList.remove('is-visible');
+        lens.classList.remove('is-visible');
+      };
+
+      if (canUseHoverZoom) {
+        mediaMain.addEventListener('mouseenter', showZoom);
+        mediaMain.addEventListener('mouseleave', hideZoom);
+        mediaMain.addEventListener('mousemove', moveZoom);
+      } else {
+        hideZoom();
+      }
     }
 
-    const moveZoom = (event) => {
-      if (!zoomReady) return;
-      const rect = mediaMain.getBoundingClientRect();
-      const x = Math.min(Math.max(0, event.clientX - rect.left), rect.width);
-      const y = Math.min(Math.max(0, event.clientY - rect.top), rect.height);
-
-      const lensSize = 120;
-      const lensX = Math.min(Math.max(x - lensSize / 2, 0), rect.width - lensSize);
-      const lensY = Math.min(Math.max(y - lensSize / 2, 0), rect.height - lensSize);
-
-      lens.style.transform = `translate(${lensX}px, ${lensY}px)`;
-      lens.style.width = `${lensSize}px`;
-      lens.style.height = `${lensSize}px`;
-
-      const zoomX = (x / rect.width) * 100;
-      const zoomY = (y / rect.height) * 100;
-      zoomWindow.style.backgroundPosition = `${zoomX}% ${zoomY}%`;
-    };
-
-    const showZoom = () => {
-      zoomWindow.classList.add('is-visible');
-      lens.classList.add('is-visible');
-    };
-
-    const hideZoom = () => {
-      zoomWindow.classList.remove('is-visible');
-      lens.classList.remove('is-visible');
-    };
-
-    mediaMain.addEventListener('mouseenter', showZoom);
-    mediaMain.addEventListener('mouseleave', hideZoom);
-    mediaMain.addEventListener('mousemove', moveZoom);
-
     if (zoomModal && zoomModalImg) {
+      let zoomScrollY = 0;
       const openModal = () => {
+        zoomScrollY = window.scrollY || window.pageYOffset || 0;
+        document.body.classList.add('product-zoom-open');
+        document.body.style.top = `-${zoomScrollY}px`;
         zoomModalImg.src = mainImg.src;
+        setActiveThumbs(mainImg.dataset.mediaId || '', null);
         zoomModal.classList.add('is-visible');
       };
       const closeModal = () => {
         zoomModal.classList.remove('is-visible');
+        document.body.classList.remove('product-zoom-open');
+        document.body.style.top = '';
+        window.scrollTo(0, zoomScrollY);
       };
 
       mainImg.addEventListener('click', () => {
