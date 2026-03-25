@@ -3,31 +3,45 @@
   <div class="container comm-hero-inner">
     <span class="comm-eyebrow">Custom work</span>
     <h1 class="comm-heading">Your vision,<br>tufted to life.</h1>
-    <p class="comm-subheading">We take on a limited number of custom commissions each month. Every piece is made to order — your character, your size, your wall.</p>
+    <p class="comm-subheading">Every piece made to order — your character, your size, your wall.</p>
   </div>
 </section>
 
-<!-- How it works -->
+<!-- Closed notice -->
+<section class="comm-closed-section">
+  <div class="container comm-closed-inner">
+    <div class="comm-closed-badge">Commissions closed</div>
+    <h2 class="comm-closed-heading">We're not taking new commissions right now.</h2>
+    <p class="comm-closed-copy">We open commissions in limited batches to make sure every piece gets the attention it deserves. Check back soon — or if you have something special in mind, reach out directly and we'll see what we can do.</p>
+    <a class="comm-closed-cta" href="mailto:{{ shop.email }}">
+      Email us about a special request
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+<!-- How it works (for when commissions reopen) -->
 <section class="section comm-process-section">
   <div class="container">
+    <p class="comm-process-label">How it works when we reopen</p>
     <div class="comm-process-grid">
 
       <div class="comm-step">
         <span class="comm-step-num">01</span>
         <h3 class="comm-step-title">Submit your idea</h3>
-        <p class="comm-step-copy">Fill out the form below with your character, dimensions, and any reference images. The more detail, the better.</p>
+        <p class="comm-step-copy">Share your character, dimensions, and reference images. The more detail, the better.</p>
       </div>
 
       <div class="comm-step">
         <span class="comm-step-num">02</span>
         <h3 class="comm-step-title">We review & quote</h3>
-        <p class="comm-step-copy">We'll get back to you within 2–3 business days with a price and estimated timeline. No obligation to proceed.</p>
+        <p class="comm-step-copy">We'll get back to you within 2–3 business days with a price and estimated timeline.</p>
       </div>
 
       <div class="comm-step">
         <span class="comm-step-num">03</span>
         <h3 class="comm-step-title">Approve & receive</h3>
-        <p class="comm-step-copy">Once you approve the design mockup and deposit, we tuft your piece and ship it straight to you.</p>
+        <p class="comm-step-copy">Approve the design mockup and deposit, and we'll tuft your piece and ship it to you.</p>
       </div>
 
     </div>
@@ -58,20 +72,6 @@
     </div>
   </div>
 </div>
-
-<!-- Commission request form -->
-<section class="section comm-form-section">
-  <div class="container comm-form-inner">
-    <div class="comm-form-header">
-      <h2 class="comm-form-title">Start your commission</h2>
-      <p class="comm-form-subtitle">Spots are limited each month. Fill out the form and we'll reach out to get things started.</p>
-    </div>
-    <div class="comm-form-widget">
-      {{ page.content }}
-      <div class="globo_widget_26011"></div>
-    </div>
-  </div>
-</section>
 
 {% schema %}
 {

@@ -220,6 +220,88 @@ a {
   font-weight: 300;
 }
 
+/* Closed notice */
+.comm-closed-section {
+  background: #fafaf8;
+  padding: clamp(52px, 7vw, 80px) 0;
+  border-bottom: 1px solid #e8e5e1;
+}
+
+.comm-closed-inner {
+  max-width: 640px;
+}
+
+.comm-closed-badge {
+  display: inline-block;
+  background: #e8e5e1;
+  color: rgba(12, 18, 32, 0.55);
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 2px;
+  margin-bottom: 24px;
+}
+
+.comm-closed-heading {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3.5vw, 40px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0 0 16px;
+  line-height: 1.05;
+}
+
+.comm-closed-copy {
+  font-size: 15px;
+  line-height: 1.75;
+  color: rgba(12, 18, 32, 0.6);
+  margin: 0 0 28px;
+  max-width: 56ch;
+}
+
+.comm-closed-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--tangerine-1);
+  padding-bottom: 3px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.comm-closed-cta:hover {
+  color: var(--tangerine-1);
+}
+
+.comm-closed-cta svg {
+  transition: transform 0.2s;
+}
+
+.comm-closed-cta:hover svg {
+  transform: translateX(3px);
+}
+
+/* Process label */
+.comm-process-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(12, 18, 32, 0.4);
+  margin: 0 0 28px;
+}
+
 /* Process steps */
 .comm-process-section {
   background: #fafaf8;
@@ -583,22 +665,27 @@ body.menu-drawer-open .menu-toggle {
 }
 
 .stock-indicator {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 8px;
-  border-radius: 999px;
+  display: block;
+  width: 100%;
+  padding: 11px 16px;
+  font-family: var(--font-body);
   font-size: 11px;
-  letter-spacing: 0.08em;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #8b1d1d;
-  background: linear-gradient(135deg, rgba(255, 118, 0, 0.25), rgba(255, 76, 76, 0.2));
-  border: 1px solid rgba(255, 118, 0, 0.35);
+  text-align: center;
+  border-radius: 2px;
+  background: #e8e5e1;
+  color: rgba(12, 18, 32, 0.45);
+  border: none;
+  cursor: default;
 }
 
 .stock-indicator-inline {
-  margin-left: 8px;
-  align-self: center;
+  display: block;
+  width: 100%;
+  margin-left: 0;
+  align-self: unset;
 }
 
 .product-card .price-compare,
