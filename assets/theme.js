@@ -976,6 +976,9 @@ window.addEventListener('load', () => {
 
   const openCartDrawer = async (cart) => {
     if (!cartDrawer) return;
+    if (menuDrawer && !menuDrawer.hidden) {
+      closeMenuDrawer();
+    }
     cartDrawer.hidden = false;
     requestAnimationFrame(() => {
       cartDrawer.classList.add('is-open');
@@ -1050,6 +1053,9 @@ window.addEventListener('load', () => {
 
   const openMenuDrawer = () => {
     if (!menuDrawer) return;
+    if (cartDrawer && !cartDrawer.hidden) {
+      closeCartDrawer();
+    }
     menuDrawer.hidden = false;
     requestAnimationFrame(() => {
       menuDrawer.classList.add('is-open');
@@ -1077,6 +1083,9 @@ window.addEventListener('load', () => {
   if (menuDrawer) {
     menuDrawer.querySelectorAll('[data-menu-drawer-close]').forEach((button) => {
       button.addEventListener('click', closeMenuDrawer);
+    });
+    menuDrawer.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', closeMenuDrawer);
     });
 
     document.addEventListener('keydown', (event) => {
