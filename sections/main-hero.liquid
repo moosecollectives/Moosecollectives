@@ -8,39 +8,70 @@
       <div class="hero-placeholder"></div>
     {% endif %}
   </div>
-  <div class="container hero-grid">
+  <div class="container hero-content">
     <div class="hero-panel">
-      <span class="hero-eyebrow">{{ section.settings.eyebrow }}</span>
-      <h1 class="hero-title">{{ section.settings.heading }}</h1>
-      <p class="hero-subtitle">{{ section.settings.subheading }}</p>
+      <span class="hero-eyebrow">{{ section.settings.eyebrow | default: 'redefined rugs' }}</span>
+      <h1 class="hero-title">
+        {% if section.settings.heading != blank %}
+          {{ section.settings.heading }}
+        {% else %}
+          Culture Collectibles,<br>Reframed
+        {% endif %}
+      </h1>
+      <p class="hero-subtitle">
+        {% if section.settings.subheading != blank %}
+          {{ section.settings.subheading }}
+        {% else %}
+          Limited run pop culture pieces built for collectors. Hang what you love.
+        {% endif %}
+      </p>
       <div class="hero-actions">
         {% if section.settings.primary_label != blank %}
-          <a class="button button-primary" href="{% if section.settings.primary_link != blank %}{{ section.settings.primary_link }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">
+          <a class="button button-primary hero-cta-primary" href="{% if section.settings.primary_link != blank %}{{ section.settings.primary_link }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">
             {{ section.settings.primary_label }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </a>
+        {% else %}
+          <a class="button button-primary hero-cta-primary" href="{{ routes.all_products_collection_url }}">
+            Shop the vault
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         {% endif %}
         {% if section.settings.secondary_label != blank %}
-          <a class="button button-secondary" href="{% if section.settings.secondary_link != blank %}{{ section.settings.secondary_link }}{% else %}/pages/commissions{% endif %}">
+          <a class="button button-ghost" href="{% if section.settings.secondary_link != blank %}{{ section.settings.secondary_link }}{% else %}/pages/commissions{% endif %}">
             {{ section.settings.secondary_label }}
           </a>
         {% endif %}
       </div>
-      <div class="hero-stats">
-        <div>
-          <span class="hero-stat-number">Limited run</span>
-          <span class="hero-stat-label">Collector focus</span>
-        </div>
-        <div>
-          <span class="hero-stat-number">30+</span>
-          <span class="hero-stat-label">New arrivals</span>
-        </div>
-        <div>
-          <span class="hero-stat-number">4.9</span>
-          <span class="hero-stat-label">Collector rated</span>
-        </div>
+      <div class="hero-trust">
+        <span class="hero-trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Free shipping $75+
+        </span>
+        <span class="hero-trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Secure checkout
+        </span>
+        <span class="hero-trust-item">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          Limited runs only
+        </span>
       </div>
     </div>
-    <div class="hero-ticker"></div>
+    <div class="hero-stats-panel">
+      <div class="hero-stat">
+        <span class="hero-stat-number">Limited run</span>
+        <span class="hero-stat-label">Collector focus</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">30+</span>
+        <span class="hero-stat-label">Active drops</span>
+      </div>
+      <div class="hero-stat">
+        <span class="hero-stat-number">4.9★</span>
+        <span class="hero-stat-label">Collector rated</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -48,12 +79,12 @@
 {
   "name": "Main hero",
   "settings": [
-    {"type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "Drop radar"},
-    {"type": "text", "id": "heading", "label": "Heading", "default": "Culture collectibles, reframed"},
-    {"type": "textarea", "id": "subheading", "label": "Subheading", "default": "A rotating vault of pop culture pieces with bold energy and collector-grade finishes."},
+    {"type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "redefined rugs"},
+    {"type": "text", "id": "heading", "label": "Heading"},
+    {"type": "textarea", "id": "subheading", "label": "Subheading"},
     {"type": "text", "id": "primary_label", "label": "Primary button label", "default": "Shop the vault"},
     {"type": "url", "id": "primary_link", "label": "Primary button link"},
-    {"type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "See commissions"},
+    {"type": "text", "id": "secondary_label", "label": "Secondary button label", "default": "Custom commissions"},
     {"type": "url", "id": "secondary_link", "label": "Secondary button link"},
     {"type": "image_picker", "id": "image", "label": "Hero image"},
     {"type": "video", "id": "video", "label": "Hero video"}

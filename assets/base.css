@@ -663,6 +663,15 @@ body.menu-drawer-open .menu-toggle {
   z-index: 2;
 }
 
+.hero-content {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(20px, 4vw, 56px);
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
 .hero-panel {
   background: rgba(255, 255, 255, 0.75);
   border-radius: var(--radius-lg);
@@ -2168,19 +2177,19 @@ body.menu-drawer-open {
 .collection-carousel-card {
   width: 100%;
   transform: none;
-  background: rgba(255, 255, 255, 0.16);
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #ffffff;
+  border: 1px solid rgba(12, 18, 32, 0.08);
   border-radius: 22px;
   padding: 12px;
-  box-shadow: 0 12px 24px -22px rgba(255, 122, 0, 0.24);
+  box-shadow: 0 4px 20px -8px rgba(12, 18, 32, 0.1), 0 12px 24px -22px rgba(255, 122, 0, 0.16);
   position: relative;
   overflow: hidden;
-  backdrop-filter: blur(8px);
 }
 
 .collection-carousel-card:hover {
-  transform: translateY(-4px) scale(1.01);
-  box-shadow: 0 14px 28px -22px rgba(255, 122, 0, 0.3);
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 8px 32px -10px rgba(12, 18, 32, 0.14), 0 20px 36px -24px rgba(255, 122, 0, 0.28);
+  border-color: rgba(255, 90, 0, 0.18);
 }
 
 .collection-carousel-card img {
@@ -2962,7 +2971,8 @@ body.product-zoom-open {
     align-items: flex-start;
   }
 
-  .hero-grid {
+  .hero-grid,
+  .hero-content {
     grid-template-columns: 1fr;
   }
 
@@ -3190,16 +3200,492 @@ body.product-zoom-open {
   padding: 9px 16px;
 }
 
-/* ── Hero secondary button — demoted ── */
-.hero-actions .button-secondary {
-  background: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(12, 18, 32, 0.18);
-  font-size: 0.9em;
-  padding: 10px 20px;
-}
+/* hero .button-secondary handled by .button-ghost in hero liquid */
 
 @media (prefers-reduced-motion: reduce) {
   .card-quick-add {
     transition: none;
   }
+}
+
+/* ════════════════════════════════════════
+   ANNOUNCEMENT BAR
+════════════════════════════════════════ */
+.announce-bar {
+  background: linear-gradient(90deg, var(--navy-1), var(--navy-2));
+  color: rgba(255, 255, 255, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 10px 16px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-align: center;
+  flex-wrap: wrap;
+  row-gap: 4px;
+}
+
+.announce-dot {
+  color: var(--tangerine-2);
+  font-size: 16px;
+  line-height: 1;
+}
+
+@media (max-width: 600px) {
+  .announce-dot { display: none; }
+  .announce-bar { gap: 4px; flex-direction: column; padding: 8px 16px; }
+}
+
+/* ════════════════════════════════════════
+   FLOATING NAV — brand, cart, menu
+════════════════════════════════════════ */
+.brand-float {
+  position: fixed;
+  top: 16px;
+  left: 16px;
+  z-index: 90;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ink);
+  text-decoration: none;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(12, 18, 32, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  line-height: 1;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+  box-shadow: 0 4px 16px -6px rgba(12, 18, 32, 0.14);
+}
+
+.brand-float:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px -8px rgba(12, 18, 32, 0.18);
+}
+
+.cart-float {
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  z-index: 90;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 44px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(12, 18, 32, 0.14);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+  position: fixed;
+  box-shadow: 0 4px 16px -6px rgba(12, 18, 32, 0.14);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.cart-float:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 22px -8px rgba(12, 18, 32, 0.18);
+}
+
+.cart-float .cart-count {
+  top: -6px;
+  right: -6px;
+  font-size: 10px;
+  padding: 2px 5px;
+}
+
+.menu-toggle {
+  right: calc(16px + 48px + 8px);
+  gap: 8px;
+}
+
+body.menu-drawer-open .brand-float,
+body.menu-drawer-open .cart-float,
+body.cart-drawer-open .brand-float,
+body.cart-drawer-open .cart-float {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+@media (max-width: 540px) {
+  .brand-float {
+    font-size: 11px;
+    padding: 8px 12px;
+    letter-spacing: 0.16em;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .menu-toggle {
+    right: calc(16px + 44px + 6px);
+  }
+}
+
+/* ════════════════════════════════════════
+   HERO — overhaul
+════════════════════════════════════════ */
+.hero {
+  min-height: clamp(520px, 80vh, 860px);
+  display: flex;
+  align-items: center;
+}
+
+.template-index .hero-panel {
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  box-shadow: 0 24px 60px -30px rgba(12, 18, 32, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+.template-index .hero-title {
+  font-size: clamp(36px, 5.5vw, 68px);
+  line-height: 1.05;
+  letter-spacing: 0.06em;
+}
+
+/* Ghost (secondary) button for hero */
+.button-ghost {
+  background: transparent;
+  border: 1.5px solid rgba(12, 18, 32, 0.22);
+  color: var(--ink);
+  font-size: 0.88em;
+  padding: 10px 20px;
+}
+
+.button-ghost:hover {
+  background: rgba(12, 18, 32, 0.05);
+  border-color: rgba(12, 18, 32, 0.35);
+}
+
+/* Outline button (for carousel CTA) */
+.button-outline {
+  background: transparent;
+  border: 1.5px solid rgba(12, 18, 32, 0.22);
+  color: var(--ink);
+}
+
+.button-outline:hover {
+  background: rgba(12, 18, 32, 0.05);
+  border-color: rgba(12, 18, 32, 0.35);
+}
+
+/* Arrow inside primary CTA */
+.hero-cta-primary svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.hero-cta-primary:hover svg {
+  transform: translateX(3px);
+}
+
+/* Hero trust bar */
+.hero-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(12, 18, 32, 0.08);
+}
+
+.hero-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(12, 18, 32, 0.6);
+}
+
+.hero-trust-item svg {
+  color: var(--tangerine-1);
+  flex-shrink: 0;
+}
+
+/* Hero stats panel (right column) */
+.hero-stats-panel {
+  display: grid;
+  gap: 16px;
+  padding: clamp(20px, 3vw, 32px);
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 50px -30px rgba(12, 18, 32, 0.22);
+}
+
+.hero-stat {
+  display: grid;
+  gap: 4px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(12, 18, 32, 0.06);
+}
+
+.hero-stat:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.hero-stat-number {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3vw, 32px);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  display: block;
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.hero-stat-label {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 980px) {
+  .hero-stats-panel {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 16px;
+  }
+
+  .hero-stat {
+    padding-bottom: 0;
+    border-bottom: none;
+    text-align: center;
+  }
+
+  .hero-stat-number {
+    font-size: clamp(18px, 5vw, 26px);
+  }
+}
+
+/* ════════════════════════════════════════
+   PRODUCT CARD TEXT — fix missing styles
+════════════════════════════════════════ */
+.product-carousel-card > a,
+.collection-carousel-card > a {
+  display: grid;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.product-carousel-card h3,
+.collection-carousel-card h3 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.product-carousel-card .price-current,
+.collection-carousel-card .price-current {
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+
+.product-carousel-card .price-compare,
+.collection-carousel-card .price-compare {
+  font-size: 12px;
+}
+
+/* ════════════════════════════════════════
+   PROOF STRIP (replaces lone CTA button)
+════════════════════════════════════════ */
+.proof-strip-section {
+  padding-top: 0;
+  padding-bottom: clamp(32px, 5vw, 56px);
+}
+
+.proof-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(16px, 3vw, 40px);
+  flex-wrap: wrap;
+  padding: clamp(20px, 3vw, 32px) clamp(24px, 4vw, 48px);
+  background: linear-gradient(135deg, rgba(255, 90, 0, 0.06), rgba(255, 184, 0, 0.07));
+  border: 1px solid rgba(255, 122, 0, 0.18);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 36px -20px rgba(255, 90, 0, 0.15);
+}
+
+.proof-stat {
+  display: grid;
+  gap: 3px;
+  text-align: center;
+  min-width: 80px;
+}
+
+.proof-number {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: block;
+}
+
+.proof-label {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
+.proof-divider {
+  width: 1px;
+  height: 36px;
+  background: rgba(12, 18, 32, 0.1);
+  flex-shrink: 0;
+}
+
+.proof-divider-wide {
+  width: clamp(16px, 2vw, 32px);
+  height: 0;
+  background: transparent;
+}
+
+.proof-cta {
+  flex-shrink: 0;
+}
+
+.proof-cta svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.proof-cta:hover svg {
+  transform: translateX(3px);
+}
+
+@media (max-width: 720px) {
+  .proof-divider { display: none; }
+  .proof-divider-wide { display: none; }
+  .proof-strip { gap: 20px; }
+  .proof-cta { width: 100%; justify-content: center; margin-top: 4px; }
+}
+
+/* ════════════════════════════════════════
+   CAROUSEL SECTION HEADING
+════════════════════════════════════════ */
+.carousel-section-heading {
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.carousel-cta-btn svg {
+  flex-shrink: 0;
+  transition: transform 0.2s ease;
+}
+
+.carousel-cta-btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* ════════════════════════════════════════
+   FEATURED SECTION — tighter, cleaner
+════════════════════════════════════════ */
+.featured-rugs-section {
+  padding-top: clamp(32px, 5vw, 60px);
+}
+
+.featured-rugs-heading {
+  margin-bottom: 24px;
+}
+
+/* ════════════════════════════════════════
+   PAGE BACKGROUND — subtle off-white
+════════════════════════════════════════ */
+body {
+  background: #f9f8f6;
+}
+
+.template-index,
+.template-product,
+.template-page,
+.template-cart,
+.template-404,
+.template-collection {
+  background: #f9f8f6;
+}
+
+/* Hero stays full bleed over page bg */
+.hero {
+  background: var(--navy-1);
+}
+
+/* ════════════════════════════════════════
+   SECTION SPACING — home page tightening
+════════════════════════════════════════ */
+.template-index .section {
+  padding-top: clamp(36px, 5vw, 72px);
+  padding-bottom: clamp(36px, 5vw, 72px);
+}
+
+.template-index .hero.section {
+  padding-top: clamp(36px, 7vw, 90px);
+  padding-bottom: clamp(44px, 6vw, 80px);
+}
+
+/* ════════════════════════════════════════
+   MENU DRAWER — brand name in header
+════════════════════════════════════════ */
+.menu-cart-link {
+  margin-top: 8px;
+  padding: 10px 16px;
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  color: #2d1600 !important;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 13px;
+  justify-content: center;
+}
+
+.menu-cart-link .cart-count {
+  position: static;
+  background: rgba(0,0,0,0.2);
+  color: #fff;
+  margin-left: 4px;
+  font-size: 11px;
+}
+
+/* ════════════════════════════════════════
+   COLLECTION PAGE — slight bg tweak
+════════════════════════════════════════ */
+.template-collection .collection-grid {
+  gap: clamp(14px, 2vw, 22px);
 }

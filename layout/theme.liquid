@@ -27,12 +27,34 @@
     {{ content_for_header }}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
-    {{ 'theme.js' | asset_url | script_tag }}
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
   </head>
   <body class="template-{{ template.name | handle }}">
     <a class="skip-link" href="#MainContent">Skip to content</a>
 
+    <div class="announce-bar" role="status">
+      <span>Free shipping on orders $75+</span>
+      <span class="announce-dot" aria-hidden="true">·</span>
+      <span>Limited runs — gone when they're gone</span>
+      <span class="announce-dot" aria-hidden="true">·</span>
+      <span>Collector-grade quality, every piece</span>
+    </div>
+
+    <a class="brand-float" href="/">{{ shop.name }}</a>
+
+    <button class="cart-float" type="button" data-cart-drawer-trigger aria-label="View cart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="cart-count" {% if cart.item_count == 0 %}hidden{% endif %} data-cart-count>{{ cart.item_count }}</span>
+    </button>
+
     <button class="menu-toggle" type="button" data-menu-drawer-trigger aria-controls="MenuDrawer" aria-expanded="false">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+        <path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
       Menu
     </button>
 
@@ -79,7 +101,7 @@
       <div class="menu-drawer-backdrop" data-menu-drawer-close></div>
       <aside class="menu-drawer-panel" id="MenuDrawer" aria-label="Menu">
         <div class="menu-drawer-header">
-          <span>Menu</span>
+          <span>{{ shop.name }}</span>
           <button class="menu-drawer-close" type="button" data-menu-drawer-close aria-label="Close menu">×</button>
         </div>
         <nav class="menu-drawer-nav">
@@ -89,7 +111,9 @@
             {% endunless %}
           {% endfor %}
           <a href="/pages/commissions">Commissions</a>
-          <a class="cart-link" href="{{ routes.cart_url }}" data-cart-drawer-trigger>
+          <a href="/pages/faq">FAQ</a>
+          <a href="/pages/contact">Contact</a>
+          <a class="cart-link menu-cart-link" href="{{ routes.cart_url }}" data-cart-drawer-trigger>
             <span class="cart-label">Cart</span>
             <span class="cart-count" aria-label="Cart items" {% if cart.item_count == 0 %}hidden{% endif %} data-cart-count>{{ cart.item_count }}</span>
           </a>

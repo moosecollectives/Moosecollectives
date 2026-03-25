@@ -682,8 +682,8 @@ window.addEventListener('load', () => {
     }
   });
 
-  const cartCount = document.querySelector('[data-cart-count]');
-  const cartLink = document.querySelector('.cart-link');
+  const cartCounts = document.querySelectorAll('[data-cart-count]');
+  const cartLink = document.querySelector('.cart-link, .cart-float');
 
   const fetchCart = async () => {
     const response = await fetch('/cart.js', {
@@ -709,24 +709,21 @@ window.addEventListener('load', () => {
     if (!resolvedCart) return null;
     const previousCount = cartCache ? cartCache.item_count : 0;
     cartCache = resolvedCart;
-    if (cartCount) {
-      cartCount.textContent = resolvedCart.item_count;
-    }
-    if (cartCount) {
-      cartCount.hidden = resolvedCart.item_count === 0;
-    }
-    if (cartCount && resolvedCart.item_count > previousCount) {
-      cartCount.classList.remove('cart-count-pulse');
-      // force reflow to restart animation
-      void cartCount.offsetWidth;
-      cartCount.classList.add('cart-count-pulse');
-      const cartLink = cartCount.closest('.cart-link');
-      if (cartLink) {
-        cartLink.classList.remove('cart-link-pulse');
-        void cartLink.offsetWidth;
-        cartLink.classList.add('cart-link-pulse');
+    cartCounts.forEach((el) => {
+      el.textContent = resolvedCart.item_count;
+      el.hidden = resolvedCart.item_count === 0;
+      if (resolvedCart.item_count > previousCount) {
+        el.classList.remove('cart-count-pulse');
+        void el.offsetWidth;
+        el.classList.add('cart-count-pulse');
+        const link = el.closest('.cart-link, .cart-float');
+        if (link) {
+          link.classList.remove('cart-link-pulse');
+          void link.offsetWidth;
+          link.classList.add('cart-link-pulse');
+        }
       }
-    }
+    });
     return resolvedCart;
   };
 
