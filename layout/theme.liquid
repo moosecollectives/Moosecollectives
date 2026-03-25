@@ -32,7 +32,9 @@
   <body class="template-{{ template.name | handle }}">
     <a class="skip-link" href="#MainContent">Skip to content</a>
 
-    {% section 'header' %}
+    <button class="menu-toggle" type="button" data-menu-drawer-trigger aria-controls="MenuDrawer" aria-expanded="false">
+      Menu
+    </button>
 
     <main id="MainContent" role="main">
       {{ content_for_layout }}
@@ -72,5 +74,27 @@
     </div>
 
     {% section 'footer' %}
+
+    <div class="menu-drawer" data-menu-drawer hidden>
+      <div class="menu-drawer-backdrop" data-menu-drawer-close></div>
+      <aside class="menu-drawer-panel" id="MenuDrawer" aria-label="Menu">
+        <div class="menu-drawer-header">
+          <span>Menu</span>
+          <button class="menu-drawer-close" type="button" data-menu-drawer-close aria-label="Close menu">×</button>
+        </div>
+        <nav class="menu-drawer-nav">
+          {% for link in linklists[settings.main_menu].links %}
+            {% unless link.handle == 'contact' %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endunless %}
+          {% endfor %}
+          <a href="/pages/commissions">Commissions</a>
+          <a class="cart-link" href="{{ routes.cart_url }}" data-cart-drawer-trigger>
+            <span class="cart-label">Cart</span>
+            <span class="cart-count" aria-label="Cart items" {% if cart.item_count == 0 %}hidden{% endif %} data-cart-count>{{ cart.item_count }}</span>
+          </a>
+        </nav>
+      </aside>
+    </div>
   </body>
 </html>

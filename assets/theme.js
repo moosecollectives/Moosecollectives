@@ -1045,6 +1045,54 @@ window.addEventListener('load', () => {
     });
   });
 
+  const menuDrawer = document.querySelector('[data-menu-drawer]');
+  const menuTriggers = document.querySelectorAll('[data-menu-drawer-trigger]');
+
+  const openMenuDrawer = () => {
+    if (!menuDrawer) return;
+    menuDrawer.hidden = false;
+    requestAnimationFrame(() => {
+      menuDrawer.classList.add('is-open');
+    });
+    document.body.classList.add('menu-drawer-open');
+    const closeButton = menuDrawer.querySelector('[data-menu-drawer-close]');
+    if (closeButton) {
+      closeButton.focus();
+    }
+  };
+
+  const closeMenuDrawer = () => {
+    if (!menuDrawer) return;
+    menuDrawer.classList.add('is-closing');
+    menuDrawer.classList.remove('is-open');
+    document.body.classList.remove('menu-drawer-open');
+    setTimeout(() => {
+      if (!menuDrawer.classList.contains('is-open')) {
+        menuDrawer.classList.remove('is-closing');
+        menuDrawer.hidden = true;
+      }
+    }, 280);
+  };
+
+  if (menuDrawer) {
+    menuDrawer.querySelectorAll('[data-menu-drawer-close]').forEach((button) => {
+      button.addEventListener('click', closeMenuDrawer);
+    });
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && !menuDrawer.hidden) {
+        closeMenuDrawer();
+      }
+    });
+  }
+
+  menuTriggers.forEach((trigger) => {
+    trigger.addEventListener('click', (event) => {
+      event.preventDefault();
+      openMenuDrawer();
+    });
+  });
+
   const animateAddToCart = (sourceButton) => {
     if (!sourceButton || !cartLink) return;
     const sourceRect = sourceButton.getBoundingClientRect();
