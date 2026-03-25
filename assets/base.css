@@ -357,6 +357,11 @@ a {
   cursor: pointer;
 }
 
+body.menu-drawer-open .menu-toggle {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .sale-banner {
   background: linear-gradient(135deg, rgba(255, 138, 29, 0.9), rgba(255, 196, 0, 0.85));
   color: #2d1600;

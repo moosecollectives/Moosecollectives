@@ -1061,6 +1061,9 @@ window.addEventListener('load', () => {
       menuDrawer.classList.add('is-open');
     });
     document.body.classList.add('menu-drawer-open');
+    menuTriggers.forEach((trigger) => {
+      trigger.setAttribute('aria-expanded', 'true');
+    });
     const closeButton = menuDrawer.querySelector('[data-menu-drawer-close]');
     if (closeButton) {
       closeButton.focus();
@@ -1072,6 +1075,9 @@ window.addEventListener('load', () => {
     menuDrawer.classList.add('is-closing');
     menuDrawer.classList.remove('is-open');
     document.body.classList.remove('menu-drawer-open');
+    menuTriggers.forEach((trigger) => {
+      trigger.setAttribute('aria-expanded', 'false');
+    });
     setTimeout(() => {
       if (!menuDrawer.classList.contains('is-open')) {
         menuDrawer.classList.remove('is-closing');
