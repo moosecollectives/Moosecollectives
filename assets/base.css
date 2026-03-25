@@ -3716,3 +3716,97 @@ body {
 .template-collection .collection-grid {
   gap: clamp(14px, 2vw, 22px);
 }
+
+/* ════════════════════════════════════════
+   MOBILE OVERRIDES — must be LAST in file
+   (new base styles above override the
+   earlier 980px block; this block fixes that)
+════════════════════════════════════════ */
+@media (max-width: 980px) {
+  /* Hero: single column, panel fills full width */
+  .hero-content {
+    grid-template-columns: 1fr;
+    padding-top: 0;
+  }
+
+  /* Hide stats panel — proof strip below covers it */
+  .hero-stats-panel {
+    display: none;
+  }
+
+  /* Hero panel: full width, less padding */
+  .hero-panel {
+    width: 100%;
+    box-sizing: border-box;
+    padding: clamp(20px, 4vw, 32px);
+  }
+
+  /* Hero title: tighter on mobile */
+  .template-index .hero-title {
+    font-size: clamp(30px, 8vw, 48px);
+    margin: 10px 0 8px;
+  }
+
+  /* Hero actions: full-width buttons, no wrap */
+  .hero-actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .hero-actions .button {
+    width: 100%;
+    justify-content: center;
+    white-space: normal;
+    text-align: center;
+  }
+
+  /* Trust items: inline, smaller */
+  .hero-trust {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 8px 14px;
+  }
+
+  .hero-trust-item {
+    font-size: 10px;
+  }
+
+  /* Hero section: clear the floating nav (44px button + 16px top + 8px gap = 68px) */
+  .hero {
+    padding-top: 72px;
+    min-height: clamp(420px, 78vh, 640px);
+  }
+}
+
+@media (max-width: 600px) {
+  /* Floating nav: push buttons below announce bar (~34px tall) */
+  .brand-float,
+  .cart-float,
+  .menu-toggle {
+    top: calc(34px + 10px);
+  }
+
+  /* Announce bar: single line, no wrap */
+  .announce-bar {
+    padding: 8px 12px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* Remove brand float on very small screens */
+  .brand-float {
+    display: none;
+  }
+
+  /* Menu toggle goes back to right: 16px + cart width */
+  .menu-toggle {
+    right: calc(16px + 48px + 8px);
+    top: calc(34px + 10px);
+  }
+
+  .cart-float {
+    right: 16px;
+    top: calc(34px + 10px);
+  }
+}
