@@ -1,7 +1,7 @@
 <section class="section">
   <div class="container">
     <div class="section-heading collection-heading">
-      <h1 class="section-title">Full collection</h1>
+      <h1 class="section-title">The vault</h1>
       <div class="collection-heading-meta">
         <span>{{ collection.products_count }} items</span>
         {% assign current_sort = collection.sort_by %}
@@ -23,6 +23,9 @@
           {% continue %}
         {% endif %}
         <article class="product-carousel-card collection-carousel-card">
+          {% if product.available %}
+            <span class="card-badge" aria-hidden="true">Limited run</span>
+          {% endif %}
           <a href="{{ product.url }}">
             {% if product.featured_image %}
               {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
@@ -36,6 +39,12 @@
             {% endunless %}
             <span class="price-compare">{{ compare_price | money }}</span>
           </a>
+          {% if product.available %}
+            <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+            </form>
+          {% endif %}
         </article>
       {% endfor %}
     </div>

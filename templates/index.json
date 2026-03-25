@@ -15,9 +15,9 @@
         "eyebrow": "redefined rugs",
         "heading": "",
         "subheading": "",
-        "primary_label": "full collection",
+        "primary_label": "Shop the vault",
         "primary_link": "",
-        "secondary_label": "custom commissions",
+        "secondary_label": "Custom commissions",
         "secondary_link": "",
         "video": "shopify://files/videos/IMG_4762.mov"
       }
@@ -25,13 +25,13 @@
     "featured-rugs": {
       "type": "featured-collection",
       "settings": {
-        "heading": "Featured rugs",
+        "heading": "New drops",
         "product_1": "hinata",
         "product_2": "batman-og",
         "product_3": "jojo-logo",
         "product_4": "pikachu",
         "collection": "",
-        "cta_label": "browse full collection",
+        "cta_label": "See all drops",
         "cta_link": ""
       }
     },

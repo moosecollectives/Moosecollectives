@@ -27,6 +27,9 @@
             {% continue %}
           {% endif %}
           <article class="product-carousel-card" data-carousel-card>
+            {% if product.available %}
+              <span class="card-badge" aria-hidden="true">Limited run</span>
+            {% endif %}
             <a href="{{ product.url }}">
               {% if product.featured_image %}
                 {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
@@ -37,6 +40,12 @@
               <span class="price price-current">{{ product.price | money }}</span>
               <span class="price-compare">{{ compare_price | money }}</span>
             </a>
+            {% if product.available %}
+              <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+              </form>
+            {% endif %}
           </article>
         {% endfor %}
         {% for product in carousel_collection.products limit: section.settings.max_products %}
@@ -44,6 +53,9 @@
             {% continue %}
           {% endif %}
           <article class="product-carousel-card" data-carousel-card>
+            {% if product.available %}
+              <span class="card-badge" aria-hidden="true">Limited run</span>
+            {% endif %}
             <a href="{{ product.url }}">
               {% if product.featured_image %}
                 {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
@@ -54,6 +66,12 @@
               <span class="price price-current">{{ product.price | money }}</span>
               <span class="price-compare">{{ compare_price | money }}</span>
             </a>
+            {% if product.available %}
+              <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+              </form>
+            {% endif %}
           </article>
         {% endfor %}
       </div>

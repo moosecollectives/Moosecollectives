@@ -3140,3 +3140,66 @@ body.product-zoom-open {
     transition: none;
   }
 }
+
+/* ── Card badge (Limited run pill) ── */
+.card-badge {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  z-index: 3;
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--tangerine-1), var(--tangerine-2));
+  color: #2d1600;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  pointer-events: none;
+  box-shadow: 0 4px 10px -4px rgba(255, 90, 0, 0.45);
+}
+
+/* ── Card quick-add button ── */
+.card-quick-add {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  right: 12px;
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+  margin: 0;
+}
+
+.product-carousel-card:hover .card-quick-add,
+.collection-carousel-card:hover .card-quick-add {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.card-quick-add .button {
+  width: 100%;
+  justify-content: center;
+  font-size: 12px;
+  padding: 9px 16px;
+}
+
+/* ── Hero secondary button — demoted ── */
+.hero-actions .button-secondary {
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(12, 18, 32, 0.18);
+  font-size: 0.9em;
+  padding: 10px 20px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-quick-add {
+    transition: none;
+  }
+}

@@ -13,6 +13,9 @@
     <div class="collection-grid featured-rugs-grid">
       {% if product_1 != blank %}
         <article class="product-carousel-card collection-carousel-card">
+          {% if product_1.available %}
+            <span class="card-badge" aria-hidden="true">Limited run</span>
+          {% endif %}
           <a href="{{ product_1.url }}">
             {% if product_1.featured_image %}
               {{ product_1.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_1.title }}
@@ -23,10 +26,19 @@
             <span class="price price-current">{{ product_1.price | money }}</span>
             <span class="price-compare">{{ product_1_compare | money }}</span>
           </a>
+          {% if product_1.available %}
+            <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product_1.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="id" value="{{ product_1.selected_or_first_available_variant.id }}">
+              <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+            </form>
+          {% endif %}
         </article>
       {% endif %}
       {% if product_2 != blank %}
         <article class="product-carousel-card collection-carousel-card">
+          {% if product_2.available %}
+            <span class="card-badge" aria-hidden="true">Limited run</span>
+          {% endif %}
           <a href="{{ product_2.url }}">
             {% if product_2.featured_image %}
               {{ product_2.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_2.title }}
@@ -37,10 +49,19 @@
             <span class="price price-current">{{ product_2.price | money }}</span>
             <span class="price-compare">{{ product_2_compare | money }}</span>
           </a>
+          {% if product_2.available %}
+            <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product_2.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="id" value="{{ product_2.selected_or_first_available_variant.id }}">
+              <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+            </form>
+          {% endif %}
         </article>
       {% endif %}
       {% if product_3 != blank %}
         <article class="product-carousel-card collection-carousel-card">
+          {% if product_3.available %}
+            <span class="card-badge" aria-hidden="true">Limited run</span>
+          {% endif %}
           <a href="{{ product_3.url }}">
             {% if product_3.featured_image %}
               {{ product_3.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_3.title }}
@@ -51,10 +72,19 @@
             <span class="price price-current">{{ product_3.price | money }}</span>
             <span class="price-compare">{{ product_3_compare | money }}</span>
           </a>
+          {% if product_3.available %}
+            <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product_3.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="id" value="{{ product_3.selected_or_first_available_variant.id }}">
+              <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+            </form>
+          {% endif %}
         </article>
       {% endif %}
       {% if product_4 != blank %}
         <article class="product-carousel-card collection-carousel-card">
+          {% if product_4.available %}
+            <span class="card-badge" aria-hidden="true">Limited run</span>
+          {% endif %}
           <a href="{{ product_4.url }}">
             {% if product_4.featured_image %}
               {{ product_4.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_4.title }}
@@ -65,9 +95,23 @@
             <span class="price price-current">{{ product_4.price | money }}</span>
             <span class="price-compare">{{ product_4_compare | money }}</span>
           </a>
+          {% if product_4.available %}
+            <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product_4.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="id" value="{{ product_4.selected_or_first_available_variant.id }}">
+              <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+            </form>
+          {% endif %}
         </article>
       {% endif %}
     </div>
+
+    {% if section.settings.cta_label != blank %}
+      <div class="featured-cta">
+        <a class="button button-primary" href="{% if section.settings.cta_link != blank %}{{ section.settings.cta_link }}{% else %}{{ routes.all_products_collection_url }}{% endif %}">
+          {{ section.settings.cta_label }}
+        </a>
+      </div>
+    {% endif %}
 
   </div>
 </section>
