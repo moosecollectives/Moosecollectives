@@ -265,18 +265,24 @@ a {
   border-bottom: none;
   z-index: 20;
   color: var(--ink);
+  height: 0;
+  pointer-events: none;
 }
 
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 12px 0;
+  padding: 0;
   gap: 18px;
 }
 
 .nav-dropdown {
-  position: relative;
+  position: fixed;
+  top: 16px;
+  right: 16px;
+  pointer-events: auto;
+  z-index: 30;
 }
 
 .nav-toggle {
