@@ -2976,6 +2976,26 @@ body.product-zoom-open {
     grid-template-columns: 1fr;
   }
 
+  /* Hide stats panel on mobile — shown in proof strip below */
+  .hero-stats-panel {
+    display: none;
+  }
+
+  /* Reduce hero min-height on mobile */
+  .hero {
+    min-height: clamp(420px, 75vh, 640px);
+    align-items: flex-start;
+  }
+
+  .template-index .hero-title {
+    font-size: clamp(30px, 8vw, 48px);
+  }
+
+  /* Trust items — 2 per row max on mobile */
+  .hero-trust {
+    gap: 8px;
+  }
+
   .product-media {
     padding: 14px;
   }
@@ -2994,7 +3014,7 @@ body.product-zoom-open {
   }
 
   .hero {
-    padding-top: 16px;
+    padding-top: 72px;
     padding-bottom: 24px;
   }
 
@@ -3234,9 +3254,11 @@ body.product-zoom-open {
   line-height: 1;
 }
 
+.announce-hide-mobile { display: inline; }
+
 @media (max-width: 600px) {
-  .announce-dot { display: none; }
-  .announce-bar { gap: 4px; flex-direction: column; padding: 8px 16px; }
+  .announce-hide-mobile { display: none; }
+  .announce-bar { padding: 8px 16px; }
 }
 
 /* ════════════════════════════════════════
@@ -3319,18 +3341,23 @@ body.cart-drawer-open .cart-float {
   transition: opacity 0.2s ease;
 }
 
-@media (max-width: 540px) {
+@media (max-width: 700px) {
+  /* On mobile, brand text is too wide — hide text, show initials */
   .brand-float {
     font-size: 11px;
     padding: 8px 12px;
-    letter-spacing: 0.16em;
-    max-width: 140px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    letter-spacing: 0.14em;
   }
+}
+
+@media (max-width: 480px) {
+  /* Very small screens — hide brand-float entirely, shop name is in menu */
+  .brand-float {
+    display: none;
+  }
+  /* Move menu-toggle back to its original position since brand is gone */
   .menu-toggle {
-    right: calc(16px + 44px + 6px);
+    right: calc(16px + 48px + 8px);
   }
 }
 
