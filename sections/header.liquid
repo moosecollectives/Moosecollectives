@@ -1,27 +1,21 @@
 <header class="header">
-  <div class="sale-banner">
-    <span>Spring Opening Sale — 15% off sitewide</span>
-  </div>
   <div class="container header-inner">
-    <a class="brand" href="{{ routes.root_url }}">
-      {% if settings.logo != blank %}
-        {{ settings.logo | image_url: width: 220 | image_tag: alt: shop.name }}
-      {% else %}
-        {{ shop.name }}
-      {% endif %}
-    </a>
-
     <nav class="nav nav-main" aria-label="Main navigation">
-      {% for link in linklists[settings.main_menu].links %}
-        {% unless link.handle == 'contact' %}
-          <a href="{{ link.url }}">{{ link.title }}</a>
-        {% endunless %}
-      {% endfor %}
-      <a href="/pages/commissions">Commissions</a>
-      <a class="cart-link" href="{{ routes.cart_url }}" data-cart-drawer-trigger>
-        <span class="cart-label">Cart</span>
-        <span class="cart-count" aria-label="Cart items" {% if cart.item_count == 0 %}hidden{% endif %} data-cart-count>{{ cart.item_count }}</span>
-      </a>
+      <details class="nav-dropdown">
+        <summary class="nav-toggle">Menu</summary>
+        <div class="nav-menu" role="menu">
+          {% for link in linklists[settings.main_menu].links %}
+            {% unless link.handle == 'contact' %}
+              <a href="{{ link.url }}" role="menuitem">{{ link.title }}</a>
+            {% endunless %}
+          {% endfor %}
+          <a href="/pages/commissions" role="menuitem">Commissions</a>
+          <a class="cart-link" href="{{ routes.cart_url }}" role="menuitem" data-cart-drawer-trigger>
+            <span class="cart-label">Cart</span>
+            <span class="cart-count" aria-label="Cart items" {% if cart.item_count == 0 %}hidden{% endif %} data-cart-count>{{ cart.item_count }}</span>
+          </a>
+        </div>
+      </details>
     </nav>
   </div>
 </header>
