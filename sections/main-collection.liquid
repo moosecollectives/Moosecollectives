@@ -22,7 +22,7 @@
         {% if product.handle == adhesive_handle %}
           {% continue %}
         {% endif %}
-        {% assign badge_mod = forloop.index | modulo: 4 %}
+        {% assign badge_mod = product.id | modulo: 4 %}
         <article class="product-carousel-card collection-carousel-card">
           {% if product.available and badge_mod == 1 %}
             <span class="card-badge" aria-hidden="true">Limited run</span>
