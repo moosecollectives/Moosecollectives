@@ -515,52 +515,90 @@ body.menu-drawer-open .menu-toggle {
    SURPRISE SALE BANNER
 ════════════════════════════════════════ */
 .surprise-sale-banner {
-  background: linear-gradient(135deg, var(--tangerine-1) 0%, #ffb300 100%);
-  padding: clamp(28px, 4vw, 48px) 0;
+  background: linear-gradient(120deg, #ff6b00 0%, #ffb300 60%, #ff8c00 100%);
+  padding: clamp(40px, 6vw, 72px) 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.surprise-sale-banner::before {
+  content: '30%';
+  position: absolute;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-display);
+  font-size: clamp(120px, 18vw, 220px);
+  font-weight: 700;
+  color: rgba(255,255,255,0.08);
+  letter-spacing: -0.04em;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
 }
 
 .surprise-sale-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
+  gap: 32px;
   flex-wrap: wrap;
+  position: relative;
 }
 
 .surprise-sale-left {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 8px;
+}
+
+@keyframes surprise-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
 }
 
 .surprise-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-family: var(--font-body);
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba(12, 18, 32, 0.6);
+  color: rgba(255,255,255,0.9);
+}
+
+.surprise-tag::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #fff;
+  animation: surprise-pulse 1.6s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 .surprise-heading {
   font-family: var(--font-display);
-  font-size: clamp(30px, 5vw, 56px);
+  font-size: clamp(38px, 6.5vw, 72px);
   font-weight: 700;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
-  color: var(--ink);
+  color: #ffffff;
   margin: 0;
   line-height: 1;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.12);
 }
 
 .surprise-dot {
-  color: rgba(12, 18, 32, 0.35);
+  color: rgba(255,255,255,0.45);
 }
 
 .surprise-sub {
-  font-size: 13px;
-  color: rgba(12, 18, 32, 0.65);
+  font-size: 14px;
+  color: rgba(255,255,255,0.8);
   margin: 0;
   font-weight: 400;
 }
@@ -569,26 +607,33 @@ body.menu-drawer-open .menu-toggle {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: var(--ink);
-  color: #ffffff;
+  background: #ffffff;
+  color: var(--ink);
   font-family: var(--font-display);
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   text-decoration: none;
-  padding: 16px 32px;
+  padding: 18px 36px;
   border-radius: 2px;
   white-space: nowrap;
   flex-shrink: 0;
-  transition: background 0.2s;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }
 
 .surprise-cta:hover {
-  background: #1a2540;
+  background: var(--ink);
+  color: #ffffff;
+  transform: translateY(-1px);
 }
 
 @media (max-width: 600px) {
+  .surprise-sale-banner::before {
+    right: -10px;
+    opacity: 0.5;
+  }
   .surprise-sale-inner {
     flex-direction: column;
     align-items: flex-start;
