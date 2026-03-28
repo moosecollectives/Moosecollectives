@@ -511,6 +511,94 @@ body.menu-drawer-open .menu-toggle {
   pointer-events: none;
 }
 
+/* ════════════════════════════════════════
+   SURPRISE SALE BANNER
+════════════════════════════════════════ */
+.surprise-sale-banner {
+  background: linear-gradient(135deg, var(--tangerine-1) 0%, #ffb300 100%);
+  padding: clamp(28px, 4vw, 48px) 0;
+}
+
+.surprise-sale-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.surprise-sale-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.surprise-tag {
+  display: inline-block;
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(12, 18, 32, 0.6);
+}
+
+.surprise-heading {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 5vw, 56px);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--ink);
+  margin: 0;
+  line-height: 1;
+}
+
+.surprise-dot {
+  color: rgba(12, 18, 32, 0.35);
+}
+
+.surprise-sub {
+  font-size: 13px;
+  color: rgba(12, 18, 32, 0.65);
+  margin: 0;
+  font-weight: 400;
+}
+
+.surprise-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ink);
+  color: #ffffff;
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 16px 32px;
+  border-radius: 2px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background 0.2s;
+}
+
+.surprise-cta:hover {
+  background: #1a2540;
+}
+
+@media (max-width: 600px) {
+  .surprise-sale-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .surprise-cta {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 .sale-banner {
   background: linear-gradient(135deg, rgba(255, 138, 29, 0.9), rgba(255, 196, 0, 0.85));
   color: #2d1600;
@@ -2444,7 +2532,12 @@ body.menu-drawer-open {
 
 .collection-carousel-card .price-compare,
 .product-carousel-card .price-compare {
-  display: none;
+  display: block;
+  margin: -8px 14px 10px;
+  font-size: 12px;
+  color: #aaa;
+  text-decoration: line-through;
+  text-align: center;
 }
 
 .card-badge {

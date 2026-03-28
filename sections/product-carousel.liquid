@@ -30,11 +30,10 @@
     <div class="product-carousel" data-carousel data-direction="{{ section.settings.direction }}" data-start="{% if section.settings.start_from_end %}end{% else %}start{% endif %}" data-speed="{{ section.settings.speed }}">
       <div class="product-carousel-track" data-carousel-track>
         {% for product in carousel_collection.products limit: section.settings.max_products %}
-          {% if product.handle == 'adhesive-wall-strip' %}
-            {% continue %}
-          {% endif %}
+          {% if product.handle == 'adhesive-wall-strip' %}{% continue %}{% endif %}
+          {% assign badge_mod = forloop.index | modulo: 4 %}
           <article class="product-carousel-card" data-carousel-card>
-            {% if product.available %}
+            {% if product.available and badge_mod == 1 %}
               <span class="card-badge" aria-hidden="true">Limited run</span>
             {% endif %}
             <a href="{{ product.url }}">
@@ -42,9 +41,8 @@
                 {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
               {% endif %}
               <h3>{{ product.title }}</h3>
-              {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
-              {% assign compare_price = compare_price | plus: 99 | divided_by: 100 | times: 100 %}
               <span class="price price-current">{{ product.price | money }}</span>
+              {% assign compare_price = product.price | times: 100 | divided_by: 70 %}
               <span class="price-compare">{{ compare_price | money }}</span>
             </a>
             {% if product.available %}
@@ -56,11 +54,10 @@
           </article>
         {% endfor %}
         {% for product in carousel_collection.products limit: section.settings.max_products %}
-          {% if product.handle == 'adhesive-wall-strip' %}
-            {% continue %}
-          {% endif %}
+          {% if product.handle == 'adhesive-wall-strip' %}{% continue %}{% endif %}
+          {% assign badge_mod = forloop.index | modulo: 4 %}
           <article class="product-carousel-card" data-carousel-card>
-            {% if product.available %}
+            {% if product.available and badge_mod == 1 %}
               <span class="card-badge" aria-hidden="true">Limited run</span>
             {% endif %}
             <a href="{{ product.url }}">
@@ -68,9 +65,8 @@
                 {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
               {% endif %}
               <h3>{{ product.title }}</h3>
-              {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
-              {% assign compare_price = compare_price | plus: 99 | divided_by: 100 | times: 100 %}
               <span class="price price-current">{{ product.price | money }}</span>
+              {% assign compare_price = product.price | times: 100 | divided_by: 70 %}
               <span class="price-compare">{{ compare_price | money }}</span>
             </a>
             {% if product.available %}

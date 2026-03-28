@@ -22,6 +22,10 @@
         "video": "shopify://files/videos/IMG_4762.mov"
       }
     },
+    "sale-banner": {
+      "type": "sale-banner",
+      "settings": {}
+    },
     "featured-rugs": {
       "type": "featured-collection",
       "settings": {
@@ -46,6 +50,7 @@
   },
   "order": [
     "main-hero",
+    "sale-banner",
     "featured-rugs",
     "brand-manifesto",
     "collection-cta"

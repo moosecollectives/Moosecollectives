@@ -1,0 +1,21 @@
+<section class="surprise-sale-banner">
+  <div class="container surprise-sale-inner">
+    <div class="surprise-sale-left">
+      <span class="surprise-tag">Surprise drop</span>
+      <p class="surprise-heading">30% off everything<span class="surprise-dot">.</span></p>
+      <p class="surprise-sub">No code needed — discount applied at checkout. Today only.</p>
+    </div>
+    <a class="surprise-cta" href="{{ routes.all_products_collection_url }}">
+      Shop now
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Sale banner",
+  "settings": [],
+  "presets": [{"name": "Sale banner"}]
+}
+{% endschema %}

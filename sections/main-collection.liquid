@@ -22,8 +22,9 @@
         {% if product.handle == adhesive_handle %}
           {% continue %}
         {% endif %}
+        {% assign badge_mod = forloop.index | modulo: 4 %}
         <article class="product-carousel-card collection-carousel-card">
-          {% if product.available %}
+          {% if product.available and badge_mod == 1 %}
             <span class="card-badge" aria-hidden="true">Limited run</span>
           {% endif %}
           <a href="{{ product.url }}">
@@ -31,12 +32,11 @@
               {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
             {% endif %}
             <h3>{{ product.title }}</h3>
-            {% assign compare_price = product.price | times: 100 | divided_by: 85 %}
-            {% assign compare_price = compare_price | plus: 99 | divided_by: 100 | times: 100 %}
             <span class="price price-current">{{ product.price | money }}</span>
             {% unless product.available %}
               <span class="stock-indicator">Out of stock</span>
             {% endunless %}
+            {% assign compare_price = product.price | times: 100 | divided_by: 70 %}
             <span class="price-compare">{{ compare_price | money }}</span>
           </a>
           {% if product.available %}

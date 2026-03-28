@@ -26,6 +26,8 @@
             {% endif %}
             <h3>{{ product_1.title }}</h3>
             <span class="price price-current">{{ product_1.price | money }}</span>
+            {% assign compare_price_1 = product_1.price | times: 100 | divided_by: 70 %}
+            <span class="price-compare">{{ compare_price_1 | money }}</span>
           </a>
           {% if product_1.available %}
             <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product_1.selected_or_first_available_variant.id }}">
@@ -38,13 +40,14 @@
 
       {% if product_2 != blank %}
         <article class="collection-carousel-card">
-          {% if product_2.available %}<span class="card-badge" aria-hidden="true">Limited run</span>{% endif %}
           <a href="{{ product_2.url }}">
             {% if product_2.featured_image %}
               {{ product_2.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_2.title }}
             {% endif %}
             <h3>{{ product_2.title }}</h3>
             <span class="price price-current">{{ product_2.price | money }}</span>
+            {% assign compare_price_2 = product_2.price | times: 100 | divided_by: 70 %}
+            <span class="price-compare">{{ compare_price_2 | money }}</span>
           </a>
           {% if product_2.available %}
             <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product_2.selected_or_first_available_variant.id }}">
@@ -57,13 +60,14 @@
 
       {% if product_3 != blank %}
         <article class="collection-carousel-card">
-          {% if product_3.available %}<span class="card-badge" aria-hidden="true">Limited run</span>{% endif %}
           <a href="{{ product_3.url }}">
             {% if product_3.featured_image %}
               {{ product_3.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_3.title }}
             {% endif %}
             <h3>{{ product_3.title }}</h3>
             <span class="price price-current">{{ product_3.price | money }}</span>
+            {% assign compare_price_3 = product_3.price | times: 100 | divided_by: 70 %}
+            <span class="price-compare">{{ compare_price_3 | money }}</span>
           </a>
           {% if product_3.available %}
             <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product_3.selected_or_first_available_variant.id }}">
@@ -76,13 +80,14 @@
 
       {% if product_4 != blank %}
         <article class="collection-carousel-card">
-          {% if product_4.available %}<span class="card-badge" aria-hidden="true">Limited run</span>{% endif %}
           <a href="{{ product_4.url }}">
             {% if product_4.featured_image %}
               {{ product_4.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_4.title }}
             {% endif %}
             <h3>{{ product_4.title }}</h3>
             <span class="price price-current">{{ product_4.price | money }}</span>
+            {% assign compare_price_4 = product_4.price | times: 100 | divided_by: 70 %}
+            <span class="price-compare">{{ compare_price_4 | money }}</span>
           </a>
           {% if product_4.available %}
             <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product_4.selected_or_first_available_variant.id }}">
