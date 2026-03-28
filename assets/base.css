@@ -521,20 +521,56 @@ body.menu-drawer-open .menu-toggle {
   overflow: hidden;
 }
 
-.surprise-sale-banner::before {
-  content: '30%';
+/* Repeating text watermark rows */
+.surprise-repeat-bg {
   position: absolute;
-  right: -20px;
-  top: 50%;
-  transform: translateY(-50%);
-  font-family: var(--font-display);
-  font-size: clamp(120px, 18vw, 220px);
-  font-weight: 700;
-  color: rgba(255,255,255,0.08);
-  letter-spacing: -0.04em;
-  line-height: 1;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0;
   pointer-events: none;
   user-select: none;
+  transform: rotate(-4deg) scale(1.1);
+}
+
+@keyframes surprise-scroll-left {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+@keyframes surprise-scroll-right {
+  from { transform: translateX(-50%); }
+  to { transform: translateX(0); }
+}
+
+.surprise-repeat-row {
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  font-family: var(--font-display);
+  font-size: clamp(18px, 2.8vw, 32px);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.13);
+  padding: 6px 0;
+  gap: 20px;
+}
+
+.surprise-repeat-row span {
+  flex-shrink: 0;
+}
+
+.surprise-repeat-row--1 {
+  animation: surprise-scroll-left 18s linear infinite;
+}
+.surprise-repeat-row--2 {
+  animation: surprise-scroll-right 22s linear infinite;
+  color: rgba(255,255,255,0.09);
+}
+.surprise-repeat-row--3 {
+  animation: surprise-scroll-left 14s linear infinite;
+  color: rgba(255,255,255,0.06);
 }
 
 .surprise-sale-inner {
