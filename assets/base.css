@@ -548,13 +548,13 @@ body.menu-drawer-open .menu-toggle {
   white-space: nowrap;
   overflow: hidden;
   font-family: var(--font-display);
-  font-size: clamp(18px, 2.8vw, 32px);
+  font-size: clamp(28px, 4.5vw, 52px);
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.13);
-  padding: 6px 0;
-  gap: 20px;
+  color: rgba(255,255,255,0.28);
+  padding: 4px 0;
+  gap: 28px;
 }
 
 .surprise-repeat-row span {
@@ -566,11 +566,11 @@ body.menu-drawer-open .menu-toggle {
 }
 .surprise-repeat-row--2 {
   animation: surprise-scroll-right 22s linear infinite;
-  color: rgba(255,255,255,0.09);
+  color: rgba(255,255,255,0.18);
 }
 .surprise-repeat-row--3 {
   animation: surprise-scroll-left 14s linear infinite;
-  color: rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.12);
 }
 
 .surprise-sale-inner {
