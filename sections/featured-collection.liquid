@@ -19,8 +19,7 @@
     <div class="featured-grid">
       {% if product_1 != blank %}
         <article class="collection-carousel-card">
-          {% if product_1.available %}<span class="card-badge" aria-hidden="true">Limited run</span>{% endif %}
-          <a href="{{ product_1.url }}">
+              <a href="{{ product_1.url }}">
             {% if product_1.featured_image %}
               {{ product_1.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product_1.title }}
             {% endif %}
