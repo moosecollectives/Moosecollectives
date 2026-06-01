@@ -1,0 +1,135 @@
+{% assign carousel_collection = section.settings.collection %}
+{% if carousel_collection == blank %}
+  {% assign carousel_collection = collections['all'] %}
+{% endif %}
+
+{% assign carousel_heading = section.settings.heading %}
+{% if carousel_heading == blank %}
+  {% assign carousel_heading = 'Everything in the vault' %}
+{% endif %}
+
+{% assign carousel_cta = section.settings.cta_label %}
+{% if carousel_cta == blank %}
+  {% assign carousel_cta = 'Browse all' %}
+{% endif %}
+
+<section class="section carousel-section carousel-section-fancy">
+  <div class="container">
+    <div class="section-heading carousel-section-heading">
+      <h2 class="section-title">{{ carousel_heading }}</h2>
+      {% if carousel_collection != blank %}
+        <a class="button button-outline carousel-cta-btn" href="{{ carousel_collection.url }}">
+          {{ carousel_cta }}
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      {% endif %}
+    </div>
+  </div>
+
+  {% if carousel_collection != blank and carousel_collection.products_count > 0 %}
+    <div class="product-carousel" data-carousel data-direction="{{ section.settings.direction }}" data-start="{% if section.settings.start_from_end %}end{% else %}start{% endif %}" data-speed="{{ section.settings.speed }}">
+      <div class="product-carousel-track" data-carousel-track>
+        {% for product in carousel_collection.products limit: section.settings.max_products %}
+          {% if product.handle == 'adhesive-wall-strip' %}{% continue %}{% endif %}
+          {% assign badge_mod = forloop.index | modulo: 4 %}
+          <article class="product-carousel-card" data-carousel-card>
+            {% if product.available and badge_mod == 1 %}
+              <span class="card-badge" aria-hidden="true">Limited run</span>
+            {% endif %}
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <h3>{{ product.title }}</h3>
+              <span class="price price-current">{{ product.price | money }}</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="price-compare">{{ product.compare_at_price | money }}</span>
+              {% endif %}
+            </a>
+            {% if product.available %}
+              <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+              </form>
+            {% endif %}
+          </article>
+        {% endfor %}
+        {% for product in carousel_collection.products limit: section.settings.max_products %}
+          {% if product.handle == 'adhesive-wall-strip' %}{% continue %}{% endif %}
+          {% assign badge_mod = forloop.index | modulo: 4 %}
+          <article class="product-carousel-card" data-carousel-card>
+            {% if product.available and badge_mod == 1 %}
+              <span class="card-badge" aria-hidden="true">Limited run</span>
+            {% endif %}
+            <a href="{{ product.url }}">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 700 | image_tag: loading: 'lazy', alt: product.title }}
+              {% endif %}
+              <h3>{{ product.title }}</h3>
+              <span class="price price-current">{{ product.price | money }}</span>
+              {% if product.compare_at_price > product.price %}
+                <span class="price-compare">{{ product.compare_at_price | money }}</span>
+              {% endif %}
+            </a>
+            {% if product.available %}
+              <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+              </form>
+            {% endif %}
+          </article>
+        {% endfor %}
+      </div>
+    </div>
+  {% else %}
+    <div class="container">
+      <p>No products available to display.</p>
+    </div>
+  {% endif %}
+</section>
+
+{% schema %}
+{
+  "name": "Product carousel",
+  "settings": [
+    {"type": "text", "id": "heading", "label": "Heading"},
+    {"type": "collection", "id": "collection", "label": "Collection (defaults to All products)"},
+    {"type": "text", "id": "cta_label", "label": "CTA label"},
+    {
+      "type": "select",
+      "id": "direction",
+      "label": "Scroll direction",
+      "options": [
+        {"value": "left", "label": "Left"},
+        {"value": "right", "label": "Right"}
+      ],
+      "default": "left"
+    },
+    {
+      "type": "checkbox",
+      "id": "start_from_end",
+      "label": "Start from end of list",
+      "default": false
+    },
+    {
+      "type": "range",
+      "id": "max_products",
+      "label": "Max products",
+      "min": 4,
+      "max": 50,
+      "step": 2,
+      "default": 50
+    },
+    {
+      "type": "range",
+      "id": "speed",
+      "label": "Scroll speed",
+      "min": 0.2,
+      "max": 1.2,
+      "step": 0.1,
+      "default": 0.4
+    }
+  ],
+  "presets": [{"name": "Product carousel"}]
+}
+{% endschema %}

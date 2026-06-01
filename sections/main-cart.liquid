@@ -1,28 +1,95 @@
-<section class="section">
+<section class="section cart-section">
   <div class="container">
     <h1 class="section-title">Your cart</h1>
     {% if cart.item_count == 0 %}
       <p>Your cart is empty.</p>
-      <a class="button button-primary" href="{{ routes.collections_url }}">Continue shopping</a>
+      <a class="button button-primary" href="{{ routes.all_products_collection_url }}">Continue shopping</a>
     {% else %}
-      <form action="{{ routes.cart_url }}" method="post">
-        <div class="product-grid">
-          {% for item in cart.items %}
-            <article class="product-card">
-              <div>
-                {% if item.image %}
-                  {{ item.image | image_url: width: 400 | image_tag: loading: 'lazy', alt: item.product.title }}
-                {% endif %}
-              </div>
-              <div>
-                <h3>{{ item.product.title }}</h3>
-                <p>{{ item.final_price | money }}</p>
-                <input type="number" name="updates[]" value="{{ item.quantity }}" min="0">
-              </div>
-            </article>
-          {% endfor %}
+      {% assign upsell_product = all_products['adhesive-wall-strip'] %}
+      {% assign has_adhesive = false %}
+      {% for item in cart.items %}
+        {% if item.product.handle == 'adhesive-wall-strip' %}
+          {% assign has_adhesive = true %}
+        {% endif %}
+      {% endfor %}
+      {% if upsell_product != blank and has_adhesive == false %}
+        <div class="cart-upsell">
+          <div>
+            <span class="upsell-eyebrow">Recommended add-on</span>
+            <h3 class="upsell-title">Add adhesive strips to your order</h3>
+            <p class="upsell-subtitle">Keep your rug secure with our mounting strips.</p>
+          </div>
+          <form class="cart-upsell-form" method="post" action="/cart/add" data-cart-upsell>
+            <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
+            <button class="button button-secondary" type="submit">Add to cart</button>
+          </form>
         </div>
-        <button class="button button-primary" type="submit" name="checkout">Checkout</button>
+      {% endif %}
+      <form action="{{ routes.cart_url }}" method="post" data-cart-form>
+        <div class="cart-carousel" data-cart-carousel>
+          <div class="cart-track">
+            {% for item in cart.items %}
+              <div class="cart-card-wrap" data-cart-key="{{ item.key }}">
+                <article class="cart-card">
+                  <a class="cart-media" href="{{ item.url }}" aria-label="View {{ item.product.title }}">
+                    {% if item.image %}
+                      {{ item.image | image_url: width: 500 | image_tag: loading: 'lazy', alt: item.product.title }}
+                    {% endif %}
+                  </a>
+                  <div class="cart-meta">
+                    <h3>{{ item.product.title }}</h3>
+                    <div class="cart-meta-row">
+                      <p class="price cart-price" aria-label="Line item price">
+                        {% assign compare_line = item.final_line_price | times: 100 | divided_by: 85 %}
+                        {% assign compare_line = compare_line | plus: 99 | divided_by: 100 | times: 100 %}
+                        {% assign compare_unit = item.final_price | times: 100 | divided_by: 85 %}
+                        {% assign compare_unit = compare_unit | plus: 99 | divided_by: 100 | times: 100 %}
+                        <span class="cart-price-total">{{ item.final_line_price | money }}</span>
+                        <span class="cart-price-breakdown">{{ item.final_price | money }} x {{ item.quantity }}</span>
+                        <span class="price-compare cart-price-compare">{{ compare_line | money }}</span>
+                        <span class="price-compare cart-price-compare-breakdown">{{ compare_unit | money }} x {{ item.quantity }}</span>
+                      </p>
+                      <div class="cart-quantity" data-cart-qty-wrap>
+                        <div class="cart-quantity-pill" role="group" aria-label="Quantity controls for {{ item.product.title }}">
+                          <button class="cart-quantity-btn" type="button" data-cart-qty-btn="minus" aria-label="Decrease quantity">-</button>
+                          <input
+                            id="Quantity-{{ item.key }}"
+                            class="cart-quantity-input"
+                            type="number"
+                            name="updates[{{ item.key }}]"
+                            value="{{ item.quantity }}"
+                            min="0"
+                            inputmode="numeric"
+                            aria-label="Quantity for {{ item.product.title }}"
+                            data-cart-qty
+                            data-cart-key="{{ item.key }}"
+                            data-cart-title="{{ item.product.title | escape }}"
+                          >
+                          <button class="cart-quantity-btn" type="button" data-cart-qty-btn="plus" aria-label="Increase quantity">+</button>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="cart-actions">
+                    </div>
+                  </div>
+                </article>
+                <button class="cart-remove-tab" type="button" data-cart-remove-key="{{ item.key }}" aria-label="Remove {{ item.product.title }} from cart">
+                  <img src="{{ 'trash.png' | asset_url }}" alt="">
+                </button>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="cart-footer">
+          {% assign compare_total = cart.total_price | times: 100 | divided_by: 85 %}
+          {% assign compare_total = compare_total | plus: 99 | divided_by: 100 | times: 100 %}
+          <p class="cart-total">
+            Total:
+            <span class="price price-current">{{ cart.total_price | money }}</span>
+            <span class="price-compare">{{ compare_total | money }}</span>
+          </p>
+          <button class="button button-primary" type="submit" name="checkout">Checkout</button>
+        </div>
       </form>
     {% endif %}
   </div>

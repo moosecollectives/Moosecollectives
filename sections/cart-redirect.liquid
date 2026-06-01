@@ -1,0 +1,22 @@
+<section class="cart-redirect">
+  <div class="container">
+    <p>Redirecting to cart...</p>
+  </div>
+</section>
+<script>
+  (() => {
+    try {
+      sessionStorage.setItem('openCartDrawer', '1');
+    } catch (error) {
+      // ignore storage errors
+    }
+    window.location.replace('{{ routes.root_url }}');
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Cart redirect",
+  "settings": []
+}
+{% endschema %}

@@ -1,40 +1,69 @@
 <section class="section">
   <div class="container">
-    <div class="section-heading">
-      <h1 class="section-title">{{ collection.title }}</h1>
-      <span>{{ collection.products_count }} items</span>
+    <div class="section-heading collection-heading">
+      <h1 class="section-title">The vault</h1>
+      <div class="collection-heading-meta">
+        <span>{{ collection.products_count }} items</span>
+        {% assign current_sort = collection.sort_by %}
+        <form class="collection-sort" method="get" action="{{ collection.url }}">
+          <label for="CollectionSort">Sort</label>
+          <select id="CollectionSort" name="sort_by" onchange="this.form.submit()">
+            <option value=""{% if current_sort == blank %} selected{% endif %} hidden>General</option>
+            <option value="price-ascending"{% if current_sort == 'price-ascending' %} selected{% endif %}>Price: Low to High</option>
+            <option value="price-descending"{% if current_sort == 'price-descending' %} selected{% endif %}>Price: High to Low</option>
+          </select>
+        </form>
+      </div>
     </div>
-    <div class="product-grid">
+    {% assign adhesive_handle = 'adhesive-wall-strip' %}
+    {% assign adhesive_product = all_products[adhesive_handle] %}
+    <div class="collection-grid">
       {% for product in collection.products %}
-        <article class="product-card">
+        {% if product.handle == adhesive_handle %}
+          {% continue %}
+        {% endif %}
+        {% assign badge_mod = product.id | modulo: 4 %}
+        {% assign cv = product.selected_or_first_available_variant %}
+        <article class="product-carousel-card collection-carousel-card">
+          {% if product.available and cv.inventory_management == 'shopify' and cv.inventory_quantity > 0 and cv.inventory_quantity <= 5 %}
+            <span class="card-badge card-badge--low" aria-hidden="true">Only {{ cv.inventory_quantity }} left</span>
+          {% elsif product.available and badge_mod == 1 %}
+            <span class="card-badge" aria-hidden="true">Limited run</span>
+          {% endif %}
           <a href="{{ product.url }}">
-            <div class="product-card-img">
-              {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title, width: product.featured_image.width, height: product.featured_image.height }}
-              {% endif %}
-              {% unless product.available %}
-                <span class="card-badge badge-out">Sold out</span>
-              {% else %}
-                {% assign cv = product.selected_or_first_available_variant %}
-                {% if cv.inventory_management == 'shopify' and cv.inventory_quantity > 0 and cv.inventory_quantity <= 5 %}
-                  <span class="card-badge badge-low">Only {{ cv.inventory_quantity }} left</span>
-                {% endif %}
-              {% endunless %}
-            </div>
+            {% if product.featured_image %}
+              {{ product.featured_image | image_url: width: 800 | image_tag: loading: 'lazy', alt: product.title }}
+            {% endif %}
             <h3>{{ product.title }}</h3>
-            <div class="price-wrap">
-              {% if product.compare_at_price > product.price %}
-                {% assign compare_rounded = product.compare_at_price | divided_by: 50.0 | round | times: 50 %}
-                <span class="price-sale">{{ product.price | money }}</span>
-                <span class="price-compare">{{ compare_rounded | money }}</span>
-              {% else %}
-                <span class="price">{{ product.price | money }}</span>
-              {% endif %}
-            </div>
+            <span class="price price-current">{{ product.price | money }}</span>
+            {% unless product.available %}
+              <span class="stock-indicator">Out of stock</span>
+            {% endunless %}
+            {% if product.compare_at_price > product.price %}
+              <span class="price-compare">{{ product.compare_at_price | money }}</span>
+            {% endif %}
           </a>
+          {% if product.available %}
+            <form class="card-quick-add" method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+              <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+              <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+            </form>
+          {% endif %}
         </article>
       {% endfor %}
     </div>
+    {% if adhesive_product != blank %}
+      <div class="collection-adhesive">
+        <div class="collection-adhesive-card">
+          <div>
+            <h2>{{ adhesive_product.title }}</h2>
+            <p class="collection-adhesive-copy">Keep your rug attached to the wall with these mounting strips.</p>
+            <span class="price">{{ adhesive_product.price | money }}</span>
+          </div>
+          <a class="button button-primary" href="{{ adhesive_product.url }}">View adhesive wall strip</a>
+        </div>
+      </div>
+    {% endif %}
   </div>
 </section>
 

@@ -5,6 +5,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="canonical" href="{{ canonical_url }}">
+    {% if settings.favicon != blank %}
+      {% assign favicon_url = settings.favicon | image_url: width: 64, height: 64 | append: '&v=' | append: settings.favicon.id %}
+      <link rel="icon" type="image/png" sizes="32x32" href="{{ favicon_url }}">
+      <link rel="icon" type="image/png" sizes="16x16" href="{{ favicon_url }}">
+      <link rel="shortcut icon" href="{{ favicon_url }}">
+      <link rel="apple-touch-icon" sizes="180x180" href="{{ favicon_url }}">
+    {% endif %}
 
     <title>
       {{ page_title }}
@@ -20,54 +27,91 @@
     {{ content_for_header }}
 
     {{ 'base.css' | asset_url | stylesheet_tag }}
-    {{ 'theme.js' | asset_url | script_tag }}
+    <script src="{{ 'theme.js' | asset_url }}" defer></script>
   </head>
   <body class="template-{{ template.name | handle }}">
     <a class="skip-link" href="#MainContent">Skip to content</a>
 
     {% section 'announcement-bar' %}
-    {% section 'header' %}
+
+    <a class="brand-float" href="/">{{ shop.name }}</a>
+
+    <button class="cart-float" type="button" data-cart-drawer-trigger aria-label="View cart">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <path d="M16 10a4 4 0 0 1-8 0"/>
+      </svg>
+      <span class="cart-count" {% if cart.item_count == 0 %}hidden{% endif %} data-cart-count>{{ cart.item_count }}</span>
+    </button>
+
+    <button class="menu-toggle" type="button" data-menu-drawer-trigger aria-controls="MenuDrawer" aria-expanded="false">
+      <svg width="18" height="14" viewBox="0 0 18 14" fill="none" aria-hidden="true">
+        <path d="M0 1h18M0 7h18M0 13h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      </svg>
+      Menu
+    </button>
 
     <main id="MainContent" role="main">
       {{ content_for_layout }}
     </main>
 
+    {% assign drawer_upsell = all_products['adhesive-wall-strip'] %}
+    <div class="cart-drawer" data-cart-drawer hidden>
+      <div class="cart-drawer-backdrop" data-cart-drawer-close></div>
+      <aside class="cart-drawer-panel" aria-label="Cart">
+        <div class="cart-drawer-header">
+          <span>Cart</span>
+          <button class="cart-drawer-close" type="button" data-cart-drawer-close aria-label="Close cart">×</button>
+        </div>
+        <div class="cart-drawer-body">
+          {% if drawer_upsell != blank %}
+            <div class="cart-drawer-upsell" data-cart-drawer-upsell>
+              <div>
+                <span class="upsell-eyebrow">Recommended add-on</span>
+                <h3 class="upsell-title">Attach your rug to your wall!</h3>
+                <p class="upsell-subtitle">Add adhesive strips to your order</p>
+              </div>
+              <form class="cart-upsell-form" method="post" action="/cart/add" data-cart-upsell data-upsell-variant-id="{{ drawer_upsell.selected_or_first_available_variant.id }}">
+                <input type="hidden" name="id" value="{{ drawer_upsell.selected_or_first_available_variant.id }}">
+                <button class="button button-secondary" type="submit">Add to cart</button>
+              </form>
+            </div>
+          {% endif %}
+          <div class="cart-drawer-empty" data-cart-drawer-empty hidden>Your cart is empty.</div>
+          <div class="cart-drawer-items" data-cart-drawer-items></div>
+        </div>
+        <div class="cart-drawer-summary">
+          <span class="cart-drawer-summary-label">Total</span>
+          <span class="price price-current cart-drawer-summary-total" data-cart-drawer-total></span>
+        </div>
+        <button class="button button-primary cart-drawer-checkout" type="button" data-cart-drawer-checkout data-checkout-url="{{ routes.checkout_url }}">Checkout</button>
+      </aside>
+    </div>
+
     {% section 'footer' %}
 
-    <!-- Cart Drawer -->
-    <div class="cart-drawer" id="cart-drawer" aria-hidden="true">
-      <div class="cart-drawer-header">
-        <h2>Your cart</h2>
-        <button class="cart-drawer-close" aria-label="Close cart">&#x2715;</button>
-      </div>
-      <div class="cart-drawer-body" id="cart-drawer-body">
-        <p class="cart-empty-msg">Your cart is empty.</p>
-      </div>
-      <div class="cart-drawer-footer">
-        <a href="{{ routes.cart_url }}" class="button button-primary" style="width:100%;justify-content:center;">View cart &amp; checkout</a>
-      </div>
+    <div class="menu-drawer" data-menu-drawer hidden>
+      <div class="menu-drawer-backdrop" data-menu-drawer-close></div>
+      <aside class="menu-drawer-panel" id="MenuDrawer" aria-label="Menu">
+        <div class="menu-drawer-header">
+          <span>{{ shop.name }}</span>
+          <button class="menu-drawer-close" type="button" data-menu-drawer-close aria-label="Close menu">×</button>
+        </div>
+        <nav class="menu-drawer-nav">
+          {% for link in linklists[settings.main_menu].links %}
+            {% unless link.handle == 'contact' %}
+              <a href="{{ link.url }}">{{ link.title }}</a>
+            {% endunless %}
+          {% endfor %}
+          <a href="/pages/commissions">Commissions</a>
+          <a href="/pages/faq">FAQ</a>
+          <a class="cart-link menu-cart-link" href="{{ routes.cart_url }}" data-cart-drawer-trigger>
+            <span class="cart-label">Cart</span>
+            <span class="cart-count" aria-label="Cart items" {% if cart.item_count == 0 %}hidden{% endif %} data-cart-count>{{ cart.item_count }}</span>
+          </a>
+        </nav>
+      </aside>
     </div>
-    <div class="cart-drawer-overlay" id="cart-overlay"></div>
-
-    <!-- Email Popup -->
-    <div class="email-popup" id="email-popup" aria-hidden="true" role="dialog" aria-label="Get 10% off your first order">
-      <button class="email-popup-close" aria-label="Close">&#x2715;</button>
-      <div class="email-popup-inner">
-        <p class="email-popup-eyebrow">Exclusive for new visitors</p>
-        <h2 class="email-popup-title">Get 10% off your first order</h2>
-        <p class="email-popup-sub">Drop your email and we'll send the discount straight to you.</p>
-        <form class="email-popup-form" id="popup-form" action="/contact#contact_form" method="post">
-          <input type="hidden" name="form_type" value="customer">
-          <input type="hidden" name="utf8" value="✓">
-          <input type="hidden" name="contact[tags]" value="newsletter,popup">
-          <label for="popup-email" class="input-label">Email address</label>
-          <input id="popup-email" class="email-input" type="email" name="contact[email]" placeholder="your@email.com" required autocomplete="email">
-          <button class="button button-primary" type="submit" style="width:100%;justify-content:center;margin-top:8px;">Get my 10% off</button>
-        </form>
-        <p class="email-popup-legal">No spam. Unsubscribe anytime.</p>
-      </div>
-    </div>
-    <div class="email-popup-overlay" id="email-popup-overlay"></div>
-
   </body>
 </html>

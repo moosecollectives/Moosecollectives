@@ -1,10 +1,47 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
-    "logo": null,
+    "favicon": "shopify://shop_images/ChatGPT_Image_Feb_1_2026_at_07_17_24_PM.png",
     "main_menu": "main-menu",
-    "footer_text": "A modern essentials brand with a playful edge.",
-    "contact_email": "hello@example.com",
-    "contact_phone": "+1 (555) 555-5555"
+    "footer_text": "",
+    "contact_email": "moosecollectives@gmail.com",
+    "contact_phone": "+1 (555) 555-5555",
+    "sections": {
+      "header": {
+        "type": "header",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {}
+      }
+    },
+    "content_for_index": [],
+    "blocks": {
+      "144831480468751239": {
+        "type": "shopify://apps/essential-upsell/blocks/app-embed/50627fd9-24fd-4250-8614-accc12826d80",
+        "disabled": false,
+        "settings": {}
+      },
+      "9144908965052497053": {
+        "type": "shopify://apps/tipo-related-products/blocks/app-embed/75cf2d86-3988-45e7-8f28-ada23c99704f",
+        "disabled": true,
+        "settings": {}
+      },
+      "6279071938380501511": {
+        "type": "shopify://apps/powerful-form-builder/blocks/app-embed/e4bcb1eb-35b2-42e6-bc37-bfe0e1542c9d",
+        "disabled": true,
+        "settings": {}
+      }
+    }
   },
   "presets": {}
 }

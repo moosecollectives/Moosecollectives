@@ -1,137 +1,132 @@
-<section class="section">
-  <div class="container hero">
-
-    <div class="product-gallery">
-      {% assign images = product.images %}
-      {% if images.size > 0 %}
-        <div class="gallery-main">
-          {{ images[0] | image_url: width: 1200 | image_tag: loading: 'eager', alt: product.title, class: 'gallery-main-img', id: 'gallery-main-img', width: images[0].width, height: images[0].height }}
+<section class="section product-detail">
+  <div class="container product-detail-grid product-detail-container">
+    <div class="product-media" data-product-media>
+      {% if product.featured_image %}
+        {% assign zoom_url = product.featured_image | image_url: width: 2000 %}
+        <div class="product-media-main" data-media-main>
+          <div class="product-media-frame">
+            {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title, data_media_img: true, data_media_zoom: zoom_url, data_media_id: product.featured_image.id }}
+            <div class="product-zoom-lens" data-zoom-lens></div>
+          </div>
+          <div class="product-zoom-window" data-zoom-window></div>
         </div>
-        {% if images.size > 1 %}
-          <div class="gallery-thumbs">
-            {% for image in images %}
-              <button class="gallery-thumb {% if forloop.first %}active{% endif %}"
-                data-src="{{ image | image_url: width: 1200 }}"
-                aria-label="{{ product.title }} — image {{ forloop.index }}">
-                {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title, width: image.width, height: image.height }}
+      {% endif %}
+      {% if product.images.size > 1 %}
+        <div class="product-media-strip" role="list">
+          {% for image in product.images %}
+            {% assign thumb_zoom = image | image_url: width: 2000 %}
+            <button
+              class="product-media-thumb{% if image.id == product.featured_image.id %} is-active{% endif %}"
+              type="button"
+              data-media-thumb
+              data-media-id="{{ image.id }}"
+              data-media-src="{{ image | image_url: width: 1200 }}"
+              data-media-zoom="{{ thumb_zoom }}"
+              aria-label="View {{ product.title }} image {{ forloop.index }}"
+              role="listitem"
+            >
+              {{ image | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title }}
+            </button>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    <div class="product-zoom-modal" data-zoom-modal>
+      <button class="product-zoom-close" type="button" aria-label="Close zoom">×</button>
+      <div class="product-zoom-modal-content">
+        <div class="product-zoom-viewport" data-zoom-viewport>
+          <img src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title }}" width="{{ product.featured_image.width }}" height="{{ product.featured_image.height }}" data-zoom-modal-image>
+        </div>
+        {% if product.images.size > 1 %}
+          <div class="product-zoom-strip" role="list">
+            {% for image in product.images %}
+              {% assign thumb_zoom = image | image_url: width: 2000 %}
+              <button
+                class="product-zoom-thumb{% if image.id == product.featured_image.id %} is-active{% endif %}"
+                type="button"
+                data-zoom-modal-thumb
+                data-media-id="{{ image.id }}"
+                data-media-src="{{ image | image_url: width: 1200 }}"
+                data-media-zoom="{{ thumb_zoom }}"
+                aria-label="View {{ product.title }} image {{ forloop.index }} in zoom"
+                role="listitem"
+              >
+                {{ image | image_url: width: 200 | image_tag: loading: 'lazy', alt: product.title }}
               </button>
             {% endfor %}
           </div>
         {% endif %}
-      {% endif %}
-    </div>
-
-    <div class="hero-card">
-      <h1 class="hero-title">{{ product.title }}</h1>
-
-      <div class="product-price">
-        {% if product.compare_at_price > product.price %}
-          {% assign compare_rounded = product.compare_at_price | divided_by: 50.0 | round | times: 50 %}
-          {% assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
-          <span class="price-sale">{{ product.price | money }}</span>
-          <span class="price-compare">{{ compare_rounded | money }}</span>
-          <span class="save-badge">Save {{ discount_pct }}%</span>
-        {% else %}
-          <span class="price">{{ product.price | money }}</span>
-        {% endif %}
       </div>
-
-      {% assign active_variant = product.selected_or_first_available_variant %}
-      {% if product.available %}
-        {% if active_variant.inventory_management == 'shopify' and active_variant.inventory_quantity > 0 and active_variant.inventory_quantity <= 5 %}
-          <p class="stock-indicator low-stock">&#9889; Only {{ active_variant.inventory_quantity }} left — order soon</p>
-        {% endif %}
+    </div>
+    <div class="product-info">
+      <h1 class="hero-title">{{ product.title }}</h1>
+      <div class="product-description-block">
+        {{ product.description }}
+      </div>
+      <div class="price price-current">{{ product.price | money }}</div>
+      {% if product.compare_at_price > product.price %}
+        <div class="price-compare">{{ product.compare_at_price | money }}</div>
       {% endif %}
-
-      <div class="product-description">{{ product.description }}</div>
-
-      {% unless product.has_only_default_variant %}
-        {% for option in product.options_with_values %}
-          <div class="product-option">
-            <label class="option-label">{{ option.name }}</label>
-            <div class="option-values">
-              {% for value in option.values %}
-                <button class="option-btn {% if option.selected_value == value %}active{% endif %}"
-                  data-option-index="{{ forloop.parentloop.index0 }}"
-                  data-value="{{ value }}">{{ value }}</button>
-              {% endfor %}
-            </div>
+      <form method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        <div class="product-cart-actions" data-product-cart-actions>
+          {% if product.available %}
+            <button class="button button-primary" type="submit" data-add-to-cart-button>Add to cart</button>
+          {% else %}
+            <span class="stock-indicator">Out of stock</span>
+          {% endif %}
+          <div class="product-qty-controls" data-product-qty-controls hidden>
+            <button class="product-qty-btn" type="button" data-product-qty-btn="minus" aria-label="Decrease quantity">-</button>
+            <span class="product-qty-count" data-product-qty-count>0 in cart</span>
+            <button class="product-qty-btn" type="button" data-product-qty-btn="plus" aria-label="Increase quantity">+</button>
           </div>
-        {% endfor %}
-      {% endunless %}
-
-      {% if product.available %}
-        <form id="product-form" data-product-id="{{ product.id }}">
-          <input type="hidden" name="id" id="variant-id" value="{{ active_variant.id }}">
-          <button class="button button-primary btn-add-to-cart" type="submit">Add to cart</button>
-        </form>
-      {% else %}
-        <button class="button button-primary btn-add-to-cart" disabled>Sold out</button>
-        <div class="back-in-stock">
-          <p class="bis-heading">Get notified when back in stock</p>
-          <form class="bis-form" action="/contact#contact_form" method="post">
-            <input type="hidden" name="form_type" value="contact">
-            <input type="hidden" name="utf8" value="✓">
-            <input type="hidden" name="contact[body]" value="Back in stock request: {{ product.title }}">
-            <input type="hidden" name="contact[subject]" value="Restock request: {{ product.title }}">
-            <label for="bis-email" class="input-label">Your email</label>
-            <div class="newsletter-row">
-              <input id="bis-email" class="email-input" type="email" name="contact[email]" placeholder="your@email.com" required autocomplete="email">
-              <button class="button button-primary" type="submit">Notify me</button>
+          <div class="product-cart-view" data-view-cart>
+            <a class="button button-cart-view" href="{{ routes.cart_url }}" data-cart-drawer-trigger>View cart</a>
+          </div>
+        </div>
+      </form>
+      {% assign upsell_product = all_products['adhesive-wall-strip'] %}
+      {% if upsell_product != blank and product.handle != upsell_product.handle %}
+        <div class="product-upsell-inline">
+          <div class="upsell-card">
+            <div>
+              <span class="upsell-eyebrow">Recommended add-on</span>
+              <h3 class="upsell-title">
+                <a class="upsell-link" href="{{ upsell_product.url }}">Attach your rug to your wall!</a>
+              </h3>
+              <p class="upsell-subtitle">Add adhesive strips to your order</p>
             </div>
-          </form>
-          <p class="bis-legal">We'll email you the moment it's available.</p>
+            <form class="upsell-quick-add" method="post" action="/cart/add" data-upsell-quick-add>
+              <input type="hidden" name="id" value="{{ upsell_product.selected_or_first_available_variant.id }}">
+              <button class="button button-secondary" type="submit">Add to cart</button>
+            </form>
+          </div>
         </div>
       {% endif %}
     </div>
-
   </div>
 </section>
 
-{% assign first_col = product.collections | first %}
-{% if first_col and first_col.products_count > 1 %}
-  <section class="section related-section">
-    <div class="container">
-      <div class="section-heading">
-        <h2 class="section-title">You might also like</h2>
-      </div>
-      <div class="product-grid">
-        {% assign related_shown = 0 %}
-        {% for rp in first_col.products %}
-          {% unless rp.id == product.id or related_shown >= 4 %}
-            <article class="product-card">
-              <a href="{{ rp.url }}">
-                <div class="product-card-img">
-                  {% if rp.featured_image %}
-                    {{ rp.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: rp.title, width: rp.featured_image.width, height: rp.featured_image.height }}
-                  {% endif %}
-                  {% unless rp.available %}<span class="card-badge badge-out">Sold out</span>{% endunless %}
-                </div>
-                <h3>{{ rp.title }}</h3>
-                <div class="price-wrap">
-                  {% if rp.compare_at_price > rp.price %}
-                    {% assign rp_compare_rounded = rp.compare_at_price | divided_by: 50.0 | round | times: 50 %}
-                    <span class="price-sale">{{ rp.price | money }}</span>
-                    <span class="price-compare">{{ rp_compare_rounded | money }}</span>
-                  {% else %}
-                    <span class="price">{{ rp.price | money }}</span>
-                  {% endif %}
-                </div>
-              </a>
-            </article>
-            {% assign related_shown = related_shown | plus: 1 %}
-          {% endunless %}
-        {% endfor %}
-      </div>
-    </div>
-  </section>
-{% endif %}
+<section class="section product-media-full">
+  {% if section.settings.media_video != blank %}
+    {{ section.settings.media_video | video_tag: autoplay: true, loop: true, muted: true, controls: false, playsinline: true }}
+  {% elsif section.settings.media_image != blank %}
+    {{ section.settings.media_image | image_url: width: 2400 | image_tag: loading: 'lazy', alt: product.title }}
+  {% endif %}
+</section>
 
-<script>window.productVariants = {{ product.variants | json }};</script>
+<section class="section product-related">
+  <div class="container">
+    <div class="globo_widget_26011"></div>
+  </div>
+</section>
 
 {% schema %}
 {
   "name": "Main product",
-  "settings": []
+  "settings": [
+    {"type": "video", "id": "media_video", "label": "Product media video"},
+    {"type": "image_picker", "id": "media_image", "label": "Product media image"}
+  ]
 }
 {% endschema %}

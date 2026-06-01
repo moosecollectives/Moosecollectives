@@ -10,18 +10,9 @@
 {
   "sections": {
     "main": {
-      "type": "main-product",
-      "settings": {
-        "media_image": "shopify://shop_images/IMG_4778.jpg"
-      }
-    },
-    "1769832804c5606922": {
-      "type": "apps",
+      "type": "commissions-page",
       "settings": {}
     }
   },
-  "order": [
-    "main",
-    "1769832804c5606922"
-  ]
+  "order": ["main"]
 }
