@@ -22,7 +22,14 @@
               {% endunless %}
             </div>
             <h3>{{ product.title }}</h3>
-            <span class="price">{{ product.price | money }}</span>
+            <div class="price-wrap">
+              {% if product.compare_at_price > product.price %}
+                <span class="price-sale">{{ product.price | money }}</span>
+                <span class="price-compare">{{ product.compare_at_price | money }}</span>
+              {% else %}
+                <span class="price">{{ product.price | money }}</span>
+              {% endif %}
+            </div>
           </a>
         </article>
       {% endfor %}

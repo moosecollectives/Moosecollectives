@@ -26,9 +26,10 @@
 
       <div class="product-price">
         {% if product.compare_at_price > product.price %}
-          <span class="price price-sale">{{ product.price | money }}</span>
-          <span class="price price-compare">{{ product.compare_at_price | money }}</span>
-          <span class="badge-sale">Sale</span>
+          {% assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
+          <span class="price-sale">{{ product.price | money }}</span>
+          <span class="price-compare">{{ product.compare_at_price | money }}</span>
+          <span class="save-badge">Save {{ discount_pct }}%</span>
         {% else %}
           <span class="price">{{ product.price | money }}</span>
         {% endif %}
@@ -106,7 +107,14 @@
                   {% unless rp.available %}<span class="card-badge badge-out">Sold out</span>{% endunless %}
                 </div>
                 <h3>{{ rp.title }}</h3>
-                <span class="price">{{ rp.price | money }}</span>
+                <div class="price-wrap">
+                  {% if rp.compare_at_price > rp.price %}
+                    <span class="price-sale">{{ rp.price | money }}</span>
+                    <span class="price-compare">{{ rp.compare_at_price | money }}</span>
+                  {% else %}
+                    <span class="price">{{ rp.price | money }}</span>
+                  {% endif %}
+                </div>
               </a>
             </article>
             {% assign related_shown = related_shown | plus: 1 %}
