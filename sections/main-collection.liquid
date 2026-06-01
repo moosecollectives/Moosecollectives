@@ -8,9 +8,19 @@
       {% for product in collection.products %}
         <article class="product-card">
           <a href="{{ product.url }}">
-            {% if product.featured_image %}
-              {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title, width: product.featured_image.width, height: product.featured_image.height }}
-            {% endif %}
+            <div class="product-card-img">
+              {% if product.featured_image %}
+                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title, width: product.featured_image.width, height: product.featured_image.height }}
+              {% endif %}
+              {% unless product.available %}
+                <span class="card-badge badge-out">Sold out</span>
+              {% else %}
+                {% assign cv = product.selected_or_first_available_variant %}
+                {% if cv.inventory_management == 'shopify' and cv.inventory_quantity > 0 and cv.inventory_quantity <= 5 %}
+                  <span class="card-badge badge-low">Only {{ cv.inventory_quantity }} left</span>
+                {% endif %}
+              {% endunless %}
+            </div>
             <h3>{{ product.title }}</h3>
             <span class="price">{{ product.price | money }}</span>
           </a>

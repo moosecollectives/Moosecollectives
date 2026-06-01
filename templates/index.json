@@ -7,7 +7,16 @@
     "featured-collection": {
       "type": "featured-collection",
       "settings": {}
+    },
+    "commission-callout": {
+      "type": "commission-callout",
+      "settings": {}
+    },
+    "ugc-gallery": {
+      "type": "ugc-gallery",
+      "blocks": {},
+      "block_order": []
     }
   },
-  "order": ["main-hero", "featured-collection"]
+  "order": ["main-hero", "featured-collection", "commission-callout", "ugc-gallery"]
 }

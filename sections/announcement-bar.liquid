@@ -1,0 +1,34 @@
+<div class="announcement-bar">
+  <div class="announcement-inner">
+    <div class="announcement-messages" id="announcement-messages">
+      {% if section.settings.message_1 != blank %}
+        <span class="announcement-msg active">{{ section.settings.message_1 }}</span>
+      {% endif %}
+      {% if section.settings.message_2 != blank %}
+        <span class="announcement-msg">{{ section.settings.message_2 }}</span>
+      {% endif %}
+      {% if section.settings.message_3 != blank %}
+        <span class="announcement-msg">{{ section.settings.message_3 }}</span>
+      {% endif %}
+    </div>
+    {% if section.settings.show_countdown and section.settings.sale_end_date != blank %}
+      <div class="countdown-wrap" id="countdown-wrap" data-end="{{ section.settings.sale_end_date }}">
+        <span>Sale ends in</span>
+        <span class="countdown-timer" id="countdown-timer">--:--:--</span>
+      </div>
+    {% endif %}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Announcement bar",
+  "settings": [
+    {"type": "text", "id": "message_1", "label": "Message 1", "default": "30% off sitewide — no code needed"},
+    {"type": "text", "id": "message_2", "label": "Message 2", "default": "500+ Collectors · 4.9★ Rated · 30+ Drops"},
+    {"type": "text", "id": "message_3", "label": "Message 3", "default": "Limited runs — gone when they're gone"},
+    {"type": "checkbox", "id": "show_countdown", "label": "Show countdown timer", "default": true},
+    {"type": "text", "id": "sale_end_date", "label": "Sale end date (ISO 8601, e.g. 2026-06-08T23:59:59)", "default": "2026-06-08T23:59:59"}
+  ]
+}
+{% endschema %}

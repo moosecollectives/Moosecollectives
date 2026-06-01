@@ -5,7 +5,7 @@
       {% assign images = product.images %}
       {% if images.size > 0 %}
         <div class="gallery-main">
-          {{ images[0] | image_url: width: 1200 | image_tag: loading: 'eager', alt: product.title, class: 'gallery-main-img', id: 'gallery-main-img' }}
+          {{ images[0] | image_url: width: 1200 | image_tag: loading: 'eager', alt: product.title, class: 'gallery-main-img', id: 'gallery-main-img', width: images[0].width, height: images[0].height }}
         </div>
         {% if images.size > 1 %}
           <div class="gallery-thumbs">
@@ -13,7 +13,7 @@
               <button class="gallery-thumb {% if forloop.first %}active{% endif %}"
                 data-src="{{ image | image_url: width: 1200 }}"
                 aria-label="{{ product.title }} — image {{ forloop.index }}">
-                {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title }}
+                {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title, width: image.width, height: image.height }}
               </button>
             {% endfor %}
           </div>
@@ -34,6 +34,13 @@
         {% endif %}
       </div>
 
+      {% assign active_variant = product.selected_or_first_available_variant %}
+      {% if product.available %}
+        {% if active_variant.inventory_management == 'shopify' and active_variant.inventory_quantity > 0 and active_variant.inventory_quantity <= 5 %}
+          <p class="stock-indicator low-stock">&#9889; Only {{ active_variant.inventory_quantity }} left — order soon</p>
+        {% endif %}
+      {% endif %}
+
       <div class="product-description">{{ product.description }}</div>
 
       {% unless product.has_only_default_variant %}
@@ -51,21 +58,64 @@
         {% endfor %}
       {% endunless %}
 
-      <form id="product-form" data-product-id="{{ product.id }}">
-        <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button class="button button-primary btn-add-to-cart" type="submit"
-          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
-          {% if product.selected_or_first_available_variant.available %}
-            Add to cart
-          {% else %}
-            Sold out
-          {% endif %}
-        </button>
-      </form>
+      {% if product.available %}
+        <form id="product-form" data-product-id="{{ product.id }}">
+          <input type="hidden" name="id" id="variant-id" value="{{ active_variant.id }}">
+          <button class="button button-primary btn-add-to-cart" type="submit">Add to cart</button>
+        </form>
+      {% else %}
+        <button class="button button-primary btn-add-to-cart" disabled>Sold out</button>
+        <div class="back-in-stock">
+          <p class="bis-heading">Get notified when back in stock</p>
+          <form class="bis-form" action="/contact#contact_form" method="post">
+            <input type="hidden" name="form_type" value="contact">
+            <input type="hidden" name="utf8" value="✓">
+            <input type="hidden" name="contact[body]" value="Back in stock request: {{ product.title }}">
+            <input type="hidden" name="contact[subject]" value="Restock request: {{ product.title }}">
+            <label for="bis-email" class="input-label">Your email</label>
+            <div class="newsletter-row">
+              <input id="bis-email" class="email-input" type="email" name="contact[email]" placeholder="your@email.com" required autocomplete="email">
+              <button class="button button-primary" type="submit">Notify me</button>
+            </div>
+          </form>
+          <p class="bis-legal">We'll email you the moment it's available.</p>
+        </div>
+      {% endif %}
     </div>
 
   </div>
 </section>
+
+{% assign first_col = product.collections | first %}
+{% if first_col and first_col.products_count > 1 %}
+  <section class="section related-section">
+    <div class="container">
+      <div class="section-heading">
+        <h2 class="section-title">You might also like</h2>
+      </div>
+      <div class="product-grid">
+        {% assign related_shown = 0 %}
+        {% for rp in first_col.products %}
+          {% unless rp.id == product.id or related_shown >= 4 %}
+            <article class="product-card">
+              <a href="{{ rp.url }}">
+                <div class="product-card-img">
+                  {% if rp.featured_image %}
+                    {{ rp.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: rp.title, width: rp.featured_image.width, height: rp.featured_image.height }}
+                  {% endif %}
+                  {% unless rp.available %}<span class="card-badge badge-out">Sold out</span>{% endunless %}
+                </div>
+                <h3>{{ rp.title }}</h3>
+                <span class="price">{{ rp.price | money }}</span>
+              </a>
+            </article>
+            {% assign related_shown = related_shown | plus: 1 %}
+          {% endunless %}
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+{% endif %}
 
 <script>window.productVariants = {{ product.variants | json }};</script>
 

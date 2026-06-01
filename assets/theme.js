@@ -1,5 +1,44 @@
 document.documentElement.classList.remove('no-js');
 
+// ===== ANNOUNCEMENT BAR ROTATION =====
+const announcements = document.querySelectorAll('.announcement-msg');
+let currentAnn = 0;
+
+if (announcements.length > 1) {
+  setInterval(() => {
+    announcements[currentAnn].classList.remove('active');
+    currentAnn = (currentAnn + 1) % announcements.length;
+    announcements[currentAnn].classList.add('active');
+  }, 3500);
+}
+
+// ===== COUNTDOWN TIMER =====
+const countdownWrap  = document.getElementById('countdown-wrap');
+const countdownTimer = document.getElementById('countdown-timer');
+
+if (countdownWrap && countdownTimer) {
+  const endDate = new Date(countdownWrap.dataset.end);
+
+  function updateCountdown() {
+    const diff = endDate - Date.now();
+    if (diff <= 0) {
+      countdownWrap.style.display = 'none';
+      return;
+    }
+    const d = Math.floor(diff / 86400000);
+    const h = Math.floor((diff % 86400000) / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    const s = Math.floor((diff % 60000) / 1000);
+    const pad = n => String(n).padStart(2, '0');
+    countdownTimer.textContent = d > 0
+      ? `${d}d ${pad(h)}:${pad(m)}:${pad(s)}`
+      : `${pad(h)}:${pad(m)}:${pad(s)}`;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+}
+
 // Stagger product card animations
 const stagger = (selector, delay) => {
   document.querySelectorAll(selector).forEach((el, i) => {

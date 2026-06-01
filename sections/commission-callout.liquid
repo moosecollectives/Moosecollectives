@@ -1,0 +1,36 @@
+<section class="section commission-section">
+  <div class="container">
+    <div class="commission-card">
+      <div class="commission-text">
+        <span class="hero-eyebrow">{{ section.settings.eyebrow }}</span>
+        <h2 class="section-title" style="color:#fff;">{{ section.settings.heading }}</h2>
+        <p>{{ section.settings.subtext }}</p>
+        {% if section.settings.cta_link != blank %}
+          <a class="button button-accent" href="{{ section.settings.cta_link }}">{{ section.settings.cta_label }}</a>
+        {% endif %}
+      </div>
+      <div class="commission-image">
+        {% if section.settings.image != blank %}
+          {{ section.settings.image | image_url: width: 800 | image_tag: loading: 'lazy', alt: section.settings.heading, width: section.settings.image.width, height: section.settings.image.height }}
+        {% else %}
+          <div class="commission-placeholder">Your design here</div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Commission callout",
+  "settings": [
+    {"type": "text", "id": "eyebrow", "label": "Eyebrow text", "default": "Can't find what you're looking for?"},
+    {"type": "text", "id": "heading", "label": "Heading", "default": "Get a custom rug made just for you"},
+    {"type": "textarea", "id": "subtext", "label": "Subtext", "default": "Send us your character, scene, or idea and we'll hand-tuft it into a one-of-a-kind piece. Every commission is unique — no two are the same."},
+    {"type": "text", "id": "cta_label", "label": "Button label", "default": "Request a commission"},
+    {"type": "url", "id": "cta_link", "label": "Button link"},
+    {"type": "image_picker", "id": "image", "label": "Image"}
+  ],
+  "presets": [{"name": "Commission callout"}]
+}
+{% endschema %}
