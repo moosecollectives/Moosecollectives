@@ -13,7 +13,7 @@
           <article class="product-card">
             <a href="{{ product.url }}">
               {% if product.featured_image %}
-                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title }}
+                {{ product.featured_image | image_url: width: 600 | image_tag: loading: 'lazy', alt: product.title, width: product.featured_image.width, height: product.featured_image.height }}
               {% endif %}
               <h3>{{ product.title }}</h3>
               <span class="price">{{ product.price | money }}</span>
