@@ -26,9 +26,10 @@
 
       <div class="product-price">
         {% if product.compare_at_price > product.price %}
+          {% assign compare_rounded = product.compare_at_price | divided_by: 50.0 | round | times: 50 %}
           {% assign discount_pct = product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price %}
           <span class="price-sale">{{ product.price | money }}</span>
-          <span class="price-compare">{{ product.compare_at_price | money }}</span>
+          <span class="price-compare">{{ compare_rounded | money }}</span>
           <span class="save-badge">Save {{ discount_pct }}%</span>
         {% else %}
           <span class="price">{{ product.price | money }}</span>
@@ -109,8 +110,9 @@
                 <h3>{{ rp.title }}</h3>
                 <div class="price-wrap">
                   {% if rp.compare_at_price > rp.price %}
+                    {% assign rp_compare_rounded = rp.compare_at_price | divided_by: 50.0 | round | times: 50 %}
                     <span class="price-sale">{{ rp.price | money }}</span>
-                    <span class="price-compare">{{ rp.compare_at_price | money }}</span>
+                    <span class="price-compare">{{ rp_compare_rounded | money }}</span>
                   {% else %}
                     <span class="price">{{ rp.price | money }}</span>
                   {% endif %}
