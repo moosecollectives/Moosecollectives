@@ -32,5 +32,40 @@
     </main>
 
     {% section 'footer' %}
+
+    <!-- Cart Drawer -->
+    <div class="cart-drawer" id="cart-drawer" aria-hidden="true">
+      <div class="cart-drawer-header">
+        <h2>Your cart</h2>
+        <button class="cart-drawer-close" aria-label="Close cart">&#x2715;</button>
+      </div>
+      <div class="cart-drawer-body" id="cart-drawer-body">
+        <p class="cart-empty-msg">Your cart is empty.</p>
+      </div>
+      <div class="cart-drawer-footer">
+        <a href="{{ routes.cart_url }}" class="button button-primary" style="width:100%;justify-content:center;">View cart &amp; checkout</a>
+      </div>
+    </div>
+    <div class="cart-drawer-overlay" id="cart-overlay"></div>
+
+    <!-- Email Popup -->
+    <div class="email-popup" id="email-popup" aria-hidden="true" role="dialog" aria-label="Get 10% off your first order">
+      <button class="email-popup-close" aria-label="Close">&#x2715;</button>
+      <div class="email-popup-inner">
+        <p class="email-popup-eyebrow">Exclusive for new visitors</p>
+        <h2 class="email-popup-title">Get 10% off your first order</h2>
+        <p class="email-popup-sub">Drop your email and we'll send the discount straight to you.</p>
+        <form class="email-popup-form" id="popup-form" action="/contact#contact_form" method="post">
+          <input type="hidden" name="form_type" value="customer">
+          <input type="hidden" name="utf8" value="✓">
+          <input type="hidden" name="contact[tags]" value="newsletter,popup">
+          <input class="email-input" type="email" name="contact[email]" placeholder="your@email.com" required autocomplete="email">
+          <button class="button button-primary" type="submit" style="width:100%;justify-content:center;margin-top:8px;">Get my 10% off</button>
+        </form>
+        <p class="email-popup-legal">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+    <div class="email-popup-overlay" id="email-popup-overlay"></div>
+
   </body>
 </html>

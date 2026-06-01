@@ -1,21 +1,73 @@
 <section class="section">
   <div class="container hero">
-    <div class="hero-image">
-      {% if product.featured_image %}
-        {{ product.featured_image | image_url: width: 1200 | image_tag: loading: 'lazy', alt: product.title }}
+
+    <div class="product-gallery">
+      {% assign images = product.images %}
+      {% if images.size > 0 %}
+        <div class="gallery-main">
+          {{ images[0] | image_url: width: 1200 | image_tag: loading: 'eager', alt: product.title, class: 'gallery-main-img', id: 'gallery-main-img' }}
+        </div>
+        {% if images.size > 1 %}
+          <div class="gallery-thumbs">
+            {% for image in images %}
+              <button class="gallery-thumb {% if forloop.first %}active{% endif %}"
+                data-src="{{ image | image_url: width: 1200 }}"
+                aria-label="{{ product.title }} — image {{ forloop.index }}">
+                {{ image | image_url: width: 160 | image_tag: loading: 'lazy', alt: product.title }}
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
       {% endif %}
     </div>
+
     <div class="hero-card">
       <h1 class="hero-title">{{ product.title }}</h1>
-      <p>{{ product.description | strip_html }}</p>
-      <div class="price">{{ product.price | money }}</div>
-      <form method="post" action="/cart/add">
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
-        <button class="button button-primary" type="submit">Add to cart</button>
+
+      <div class="product-price">
+        {% if product.compare_at_price > product.price %}
+          <span class="price price-sale">{{ product.price | money }}</span>
+          <span class="price price-compare">{{ product.compare_at_price | money }}</span>
+          <span class="badge-sale">Sale</span>
+        {% else %}
+          <span class="price">{{ product.price | money }}</span>
+        {% endif %}
+      </div>
+
+      <div class="product-description">{{ product.description }}</div>
+
+      {% unless product.has_only_default_variant %}
+        {% for option in product.options_with_values %}
+          <div class="product-option">
+            <label class="option-label">{{ option.name }}</label>
+            <div class="option-values">
+              {% for value in option.values %}
+                <button class="option-btn {% if option.selected_value == value %}active{% endif %}"
+                  data-option-index="{{ forloop.parentloop.index0 }}"
+                  data-value="{{ value }}">{{ value }}</button>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+      {% endunless %}
+
+      <form id="product-form" data-product-id="{{ product.id }}">
+        <input type="hidden" name="id" id="variant-id" value="{{ product.selected_or_first_available_variant.id }}">
+        <button class="button button-primary btn-add-to-cart" type="submit"
+          {% unless product.selected_or_first_available_variant.available %}disabled{% endunless %}>
+          {% if product.selected_or_first_available_variant.available %}
+            Add to cart
+          {% else %}
+            Sold out
+          {% endif %}
+        </button>
       </form>
     </div>
+
   </div>
 </section>
+
+<script>window.productVariants = {{ product.variants | json }};</script>
 
 {% schema %}
 {

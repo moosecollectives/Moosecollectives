@@ -15,6 +15,22 @@
       <p>{{ settings.contact_email }}</p>
       <p>{{ settings.contact_phone }}</p>
     </div>
+    <div class="footer-newsletter">
+      <h4>Stay in the loop</h4>
+      <p>New drops, exclusive offers, and more — straight to your inbox.</p>
+      <form class="newsletter-form" action="/contact#contact_form" method="post">
+        <input type="hidden" name="form_type" value="customer">
+        <input type="hidden" name="utf8" value="✓">
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="newsletter-row">
+          <input class="email-input" type="email" name="contact[email]" placeholder="your@email.com" required autocomplete="email">
+          <button class="button button-primary" type="submit">Subscribe</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="container footer-bottom">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
   </div>
 </footer>
 
