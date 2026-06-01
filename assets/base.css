@@ -720,9 +720,11 @@ body.menu-drawer-open .menu-toggle {
 
 .price-compare {
   margin-left: 8px;
-  color: rgba(12, 18, 32, 0.5);
+  color: rgba(12, 18, 32, 0.35);
   text-decoration: line-through;
-  font-weight: 600;
+  text-decoration-color: rgba(12, 18, 32, 0.25);
+  text-decoration-thickness: 1px;
+  font-weight: 400;
   font-size: 0.9em;
 }
 

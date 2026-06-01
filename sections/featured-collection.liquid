@@ -30,7 +30,8 @@
             <h3>{{ product_1.title }}</h3>
             <span class="price price-current">{{ product_1.price | money }}</span>
             {% if product_1.compare_at_price > product_1.price %}
-              <span class="price-compare">{{ product_1.compare_at_price | money }}</span>
+              {% assign compare_rounded_1 = product_1.compare_at_price | divided_by: 50.0 | round | times: 50 %}
+              <span class="price-compare">{{ compare_rounded_1 | money }}</span>
             {% endif %}
           </a>
           {% if product_1.available %}
@@ -55,7 +56,8 @@
             <h3>{{ product_2.title }}</h3>
             <span class="price price-current">{{ product_2.price | money }}</span>
             {% if product_2.compare_at_price > product_2.price %}
-              <span class="price-compare">{{ product_2.compare_at_price | money }}</span>
+              {% assign compare_rounded_2 = product_2.compare_at_price | divided_by: 50.0 | round | times: 50 %}
+              <span class="price-compare">{{ compare_rounded_2 | money }}</span>
             {% endif %}
           </a>
           {% if product_2.available %}
@@ -80,7 +82,8 @@
             <h3>{{ product_3.title }}</h3>
             <span class="price price-current">{{ product_3.price | money }}</span>
             {% if product_3.compare_at_price > product_3.price %}
-              <span class="price-compare">{{ product_3.compare_at_price | money }}</span>
+              {% assign compare_rounded_3 = product_3.compare_at_price | divided_by: 50.0 | round | times: 50 %}
+              <span class="price-compare">{{ compare_rounded_3 | money }}</span>
             {% endif %}
           </a>
           {% if product_3.available %}
@@ -105,7 +108,8 @@
             <h3>{{ product_4.title }}</h3>
             <span class="price price-current">{{ product_4.price | money }}</span>
             {% if product_4.compare_at_price > product_4.price %}
-              <span class="price-compare">{{ product_4.compare_at_price | money }}</span>
+              {% assign compare_rounded_4 = product_4.compare_at_price | divided_by: 50.0 | round | times: 50 %}
+              <span class="price-compare">{{ compare_rounded_4 | money }}</span>
             {% endif %}
           </a>
           {% if product_4.available %}

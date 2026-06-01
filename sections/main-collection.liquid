@@ -40,7 +40,8 @@
               <span class="stock-indicator">Out of stock</span>
             {% endunless %}
             {% if product.compare_at_price > product.price %}
-              <span class="price-compare">{{ product.compare_at_price | money }}</span>
+              {% assign compare_rounded = product.compare_at_price | divided_by: 50.0 | round | times: 50 %}
+              <span class="price-compare">{{ compare_rounded | money }}</span>
             {% endif %}
           </a>
           {% if product.available %}

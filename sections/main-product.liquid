@@ -65,7 +65,8 @@
       </div>
       <div class="price price-current">{{ product.price | money }}</div>
       {% if product.compare_at_price > product.price %}
-        <div class="price-compare">{{ product.compare_at_price | money }}</div>
+        {% assign compare_rounded = product.compare_at_price | divided_by: 50.0 | round | times: 50 %}
+        <div class="price-compare">{{ compare_rounded | money }}</div>
       {% endif %}
       <form method="post" action="/cart/add" data-add-to-cart data-variant-id="{{ product.selected_or_first_available_variant.id }}">
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
